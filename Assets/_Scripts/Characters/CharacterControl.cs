@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Cinemachine;
 using CustomInspector;
 using UnityEngine.InputSystem;
 
@@ -16,6 +17,11 @@ public class CharacterControl : MonoBehaviour
     //[ReadOnly] public NavMeshAgent agent;
     //[ReadOnly] public CharacterController cc; -> 사용하고 싶은 방식으로 입력 후 레퍼런스 모두 교체
     [ReadOnly] public Animator animator;
+
+    //TEMPCODE
+    public CinemachineVirtualCameraBase maincamera;
+    //TEMPCODE
+    
 
     public List<AbilityData> initialAbilities;
 
