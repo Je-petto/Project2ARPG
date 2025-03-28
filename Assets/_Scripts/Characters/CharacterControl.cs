@@ -43,8 +43,6 @@ public class CharacterControl : MonoBehaviour
         
         if (TryGetComponent(out animator) == false)
             Debug.LogWarning("CharacterControl ] Animator 없음");
-
-Debug.Log($"해시 {moveSpeed}");
     }
 
     void Update()

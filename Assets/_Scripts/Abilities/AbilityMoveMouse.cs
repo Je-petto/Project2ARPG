@@ -19,9 +19,9 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
         path = new NavMeshPath();
         owner.isArrived = true;
 
-        owner._MOVESPEED = Animator.StringToHash("moveSpeed");
+        owner._MOVESPEED = Animator.StringToHash("MOVESPEED");
         if(owner._MOVESPEED < 0f)
-            Debug.LogError($"AbilityMoveKeyboard ] moveSpeed 해시를 찾을 수 없음");    
+            Debug.LogError($"AbilityMoveKeyboard ] MOVESPEED 해시를 찾을 수 없음");    
 
         marker = GameObject.Instantiate(data.marker).GetComponent<ParticleSystem>();
         if(marker == null)

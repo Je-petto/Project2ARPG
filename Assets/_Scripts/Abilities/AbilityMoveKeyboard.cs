@@ -18,10 +18,10 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
         cameraTransform = Camera.main.transform;
         velocity = data.rotatePerSec;
 
-        movespeed_hash = Animator.StringToHash("moveSpeed");
+        movespeed_hash = Animator.StringToHash("MOVESPEED");
 
         if(movespeed_hash < 0f)
-            Debug.LogError($"AbilityMoveKeyboard ] moveSpeed 해시를 찾을 수 없음");
+            Debug.LogError($"AbilityMoveKeyboard ] MOVESPEED 해시를 찾을 수 없음");
 
     }
 
