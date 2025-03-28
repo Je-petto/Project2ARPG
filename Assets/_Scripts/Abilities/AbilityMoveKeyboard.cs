@@ -1,4 +1,3 @@
-using System.Data.Common;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,12 +8,20 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
     private Vector3 camFoward, camRight;
     private Vector3 direction;
     private float velocity;
+    private int movespeed_hash;
+    
     private InputAction.CallbackContext context;
+
 
     public AbilityMoveKeyboard(AbilityMoveKeyboardData data, CharacterControl owner) : base(data, owner)
     {
         cameraTransform = Camera.main.transform;
         velocity = data.rotatePerSec;
+
+        movespeed_hash = Animator.StringToHash("moveSpeed");
+
+        if(movespeed_hash < 0f)
+            Debug.LogError($"AbilityMoveKeyboard ] moveSpeed 해시를 찾을 수 없음");
 
     }
 
@@ -66,9 +73,11 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
         {
             float v = Vector3.Distance(Vector3.zero, owner.rb.linearVelocity);
             float targetspeed = Mathf.Clamp01(v / data.movePerSec);
-            float movespd = Mathf.Lerp(owner.animator.GetFloat("moveSpeed"), targetspeed, Time.deltaTime * 18f);
+            float movespd = Mathf.Lerp(owner.animator.GetFloat(owner._MOVESPEED), targetspeed, Time.deltaTime * 18f);
 
-            owner.animator?.SetFloat("moveSpeed", movespd);
+            owner.animator?.SetFloat(owner._MOVESPEED, movespd);
+
+
         }
 
 

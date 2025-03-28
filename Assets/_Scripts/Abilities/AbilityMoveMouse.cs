@@ -19,6 +19,10 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
         path = new NavMeshPath();
         owner.isArrived = true;
 
+        owner._MOVESPEED = Animator.StringToHash("moveSpeed");
+        if(owner._MOVESPEED < 0f)
+            Debug.LogError($"AbilityMoveKeyboard ] moveSpeed 해시를 찾을 수 없음");    
+
         marker = GameObject.Instantiate(data.marker).GetComponent<ParticleSystem>();
         if(marker == null)
             Debug.LogWarning("AbilityMoveMouse ] Marker - ParticleSystem 없음");
@@ -112,9 +116,9 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
 
         // 최종 위치 준비 도착
         float d = Vector3.Distance(finaltarget, owner.rb.position);
-        if (hitDistance > data.runtostopDistance * 2 &&  d <= data.runtostopDistance)
+        if (hitDistance > data.runtostopDistance.y &&  d <= data.runtostopDistance.x)
             {
-                owner.animator?.CrossFadeInFixedTime("RUNTOSTOP", 0.1f, 0, 0f); 
+                owner.animator?.CrossFadeInFixedTime(owner._runtostop, 0.1f, 0, 0f); 
             }
 
 
@@ -124,8 +128,8 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
     private void MoveAnimation()
     {
         float a = owner.isArrived ? 0f : Mathf.Clamp01( currentVelocity / data.movePerSec );
-        float spd = Mathf.Lerp(owner.animator.GetFloat("moveSpeed"), a, Time.deltaTime * 10f);
-        owner.animator.SetFloat("moveSpeed", spd);
+        float spd = Mathf.Lerp(owner.animator.GetFloat(owner._MOVESPEED), a, Time.deltaTime * 10f);
+        owner.animator.SetFloat(owner._MOVESPEED, spd);
     }
 
 

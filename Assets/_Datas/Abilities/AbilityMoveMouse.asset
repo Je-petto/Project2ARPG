@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movePerSec: 5
   rotatePerSec: 1080
-  stopdistance: 0.3
-  runtostopDistance: 1
+  stopdistance: 0.75
+  runtostopDistance: {x: 1, y: 5}
   marker: {fileID: 198834339429527870, guid: f2a47a92099261641b107ca697c2c8e9, type: 3}

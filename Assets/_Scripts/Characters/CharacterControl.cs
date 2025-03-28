@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 // 캐릭터 컨트롤 : 허브 역할 - 캐릭터 관리
 public class CharacterControl : MonoBehaviour
 {
+    private static readonly int moveSpeed = Animator.StringToHash("moveSpeed");
     [HideInInspector]public AbilityControl ability;
     [ReadOnly] public bool isGrounded;
     [ReadOnly] public bool isArrived = true;
@@ -17,6 +18,14 @@ public class CharacterControl : MonoBehaviour
     [ReadOnly] public Animator animator;
 
     public List<AbilityData> initialAbilities;
+
+#region Animator HashSet
+    [HideInInspector] public int _MOVESPEED = Animator.StringToHash("MOVESPEED");
+    [HideInInspector] public int _runtostop = Animator.StringToHash("RUNTOSTOP");
+    [HideInInspector] public int _JUMPUP = Animator.StringToHash("JUMPUP");
+    [HideInInspector] public int _JUMPDOWN = Animator.StringToHash("JUMPDOWN");
+#endregion
+
     
     void Awake()
     {
@@ -28,6 +37,8 @@ public class CharacterControl : MonoBehaviour
         
         if (TryGetComponent(out animator) == false)
             Debug.LogWarning("CharacterControl ] Animator 없음");
+
+Debug.Log($"해시 {moveSpeed}");
     }
 
     void Update()

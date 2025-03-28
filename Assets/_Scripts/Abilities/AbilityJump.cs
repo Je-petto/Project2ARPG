@@ -19,14 +19,14 @@ public class AbilityJump : Ability<AbilityJumpData>
 
         //owner.animator?.SetTrigger("jumpUp");
 
-        owner.animator?.CrossFadeInFixedTime("JUMPUP", 0.1f, 0, 0f); //Base Layer = 0
+        owner.animator?.CrossFadeInFixedTime(owner._JUMPUP, 0.1f, 0, 0f); //Base Layer = 0
         
     }
     public override void Deactivate()
     {
         isjumping = false;
 
-        owner.animator?.CrossFadeInFixedTime("JUMPDOWN", 0.02f, 0, 0f); 
+        owner.animator?.CrossFadeInFixedTime(owner._JUMPDOWN, 0.02f, 0, 0f); 
     }
 
     float elapsed;
