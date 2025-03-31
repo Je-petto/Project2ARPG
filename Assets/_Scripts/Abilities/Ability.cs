@@ -40,6 +40,7 @@ public abstract class AbilityData : ScriptableObject
 public abstract class Ability
 {
     // 어빌리티 활성
+    public virtual void Activate() {}
     public virtual void Activate(InputAction.CallbackContext context) {}
     // 어빌리티 비활성
     public virtual void Deactivate() {}

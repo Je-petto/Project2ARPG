@@ -3,14 +3,11 @@ using UnityEngine.InputSystem;
 
 public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
 {
-
+    
     private Transform cameraTransform;
     private Vector3 camFoward, camRight;
     private Vector3 direction;
     private float velocity;
-    private int movespeed_hash;
-    
-    private InputAction.CallbackContext context;
 
 
     public AbilityMoveKeyboard(AbilityMoveKeyboardData data, CharacterControl owner) : base(data, owner)
@@ -18,26 +15,30 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
         cameraTransform = Camera.main.transform;
         velocity = data.rotatePerSec;
 
-        movespeed_hash = Animator.StringToHash("MOVESPEED");
-
-        if(movespeed_hash < 0f)
-            Debug.LogError($"AbilityMoveKeyboard ] MOVESPEED 해시를 찾을 수 없음");
-
     }
 
-    public override void Activate(InputAction.CallbackContext context)
+    public override void Activate()
     {
-        this.context = context;
-
         // contest 가 canceled 는 => 키를 뗐다는 의미 => 도착했다.
-        owner.isArrived = context.canceled;
-
+        
+        owner.actionInputs.Player.Move.performed += InputMove;
+        owner.actionInputs.Player.Move.canceled += InputStop; 
     }
 
-    private void InputKeyboard()
+    public override void Deactivate()
+    {
+        owner.actionInputs.Player.Move.performed -= InputMove;
+        owner.actionInputs.Player.Move.canceled -= InputStop; 
+
+        Stop();
+    }
+
+    private void InputMove(InputAction.CallbackContext ctx)
     {
 
-        var axis = context.ReadValue<Vector2>();
+        owner.isArrived = !ctx.performed;
+
+        var axis = ctx.ReadValue<Vector2>();
 
         camFoward = cameraTransform.forward;
         camRight = cameraTransform.right;
@@ -51,13 +52,26 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
         direction = (camFoward * axis.y + camRight * axis.x).normalized;
     }
 
+    private void InputStop(InputAction.CallbackContext ctx)
+    {
+        owner.isArrived = ctx.canceled;
+
+        if (ctx.canceled)
+            Stop();
+    }
+
     //물리연산용 업데이트
     public override void FixedUpdate()
     {
-
-        InputKeyboard();
         Rotate();
         Movement();
+    }
+
+    void Stop()
+    {
+        direction = Vector3.zero;
+        owner.rb.linearVelocity = Vector3.zero; 
+        owner.animator?.SetFloat(owner._MOVESPEED, 0f);       
     }
 
     void Movement()
@@ -77,10 +91,7 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
 
             owner.animator?.SetFloat(owner._MOVESPEED, movespd);
 
-
         }
-
-
     }
 
     void Rotate()

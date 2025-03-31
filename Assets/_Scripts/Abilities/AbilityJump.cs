@@ -9,24 +9,17 @@ public class AbilityJump : Ability<AbilityJumpData>
     {   
     }
 
-    public override void Activate(InputAction.CallbackContext ctx)
+    public override void Activate()
     {
-        if (owner.rb == null || owner.isGrounded == false)
-            return;
 
-        isjumping = true;
-        elapsed = 0;
-
-        //owner.animator?.SetTrigger("jumpUp");
-
-        owner.animator?.CrossFadeInFixedTime(owner._JUMPUP, 0.1f, 0, 0f); //Base Layer = 0
+        owner.actionInputs.Player.Jump.performed += InputJump;
         
     }
     public override void Deactivate()
     {
-        isjumping = false;
 
-        owner.animator?.CrossFadeInFixedTime(owner._JUMPDOWN, 0.02f, 0, 0f); 
+
+        owner.actionInputs.Player.Jump.performed -= InputJump;
     }
 
     float elapsed;
@@ -46,8 +39,32 @@ public class AbilityJump : Ability<AbilityJumpData>
 
         // 점프 시간 종료
         if (t > 0.3f && owner.isGrounded)
-            owner.ability.Deactivate(data.Flag);
+            JumpDown();
+            //owner.ability.Deactivate(data.Flag);
 
     }
+
+    private void JumpUp()
+    {
+        if (owner.rb == null || owner.isGrounded == false)
+            return;
+
+        isjumping = true;
+        elapsed = 0;
+        owner.animator?.CrossFadeInFixedTime(owner._JUMPUP, 0.1f, 0, 0f); //Base Layer = 0
+    }
+    private void JumpDown()
+    {
+            isjumping = false;
+            owner.animator?.CrossFadeInFixedTime(owner._JUMPDOWN, 0.02f, 0, 0f);
+
+    }
+
+    private void InputJump(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+            JumpUp();
+    }
+
 
 }

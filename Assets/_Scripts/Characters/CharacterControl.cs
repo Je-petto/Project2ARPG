@@ -1,27 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Cinemachine;
 using CustomInspector;
+using Unity.Cinemachine;
 using UnityEngine.InputSystem;
+using Project2ARPG;
+
 
 
 // 캐릭터 컨트롤 : 허브 역할 - 캐릭터 관리
 public class CharacterControl : MonoBehaviour
 {
-    private static readonly int moveSpeed = Animator.StringToHash("moveSpeed");
-    [HideInInspector]public AbilityControl ability;
+    [HideInInspector] public AbilityControl ability;
+    [HideInInspector] public InputSystem_Actions actionInputs;
+
     [ReadOnly] public bool isGrounded;
     [ReadOnly] public bool isArrived = true;
 
     [ReadOnly] public Rigidbody rb; //-> 메인캐릭터에 사용하기 가장 좋음
-    //[ReadOnly] public NavMeshAgent agent;
-    //[ReadOnly] public CharacterController cc; -> 사용하고 싶은 방식으로 입력 후 레퍼런스 모두 교체
     [ReadOnly] public Animator animator;
 
-    //TEMPCODE
-    public CinemachineVirtualCameraBase maincamera;
-    //TEMPCODE
-    
 
     public List<AbilityData> initialAbilities;
 
@@ -43,22 +40,32 @@ public class CharacterControl : MonoBehaviour
         
         if (TryGetComponent(out animator) == false)
             Debug.LogWarning("CharacterControl ] Animator 없음");
+
+        actionInputs = new InputSystem_Actions();
+
+
+    }
+
+    void OnDestroy()
+    {
+        actionInputs.Dispose();                              // Destroy asset object.
+    }
+    
+    void OnEnable()
+    {
+        actionInputs.Enable();                                // Enable all actions within map.
+    }
+    
+    void OnDisable()
+    {
+        actionInputs.Disable();                               // Disable all actions within map.
     }
 
     void Update()
     {
         isGrounded = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1.1f);
         
-        //InputKeyboard();
     }
-
-    
-    // void InputKeyboard()
-    // {
-
-    //     if (Input.GetButtonDown("Jump"))
-    //         ability.Activate(AbilityFlag.Jump);
-    // }
 
     void Start()
     {
@@ -66,28 +73,28 @@ public class CharacterControl : MonoBehaviour
             ability.Add(dat, true);
     }
 
-#region InputSystem
+// #region InputSystem
 
-    public void OnMoveKeyBoard(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed || ctx.canceled)
-            ability.Activate(AbilityFlag.MoveKeyboard, ctx);
-    }
+//     public void OnMoveKeyBoard(InputAction.CallbackContext ctx)
+//     {
+//         if (ctx.performed || ctx.canceled)
+//             ability.Activate(AbilityFlag.MoveKeyboard, ctx);
+//     }
     
-    public void OnMoveMouse(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed)
-            ability.Activate(AbilityFlag.MoveMouse, ctx);
-    }
+//     public void OnMoveMouse(InputAction.CallbackContext ctx)
+//     {
+//         if (ctx.performed)
+//             ability.Activate(AbilityFlag.MoveMouse, ctx);
+//     }
 
-    public void OnJump(InputAction.CallbackContext ctx)
-    {
+//     public void OnJump(InputAction.CallbackContext ctx)
+//     {
         
-        if (ctx.performed)
-            ability.Activate(AbilityFlag.Jump, ctx);
-    }
+//         if (ctx.performed)
+//             ability.Activate(AbilityFlag.Jump, ctx);
+//     }
 
-#endregion
+// #endregion
 
 }
 

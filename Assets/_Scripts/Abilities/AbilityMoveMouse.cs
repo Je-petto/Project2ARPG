@@ -19,10 +19,6 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
         path = new NavMeshPath();
         owner.isArrived = true;
 
-        owner._MOVESPEED = Animator.StringToHash("MOVESPEED");
-        if(owner._MOVESPEED < 0f)
-            Debug.LogError($"AbilityMoveKeyboard ] MOVESPEED 해시를 찾을 수 없음");    
-
         marker = GameObject.Instantiate(data.marker).GetComponent<ParticleSystem>();
         if(marker == null)
             Debug.LogWarning("AbilityMoveMouse ] Marker - ParticleSystem 없음");
@@ -47,25 +43,40 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
         FollowPath();
     }
 
-    public override void Activate(InputAction.CallbackContext context)
+    public override void Activate()
+    {
+        owner.actionInputs.Player.MoveMouse.performed += InputMove;
+        
+    }
+
+    public override void Deactivate()
+    {
+        owner.actionInputs.Player.MoveMouse.performed -= InputMove;
+    }
+
+    private void InputMove(InputAction.CallbackContext ctx)
     {
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
         if(Physics.Raycast(ray, out var hit))
-            {
-                marker.gameObject.SetActive(true);
-                marker.transform.position = hit.point + Vector3.up * 0.1f;
-                marker.Play();
+        {
+            marker.gameObject.SetActive(true);
+            marker.transform.position = hit.point + Vector3.up * 0.1f;
+            marker.Play();
 
-                hitDistance = Vector3.Distance(hit.point, owner.rb.position);
-                SetDestination(hit.point);
-            }
+            hitDistance = Vector3.Distance(hit.point, owner.rb.position);
+            SetDestination(hit.point);
+        }
     }
 
     private void SetDestination(Vector3 destination)
     {
         
         if (NavMesh.CalculatePath(owner.transform.position, destination, -1, path) == false)
+        {
+Debug.Log($"길 못 찾음");
             return;
+        }
+Debug.Log($"길 찾음");
         
         corners = path.corners;
         next = 1;

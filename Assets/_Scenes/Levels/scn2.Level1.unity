@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c726d2c63c015541af0cb44b6d35edf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraEvent: {fileID: 8177876179027657590}
+  eventCameraSwitch: {fileID: 0}
 --- !u!135 &591463427
 SphereCollider:
   m_ObjectHideFlags: 0

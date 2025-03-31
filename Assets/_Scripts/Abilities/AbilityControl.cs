@@ -39,11 +39,16 @@ public class AbilityControl : MonoBehaviour
             return;
         
         flags.Add(d.Flag, null);
+
         datas.Add(d);
         var ability = d.CreateAbility(GetComponent<CharacterControl>());
 
         if( immediate )
+        {
             actives[d.Flag] = ability;
+            ability.Activate();
+
+        }
     }
 
     // 잠재능력을 제거, 발동: Activate (X)
@@ -52,7 +57,6 @@ public class AbilityControl : MonoBehaviour
         if (datas.Contains(d) == false || d == null)
             return;
         
-        actives[d.Flag].Deactivate();
         
         datas.Remove(d);
         flags.Remove(d.Flag, null);
@@ -60,6 +64,20 @@ public class AbilityControl : MonoBehaviour
     }
 
     // 잠재 능력 활성화 및 업데이트 추가
+    public void Activate(AbilityFlag flag)
+    {
+        foreach( var d in datas)
+        {
+            if ((d.Flag & flag) == flag)
+            {
+                if (actives.ContainsKey(flag) == false)
+                    actives[flag] = d.CreateAbility(GetComponent<CharacterControl>());
+
+                actives[flag].Activate();
+                
+            }
+        }
+    }
     public void Activate(AbilityFlag flag, InputAction.CallbackContext ctx)
     {
         foreach( var d in datas)
@@ -84,6 +102,8 @@ public class AbilityControl : MonoBehaviour
             {
                 if (actives.ContainsKey(flag) == true)
                 {
+Debug.Log($"비활성 {flag}");
+                    flags.Remove(flag, null);
                     actives[flag].Deactivate();
                     actives[flag] = null;
                     actives.Remove(flag);
