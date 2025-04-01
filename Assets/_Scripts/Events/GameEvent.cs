@@ -27,8 +27,6 @@ public abstract class GameEvent<T> : ScriptableObject where T : GameEvent<T>
     public void Raise()
     {
         OnEventRaised?.Invoke(Item);
-
-    Debug.Log($"이벤트 발동 : {Item.name}");
     }
     
 

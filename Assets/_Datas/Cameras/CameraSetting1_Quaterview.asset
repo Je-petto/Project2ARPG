@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87edaa385191f4e43ac1e2831a02159f, type: 3}
-  m_Name: CameraSetting!_Quaterview
+  m_Name: CameraSetting1_Quaterview
   m_EditorClassIdentifier: 
   Presets:
   - Name: 21mm

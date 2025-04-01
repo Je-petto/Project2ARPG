@@ -18,6 +18,7 @@ public class CharacterControl : MonoBehaviour
 
     [ReadOnly] public Rigidbody rb; //-> 메인캐릭터에 사용하기 가장 좋음
     [ReadOnly] public Animator animator;
+    [ReadOnly] public Transform eyepoint;
 
 
     public List<AbilityData> initialAbilities;
@@ -40,6 +41,10 @@ public class CharacterControl : MonoBehaviour
         
         if (TryGetComponent(out animator) == false)
             Debug.LogWarning("CharacterControl ] Animator 없음");
+
+        eyepoint = transform.Find("_EYEPOINT_");
+        if (eyepoint == null)
+            Debug.LogWarning("CharacterControl ] _EYEPOINT_ 없음");
 
         actionInputs = new InputSystem_Actions();
 
