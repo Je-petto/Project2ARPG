@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CustomInspector;
-using Unity.Cinemachine;
-using UnityEngine.InputSystem;
 using Project2ARPG;
 
 
@@ -19,7 +17,7 @@ public class CharacterControl : MonoBehaviour
     [ReadOnly] public Rigidbody rb; //-> 메인캐릭터에 사용하기 가장 좋음
     [ReadOnly] public Animator animator;
     [ReadOnly] public Transform eyepoint;
-
+    [ReadOnly] public Transform model;
 
     public List<AbilityData> initialAbilities;
 
@@ -45,6 +43,10 @@ public class CharacterControl : MonoBehaviour
         eyepoint = transform.Find("_EYEPOINT_");
         if (eyepoint == null)
             Debug.LogWarning("CharacterControl ] _EYEPOINT_ 없음");
+
+        model = transform.Find("_MODEL_");
+        if (model == null)
+            Debug.LogWarning("CharacterControl ] _MODEL_ 없음");
 
         actionInputs = new InputSystem_Actions();
 
@@ -74,32 +76,20 @@ public class CharacterControl : MonoBehaviour
 
     void Start()
     {
+        Visable(false);
+
+//TEMPCODE       
         foreach( var dat in initialAbilities )
-            ability.Add(dat, true);
+            ability.Add(dat, true);            
+//TEMPCODE
+
     }
 
-// #region InputSystem
+    public void Visable(bool b)
+    {
+        model.gameObject.SetActive(b);
 
-//     public void OnMoveKeyBoard(InputAction.CallbackContext ctx)
-//     {
-//         if (ctx.performed || ctx.canceled)
-//             ability.Activate(AbilityFlag.MoveKeyboard, ctx);
-//     }
-    
-//     public void OnMoveMouse(InputAction.CallbackContext ctx)
-//     {
-//         if (ctx.performed)
-//             ability.Activate(AbilityFlag.MoveMouse, ctx);
-//     }
-
-//     public void OnJump(InputAction.CallbackContext ctx)
-//     {
-        
-//         if (ctx.performed)
-//             ability.Activate(AbilityFlag.Jump, ctx);
-//     }
-
-// #endregion
+    }
 
 }
 

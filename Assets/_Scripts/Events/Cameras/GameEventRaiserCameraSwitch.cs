@@ -1,6 +1,6 @@
 using UnityEngine;
-using Unity.Cinemachine;
 using System.Threading.Tasks;
+
 
 public class GameEventRaiserCameraSwitch : MonoBehaviour
 {
@@ -29,14 +29,11 @@ public class GameEventRaiserCameraSwitch : MonoBehaviour
         try
         {
 
-
         eventCameraSwitch.inout = true;
         eventCameraSwitch?.Raise();
         
         //1000 milliseconds = 1초
         await Task.Delay(t);
-
-Debug.Log("2");
 
         eventCameraSwitch.inout = false;
         eventCameraSwitch?.Raise();
