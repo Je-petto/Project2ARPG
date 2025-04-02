@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class CharacterEventControl : MonoBehaviour
 {
+#region EVENTS
     [SerializeField] GameEventCameraSwitch eventCameraSwitch;
     [SerializeField] EventPlayerSpawnAfter eventPlayerSpawnAfter;
     CharacterControl cc;
+#endregion
 
 
     void Start()
@@ -24,11 +26,6 @@ public class CharacterEventControl : MonoBehaviour
     {
         eventPlayerSpawnAfter.Unregister(OneventPlayerSpawnAfter);
         eventCameraSwitch.Unregister(OneventCameraSwitch);
-    }
-
-    private void OnDestroy()
-    {
-
     }
 
     void OneventCameraSwitch(GameEventCameraSwitch e)

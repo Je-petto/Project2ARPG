@@ -72,11 +72,9 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
     {
         
         if (NavMesh.CalculatePath(owner.transform.position, destination, -1, path) == false)
-        {
-Debug.Log($"길 못 찾음");
             return;
-        }
-Debug.Log($"길 찾음");
+
+
         
         corners = path.corners;
         next = 1;
