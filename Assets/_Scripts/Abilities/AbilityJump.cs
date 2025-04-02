@@ -51,12 +51,12 @@ public class AbilityJump : Ability<AbilityJumpData>
 
         isjumping = true;
         elapsed = 0;
-        owner.animator?.CrossFadeInFixedTime(owner._JUMPUP, 0.1f, 0, 0f); //Base Layer = 0
+        owner.Animate(owner._JUMPUP, 0.1f);
     }
     private void JumpDown()
     {
-            isjumping = false;
-            owner.animator?.CrossFadeInFixedTime(owner._JUMPDOWN, 0.02f, 0, 0f);
+        isjumping = false;
+        owner.Animate(owner._JUMPDOWN, 0.02f);
 
     }
 

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 
 //Send
 public class GameManager : BehaviourSingleton<GameManager>
@@ -30,7 +31,7 @@ public class GameManager : BehaviourSingleton<GameManager>
     {
         try
         {
-            await UniTask.Delay(1000, cancellationToken:cts.Token);
+            await UniTask.Delay(millisec, cancellationToken:cts.Token);
 
             oncomplete?.Invoke();
 

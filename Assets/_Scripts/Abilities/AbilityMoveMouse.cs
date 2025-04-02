@@ -127,7 +127,7 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
         float d = Vector3.Distance(finaltarget, owner.rb.position);
         if (hitDistance > data.runtostopDistance.y &&  d <= data.runtostopDistance.x)
             {
-                owner.animator?.CrossFadeInFixedTime(owner._runtostop, 0.1f, 0, 0f); 
+                owner.Animate(owner._RUNTOSTOP, 0.1f); 
             }
 
 

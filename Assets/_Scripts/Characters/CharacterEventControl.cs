@@ -1,5 +1,6 @@
 using UnityEngine;
 using CustomInspector;
+using System.Collections;
 
 public class CharacterEventControl : MonoBehaviour
 {
@@ -40,8 +41,17 @@ public class CharacterEventControl : MonoBehaviour
 
     void OneventPlayerSpawnAfter(EventPlayerSpawnAfter e)
     {
-        //1초 후에 보이게 처리 // 비동기(synchronous - async) 처리
-        GameManager.I.DelayCallAsync(1000, ()=> cc.Visable(true)).Forget();
+        StartCoroutine(SpawnSequence(e));
+
+    }
+
+    IEnumerator SpawnSequence(EventPlayerSpawnAfter e)
+    {
+        yield return new WaitForSeconds(1f);
+        PoolManager.I.Spawn(e.particleSpawn, transform.position, Quaternion.identity, null);
+        yield return new WaitForSeconds(0.2f);
+        cc.Visable(true);
+        cc.Animate(cc._SPAWN, 0f);
     }
 
     // Unity(비동기 지원 안함 -> 싱글쓰레드)

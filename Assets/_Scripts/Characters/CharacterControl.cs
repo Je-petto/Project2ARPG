@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using CustomInspector;
 using Project2ARPG;
+using Cysharp.Threading.Tasks.Triggers;
+using System.Runtime.Serialization;
 
 
 
@@ -23,9 +25,10 @@ public class CharacterControl : MonoBehaviour
 
 #region Animator HashSet
     [HideInInspector] public int _MOVESPEED = Animator.StringToHash("MOVESPEED");
-    [HideInInspector] public int _runtostop = Animator.StringToHash("RUNTOSTOP");
+    [HideInInspector] public int _RUNTOSTOP = Animator.StringToHash("RUNTOSTOP");
     [HideInInspector] public int _JUMPUP = Animator.StringToHash("JUMPUP");
     [HideInInspector] public int _JUMPDOWN = Animator.StringToHash("JUMPDOWN");
+    [HideInInspector] public int _SPAWN = Animator.StringToHash("SPAWN");
 #endregion
 
     
@@ -77,18 +80,23 @@ public class CharacterControl : MonoBehaviour
     void Start()
     {
         Visable(false);
-
-//TEMPCODE       
-        foreach( var dat in initialAbilities )
-            ability.Add(dat, true);            
-//TEMPCODE
-
+    
+    //TEMPCODE
+        foreach(var dat in initialAbilities)
+            ability.Add(dat, true);
+    //TEMPCODE
+    
     }
 
     public void Visable(bool b)
     {
         model.gameObject.SetActive(b);
 
+    }
+
+    public void Animate(int hash, float duration, int layer = 0)
+    {
+        animator?.CrossFadeInFixedTime(hash, duration, layer, 0f);        
     }
 
 }
