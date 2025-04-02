@@ -1,15 +1,17 @@
 using UnityEngine;
+using CustomInspector;
 
 public class Spawner : MonoBehaviour
 {
-#region  EVENTS
-    [Space(15)]
-    [SerializeField] EventPlayerSpawnBefore eventPlayerSpawnBefore;
-    [SerializeField] EventPlayerSpawnAfter eventPlayerSpawnAfter;
+#region EVENTS
+    [Space(10)]
+    [HorizontalLine("EVENTS"),HideField] public bool _h0;
+    [Foldout, SerializeField] EventPlayerSpawnBefore eventPlayerSpawnBefore;
+    [Foldout, SerializeField] EventPlayerSpawnAfter eventPlayerSpawnAfter;
 #endregion
     
-    public float radius = 2f;
-    public float linelength = 2f;
+    [Space(15),HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
+    public Transform spawnpoint;
 
     void OnEnable()
     {
@@ -21,22 +23,14 @@ public class Spawner : MonoBehaviour
         eventPlayerSpawnBefore.Register(OneventPlayerSpawnBefore);
     }
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, radius);
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, transform.position + transform.forward * linelength);
-    }
 
     void OneventPlayerSpawnBefore(EventPlayerSpawnBefore e)
     {        
         CameraControl camera = Instantiate(e.PlayerCamera);
 
         CharacterControl character = Instantiate(e.PlayerCharactor);
-        Quaternion rot = Quaternion.LookRotation(transform.forward);
-        character.transform.SetPositionAndRotation(transform.position, rot);        
+        Quaternion rot = Quaternion.LookRotation(spawnpoint.forward);
+        character.transform.SetPositionAndRotation(spawnpoint.position, rot);        
         
         CursorControl cursor = Instantiate(e.PlayerCursor);
         cursor.EyePoint = character.eyepoint;

@@ -1,9 +1,11 @@
 using UnityEngine;
+using CustomInspector;
 
 public class CharacterEventControl : MonoBehaviour
 {
 #region EVENTS
-    [SerializeField] GameEventCameraSwitch eventCameraSwitch;
+    [HorizontalLine("EVENTS"),HideField] public bool _h0;
+    [SerializeField] EventCameraSwitch eventCameraSwitch;
     [SerializeField] EventPlayerSpawnAfter eventPlayerSpawnAfter;
     CharacterControl cc;
 #endregion
@@ -12,7 +14,7 @@ public class CharacterEventControl : MonoBehaviour
     void Start()
     {
         if (TryGetComponent(out cc) == false)
-            Debug.LogWarning("GameEventControl ] CharacterControl 없음");
+            Debug.LogWarning("EventControl ] CharacterControl 없음");
     }
 
     void OnEnable()
@@ -28,7 +30,7 @@ public class CharacterEventControl : MonoBehaviour
         eventCameraSwitch.Unregister(OneventCameraSwitch);
     }
 
-    void OneventCameraSwitch(GameEventCameraSwitch e)
+    void OneventCameraSwitch(EventCameraSwitch e)
     {
         if (e.inout)
             cc.ability.Deactivate(AbilityFlag.MoveKeyboard);

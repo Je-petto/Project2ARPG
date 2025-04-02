@@ -2,10 +2,10 @@ using UnityEngine;
 using System.Threading.Tasks;
 
 
-public class GameEventRaiserCameraSwitch : MonoBehaviour
+public class EventRaiserCameraSwitch : MonoBehaviour
 {
 
-    [SerializeField] GameEventCameraSwitch eventCameraSwitch;
+    [SerializeField] EventCameraSwitch eventCameraSwitch;
 
     void OnTriggerEnter(Collider other)
     {

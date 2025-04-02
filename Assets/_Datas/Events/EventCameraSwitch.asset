@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bcc736da485b74b44ab6fa6b81aa68d1, type: 3}
-  m_Name: GameEventCameraSwitch
+  m_Name: EventCameraSwitch
   m_EditorClassIdentifier: 
   cameraEvent: {fileID: 0}

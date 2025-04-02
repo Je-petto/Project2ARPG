@@ -1,9 +1,9 @@
 using UnityEngine;
 using Unity.Cinemachine;
 
-public class GameEventListenerCameraSwitch : MonoBehaviour
+public class EventListenerCameraSwitch : MonoBehaviour
 {
-    [SerializeField] GameEventCameraSwitch eventCameraSwitch;
+    [SerializeField] EventCameraSwitch eventCameraSwitch;
 
     [SerializeField] CinemachineVirtualCameraBase virtualcamera;
 
@@ -22,7 +22,7 @@ public class GameEventListenerCameraSwitch : MonoBehaviour
         eventCameraSwitch.Unregister(OnEventCameraSwitch);
     }
 
-    private void OnEventCameraSwitch(GameEventCameraSwitch e)
+    private void OnEventCameraSwitch(EventCameraSwitch e)
     {
         SwithcCamera(e.inout);
     }
