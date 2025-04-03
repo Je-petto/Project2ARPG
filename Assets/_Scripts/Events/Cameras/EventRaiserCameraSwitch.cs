@@ -1,11 +1,12 @@
-using UnityEngine;
-using System.Threading.Tasks;
 
+using System.Threading.Tasks;
+using UnityEngine;
 
 public class EventRaiserCameraSwitch : MonoBehaviour
 {
 
     [SerializeField] EventCameraSwitch eventCameraSwitch;
+
 
     void OnTriggerEnter(Collider other)
     {
@@ -13,8 +14,6 @@ public class EventRaiserCameraSwitch : MonoBehaviour
 
         SwitchCameraAsync(2000);
     }
-
-
 
     // void OnTriggerExit(Collider other)
     // {
@@ -24,29 +23,27 @@ public class EventRaiserCameraSwitch : MonoBehaviour
     //     eventCameraSwitch?.Raise();
     // }
 
+
+    // milliseconds 1000 = 1seconds ( 1000 밀리초 = 1초 )
     async void SwitchCameraAsync(int t)
     {
         try
         {
+            eventCameraSwitch.inout = true;
+            eventCameraSwitch?.Raise();
 
-        eventCameraSwitch.inout = true;
-        eventCameraSwitch?.Raise();
-        
-        //1000 milliseconds = 1초
-        await Task.Delay(t);
-
-        eventCameraSwitch.inout = false;
-        eventCameraSwitch?.Raise();
+            await Task.Delay(t);
+            
+            eventCameraSwitch.inout = false;
+            eventCameraSwitch?.Raise();
         }
         catch ( System.Exception e)
         {
             Debug.LogException(e);
         }
         finally
-        {
-
+        {            
         }
     }
-
 
 }

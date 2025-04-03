@@ -6,12 +6,10 @@ public class EventPlayerSpawnBefore : GameEvent<EventPlayerSpawnBefore>
 {
     public override EventPlayerSpawnBefore Item => this;
 
-    public CharacterControl PlayerCharactor;
-    public CameraControl PlayerCamera;    
+
+    [Space(20)]
+    public CharacterControl PlayerCharacter;
     public CursorControl PlayerCursor;
-
-
-    
-
+    public CameraControl PlayerCamera;
 
 }

@@ -244,8 +244,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _h0: 0
-  eventCameraSwitch: {fileID: 11400000, guid: 22e47a0a21bc72b478c5ae9ace501ee0, type: 2}
+  eventCameraswitch: {fileID: 11400000, guid: 22e47a0a21bc72b478c5ae9ace501ee0, type: 2}
   eventPlayerSpawnAfter: {fileID: 11400000, guid: 2eae19cd0908b9244aaa138822c18fff, type: 2}
+  _h1: 0
 --- !u!114 &7568890696256692825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: {fileID: 0}
+  actorType: 0
   isGrounded: 0
   isArrived: 1
   rb: {fileID: 0}
@@ -282,7 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f21a2b57755e540a91c428fdd1c81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _t0: 0
+  _h1: 0
   flags: 0
   datas: []
 --- !u!114 &6209618592649883331
@@ -297,13 +299,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fccfb7ff877afc468ede2b90628493e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _h0: 0
+  eventPlayerSpawnAfter: {fileID: 11400000, guid: 2eae19cd0908b9244aaa138822c18fff, type: 2}
+  _h1: 0
   smoke1: {fileID: 2566886472975382880, guid: 0d879c6f654b17e4e8b87b32da426228, type: 3}
   smoke2: {fileID: 23564290435768151, guid: 9c39fbcfdd2562143b816b99c1ea418b, type: 3}
   footLeft: {fileID: 0}
   footRight: {fileID: 0}
-  _h0: 0
-  eventCameraSwitch: {fileID: 11400000, guid: 22e47a0a21bc72b478c5ae9ace501ee0, type: 2}
-  eventPlayerSpawnAfter: {fileID: 11400000, guid: 2eae19cd0908b9244aaa138822c18fff, type: 2}
 --- !u!1 &1763961240379952856
 GameObject:
   m_ObjectHideFlags: 0

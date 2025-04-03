@@ -976,8 +976,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _h0: 0
-  eventPlayerSpawnBefore: {fileID: 11400000, guid: 4ebd8e8d5faa21845a2a4737a38eb612, type: 2}
-  eventPlayerSpawnAfter: {fileID: 11400000, guid: 2eae19cd0908b9244aaa138822c18fff, type: 2}
+  eventPlayerspawnBefore: {fileID: 11400000, guid: 4ebd8e8d5faa21845a2a4737a38eb612, type: 2}
+  eventPlayerspawnAfter: {fileID: 11400000, guid: 2eae19cd0908b9244aaa138822c18fff, type: 2}
   _h1: 0
   spawnpoint: {fileID: 2741099915808218047}
   actorProfile: {fileID: 11400000, guid: c40a3b8cc86b0334896f66b1a10574f7, type: 2}

@@ -1,50 +1,67 @@
 using UnityEngine;
 using CustomInspector;
-
+using System.Collections;
 
 public class Spawner : MonoBehaviour
 {
-#region EVENTS
-    [Space(10)]
-    [HorizontalLine("EVENTS"),HideField] public bool _h0;
-    [Foldout, SerializeField] EventPlayerSpawnBefore eventPlayerSpawnBefore;
-    [Foldout, SerializeField] EventPlayerSpawnAfter eventPlayerSpawnAfter;
-#endregion
-    
-    [Space(15),HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
-    public Transform spawnpoint;
 
-    [Space(10)]
+#region EVENTS
+    [HorizontalLine("EVENTS"),HideField] public bool _h0;
+    
+    [SerializeField] EventPlayerSpawnBefore eventPlayerspawnBefore;
+    [SerializeField] EventPlayerSpawnAfter eventPlayerspawnAfter;
+    
+    [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
+#endregion
+
+    
+    [Space(20)]
+    public Transform spawnpoint;    
+
+
+    [Space(20)]
     [SerializeField] ActorProfile actorProfile;
+
 
     void OnEnable()
     {
-        eventPlayerSpawnBefore.Register(OneventPlayerSpawnBefore);        
+        eventPlayerspawnBefore.Register(OneventPlayerSpawnBefore);
     }
 
     void OnDisable()
     {
-        eventPlayerSpawnBefore.Register(OneventPlayerSpawnBefore);
+        eventPlayerspawnBefore.Unregister(OneventPlayerSpawnBefore);
     }
 
 
+
+
+
+    CharacterControl _character;
+    CursorControl _cursor;
     void OneventPlayerSpawnBefore(EventPlayerSpawnBefore e)
     {        
-        // 캐릭터 틀 만든다
-        CameraControl camera = Instantiate(e.PlayerCamera);
+        // 캐릭터 틀 만든다.
+        CameraControl camera = Instantiate(e.PlayerCamera);                
 
-        CharacterControl character = Instantiate(e.PlayerCharactor);
+        _character = Instantiate(e.PlayerCharacter);
         Quaternion rot = Quaternion.LookRotation(spawnpoint.forward);
-        character.transform.SetPositionAndRotation(spawnpoint.position, rot);        
+        _character.transform.SetPositionAndRotation(spawnpoint.position, rot);
         
-        CursorControl cursor = Instantiate(e.PlayerCursor);
-        cursor.eyePoint = character.eyepoint;
+        _cursor = Instantiate(e.PlayerCursor);
+        _cursor.eyePoint = _character.eyepoint;
 
-        // 캐릭터 틀 생성 후, After 이벤트 발동 (내용을 채운다)
-        eventPlayerSpawnAfter.eyePoint = character.eyepoint;
-        eventPlayerSpawnAfter.cursorFixedPoint = cursor.CursorFixedPoint;
-        eventPlayerSpawnAfter.actorProfile = actorProfile;
-        eventPlayerSpawnAfter?.Raise();
+        StartCoroutine(delayevent());
+    }
 
+    IEnumerator delayevent()
+    {
+        yield return new WaitForEndOfFrame();
+
+        // 캐릭터 틀 생성 후, After 이벤트 발동 ( 내용을 채운다 )
+        eventPlayerspawnAfter.eyePoint = _character.eyepoint;
+        eventPlayerspawnAfter.cursorFixedPoint = _cursor.CursorFixedPoint;
+        eventPlayerspawnAfter.actorProfile = actorProfile;
+        eventPlayerspawnAfter?.Raise();   
     }
 }

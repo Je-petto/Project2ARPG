@@ -1,17 +1,27 @@
+using System.Collections.Generic;
 using UnityEngine;
 using CustomInspector;
-using System.Collections.Generic;
 
-[CreateAssetMenu(menuName = "Data/ActorProfile")]
+
+
+public enum ActorType { NONE = 0, PLAYER, NPC, ENEMY, BOSS, ITEM }
+
+
+[CreateAssetMenu(menuName = "Datas/ActorProfile")]
 public class ActorProfile : ScriptableObject
 {
+
     [HorizontalLine("PROPERTIES"),HideField] public bool _h0;
-    
-    public string Alias;
+
+    public ActorType type;
+    public string alias;
     [Preview(Size.medium)] public Sprite portrait;
     [Preview(Size.medium)] public GameObject model;
     [Preview(Size.medium)] public Avatar avatar;
 
-    [Space(10), HorizontalLine("ABILITIES"),HideField] public bool _h1;
+
+
+    [HorizontalLine("ABILITIES"),HideField] public bool _h1;
     public List<AbilityData> abilities;
+
 }

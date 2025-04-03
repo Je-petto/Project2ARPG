@@ -1,83 +1,97 @@
+
 using UnityEngine;
 using CustomInspector;
 using System.Collections;
 
+
 public class CharacterEventControl : MonoBehaviour
 {
+
 #region EVENTS
     [HorizontalLine("EVENTS"),HideField] public bool _h0;
-    [SerializeField] EventCameraSwitch eventCameraSwitch;
+
+    [SerializeField] EventCameraSwitch eventCameraswitch;
     [SerializeField] EventPlayerSpawnAfter eventPlayerSpawnAfter;
-    CharacterControl cc;
+    
+    [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
 #endregion
 
+    private CharacterControl cc;
 
     void Start()
-    {
+    {      
         if (TryGetComponent(out cc) == false)
-            Debug.LogWarning("EventControl ] CharacterControl 없음");
+            Debug.LogWarning("GameEventControl ] CharacterControl 없음");
+
+        cc.Visible(false);
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
-
         eventPlayerSpawnAfter.Register(OneventPlayerSpawnAfter);
-        eventCameraSwitch.Register(OneventCameraSwitch);
+        eventCameraswitch.Register(OneventCameraSwitch);
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         eventPlayerSpawnAfter.Unregister(OneventPlayerSpawnAfter);
-        eventCameraSwitch.Unregister(OneventCameraSwitch);
+        eventCameraswitch.Unregister(OneventCameraSwitch);
     }
+
 
     void OneventCameraSwitch(EventCameraSwitch e)
     {
         if (e.inout)
             cc.ability.Deactivate(AbilityFlag.MoveKeyboard);
-        else   
+        else
             cc.ability.Activate(AbilityFlag.MoveKeyboard);
     }
 
+
     void OneventPlayerSpawnAfter(EventPlayerSpawnAfter e)
     {
+        if ( cc.actorType != e.actorProfile.type )
+            return;
+            
         StartCoroutine(SpawnSequence(e));
-
     }
 
     IEnumerator SpawnSequence(EventPlayerSpawnAfter e)
     {
-        yield return new WaitUntil(() => e.actorProfile != null && e.actorProfile.model != null);
-        
-        //플레이어 모델 생성한 후 _MODEL_ 슬롯에 붙인다
+        yield return new WaitUntil(()=> e.actorProfile != null && e.actorProfile.model != null);
+
+        // 플레이어 모델 생성한 후 _MODEL_ 슬롯에 붙인다.
         if (e.actorProfile.model == null)
-            Debug.LogError($"CharacterEventControl] 모델 없음");
+            Debug.LogError($"CharacterEventControl ] 모델 없음");
 
         Instantiate(e.actorProfile.model, cc.model);
 
+        
         // 플레이어 애니메이터 아바타 연결
         if (e.actorProfile.avatar == null)
-            Debug.LogError($"CharacterEventControl] 아바타 없음");
+            Debug.LogError($"CharacterEventControl ] 아바타 없음");
 
         cc.animator.avatar = e.actorProfile.avatar;
-        
+
+
+        // 1초 후 등장 파티클 발생
         yield return new WaitForSeconds(1f);
+
         PoolManager.I.Spawn(e.particleSpawn, transform.position, Quaternion.identity, null);
-        yield return new WaitForSeconds(0.2f);
-        cc.Visable(true);
-        cc.Animate(cc._SPAWN, 0f);
         
+
+        // 캐릭터 등장 연출
+        yield return new WaitForSeconds(0.2f);
+        
+        cc.Visible(true);
+        cc.Animate(cc._SPAWN, 0f);
+
+
+        // 1초 후 캐릭터 어빌리티 부여
+        yield return new WaitForSeconds(1f);
+
+        foreach( var dat in e.actorProfile.abilities )
+            cc.ability.Add(dat, true);
     }
-
-    // Unity(비동기 지원 안함 -> 싱글쓰레드)
-
-    //비동기 코드(Async)
-    // 1. 코루틴 ( Co-routine )
-    // 2. Invoke
-    // 3. asynce / await
-    // 4. Awaitable
-    // 5. CySharp
-    // 6. DoTween - DoVirtual.Delay ( 3f, ()=> {})
-
 
 }

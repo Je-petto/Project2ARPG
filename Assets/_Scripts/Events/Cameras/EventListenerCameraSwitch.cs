@@ -1,9 +1,11 @@
 using UnityEngine;
 using Unity.Cinemachine;
 
+
 public class EventListenerCameraSwitch : MonoBehaviour
 {
     [SerializeField] EventCameraSwitch eventCameraSwitch;
+
 
     [SerializeField] CinemachineVirtualCameraBase virtualcamera;
 
@@ -14,62 +16,27 @@ public class EventListenerCameraSwitch : MonoBehaviour
 
     void OnEnable()
     {
-        eventCameraSwitch.Register(OnEventCameraSwitch);
+        eventCameraSwitch.Register(OnEventCameraSwitch);        
     }
 
     void OnDisable()
     {
-        eventCameraSwitch.Unregister(OnEventCameraSwitch);
+        eventCameraSwitch.Unregister(OnEventCameraSwitch);        
     }
 
     private void OnEventCameraSwitch(EventCameraSwitch e)
     {
-        SwithcCamera(e.inout);
+        SwitchCamera(e.inout);
     }
 
-    void SwithcCamera(bool on)
+
+    void SwitchCamera(bool on)
     {
-        if(on)
+        if (on)
             virtualcamera.Priority.Value += 1;
         else
             virtualcamera.Priority.Value -= 1;
     }
 
-
 }
 
-    // public CinemachineVirtualCameraBase cameraEvent;
-
-
-    // {
-    //     if (other.tag != "Player") return;
-
-    //     var cc = other.GetComponentInParent<CharacterControl>();
-    //     if (cc == null)
-    //     {
-    //         Debug.LogWarning($"EventCamra] 메인 카메라 없음");
-    //         return;
-    //     }
-
-    //     //카메라 스위칭
-    //     cc.maincamera.Priority.Value -= 1;
-    //     cameraEvent.Priority.Value += 1; 
-        
-    // }
-
-    // void OnTriggerExit(Collider other)
-    // {
-    //     if (other.tag != "Player") return;
-        
-    //     var cc = other.GetComponentInParent<CharacterControl>();
-    //     if (cc == null)
-    //     {
-    //         Debug.LogWarning($"EventCamra] 메인 카메라 없음");
-    //         return;
-    //     }
-
-    //     cc.maincamera.Priority.Value += 1;
-    //     cameraEvent.Priority.Value -= 1; 
-
-
-    // }

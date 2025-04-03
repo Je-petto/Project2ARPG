@@ -1,23 +1,26 @@
-using UnityEngine;
-using System.Threading;
-using Cysharp.Threading.Tasks;
 using System;
-using System.Collections.Generic;
+using System.Threading;
+using UnityEngine;
+using Cysharp.Threading.Tasks;
 
-//Send
+
+
+// 관리 , 이벤트 송출(SEND)
+
 public class GameManager : BehaviourSingleton<GameManager>
 {
     protected override bool IsDontdestroy() => true;
 
+
     void OnEnable()
     {
-        cts?.Dispose();
+        cts?.Dispose();        
         cts = new CancellationTokenSource();
     }
 
     void OnDisable()
     {
-        cts.Cancel();        
+        cts.Cancel();
     }
 
     void OnDestroy()
@@ -34,9 +37,8 @@ public class GameManager : BehaviourSingleton<GameManager>
             await UniTask.Delay(millisec, cancellationToken:cts.Token);
 
             oncomplete?.Invoke();
-
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Debug.LogException(e);
         }
@@ -45,4 +47,16 @@ public class GameManager : BehaviourSingleton<GameManager>
             cts.Cancel();
         }
     }
+    
 }
+
+
+//유니티 (비동기 지원 안함 -> 싱글쓰레드)
+
+//비동기 ( Async )
+// 1. 코루틴 ( Co-routine ) 
+// 2. Invoke 
+// 3. async / await
+// 4. Awaitable
+// 5. CySharp - UniTask
+// 6. DoTween - DoVirtual.Delay( 3f, ()=> {});
