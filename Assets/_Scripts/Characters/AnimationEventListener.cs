@@ -12,39 +12,55 @@ public class AnimationEventListener : MonoBehaviour
     private CharacterControl cc;
     private Transform modelRoot;
 
-    
+#region EVENTS
+    [HorizontalLine("EVENTS"),HideField] public bool _h0;
+    [SerializeField] EventCameraSwitch eventCameraSwitch;
+    [SerializeField] EventPlayerSpawnAfter eventPlayerSpawnAfter;
+
+#endregion
+
     void Awake()
     {
         if (TryGetComponent(out cc) == false)
             Debug.LogWarning("AnimationEventListener ] CharacterControl 없음");
     }
 
+    void OnEnable()
+    {
+
+        eventPlayerSpawnAfter.Register(OneventPlayerSpawnAfter);
+
+    }
+
+    void OnDisable()
+    {
+        eventPlayerSpawnAfter.Unregister(OneventPlayerSpawnAfter);
+
+    }
+
     //주기적으로 검사
-    void OnValidate()
+    void OneventPlayerSpawnAfter(EventPlayerSpawnAfter e)
     {
         modelRoot = transform.FindSlot("_model_");
         if (modelRoot == null)
             Debug.LogWarning("AnimationEventListener ] ModelRoot 없음");
+
+        
+        StartCoroutine(delayfind());
+        // modelRoot.FindSlot("leftfoot");
+        // modelRoot.FindSlot("rightfoot");        
+    }
+
+    IEnumerator delayfind()
+    {
+        modelRoot = transform.FindSlot("_model_");
+        if (modelRoot == null)
+            Debug.LogWarning("AnimationEventListener ] modelRoot 없음");
+
+        yield return new WaitForSeconds(1f);
         
         footLeft = modelRoot.FindSlot("leftfoot");
-        footRight = modelRoot.FindSlot("rightfoot");        
+        footRight = modelRoot.FindSlot("rightfoot");
     }
 
-    public void Footstep(string s)
-    {
-        if (cc.isArrived == true || footLeft == null || footRight == null) return;
-        PoolManager.I.Spawn(smoke1, s == "L" ? footLeft.position : footRight.position, Quaternion.identity, null);
-    }
-
-    public void Footstop(string s)
-    {
-        if (footLeft == null || footRight == null) return;
-        PoolManager.I.Spawn(smoke1, s == "L" ? footLeft.position : footRight.position, Quaternion.identity, null);
-    }
-
-    public void Jumpdown()
-    {
-        Vector3 offset = Vector3.up * 0.1f + Random.insideUnitSphere * 0.2f;
-        PoolManager.I.Spawn(smoke2, cc.model.position + offset, Quaternion.identity, null);
-    } 
 }

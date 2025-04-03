@@ -21,8 +21,6 @@ public class CharacterControl : MonoBehaviour
     [ReadOnly] public Transform eyepoint;
     [ReadOnly] public Transform model;
 
-    public List<AbilityData> initialAbilities;
-
 #region Animator HashSet
     [HideInInspector] public int _MOVESPEED = Animator.StringToHash("MOVESPEED");
     [HideInInspector] public int _RUNTOSTOP = Animator.StringToHash("RUNTOSTOP");
@@ -80,11 +78,6 @@ public class CharacterControl : MonoBehaviour
     void Start()
     {
         Visable(false);
-    
-    //TEMPCODE
-        foreach(var dat in initialAbilities)
-            ability.Add(dat, true);
-    //TEMPCODE
     
     }
 

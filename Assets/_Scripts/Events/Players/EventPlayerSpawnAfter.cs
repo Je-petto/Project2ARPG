@@ -9,6 +9,7 @@ public class EventPlayerSpawnAfter : GameEvent<EventPlayerSpawnAfter>
 
     [ReadOnly] public Transform eyePoint;
     [ReadOnly] public Transform cursorFixedPoint;
+    [ReadOnly] public ActorProfile actorProfile;
 
     [Tooltip("플레이어 스폰 시 발동 Particle")]
     public PoolableParticle particleSpawn;

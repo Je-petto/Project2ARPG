@@ -47,11 +47,26 @@ public class CharacterEventControl : MonoBehaviour
 
     IEnumerator SpawnSequence(EventPlayerSpawnAfter e)
     {
+        yield return new WaitUntil(() => e.actorProfile != null && e.actorProfile.model != null);
+        
+        //플레이어 모델 생성한 후 _MODEL_ 슬롯에 붙인다
+        if (e.actorProfile.model == null)
+            Debug.LogError($"CharacterEventControl] 모델 없음");
+
+        Instantiate(e.actorProfile.model, cc.model);
+
+        // 플레이어 애니메이터 아바타 연결
+        if (e.actorProfile.avatar == null)
+            Debug.LogError($"CharacterEventControl] 아바타 없음");
+
+        cc.animator.avatar = e.actorProfile.avatar;
+        
         yield return new WaitForSeconds(1f);
         PoolManager.I.Spawn(e.particleSpawn, transform.position, Quaternion.identity, null);
         yield return new WaitForSeconds(0.2f);
         cc.Visable(true);
         cc.Animate(cc._SPAWN, 0f);
+        
     }
 
     // Unity(비동기 지원 안함 -> 싱글쓰레드)

@@ -47,12 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c552d245795a59a4fb956c6e72ae8abe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsShowDebugCursor: 0
+  IsShowDebugCursor: 1
   eyePoint: {fileID: 0}
   cursorPoint: {fileID: 6914312702888503111}
   cursorFixedPoint: {fileID: 5303296196057365749}
   line: {fileID: 1384379811676907267}
-  cursorType: 1
+  cursorType: 0
   cursors:
   - type: 0
     texture: {fileID: 2800000, guid: 8dbee3ea400761c4aa688775ad9b80b0, type: 3}
