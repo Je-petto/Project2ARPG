@@ -25,12 +25,12 @@ public class CameraControl : MonoBehaviour
         targetGroup.Targets.Clear();
         
         CinemachineTargetGroup.Target main = new CinemachineTargetGroup.Target();
-        main.Object = e.eyepoint;
+        main.Object = e.eyePoint;
         main.Weight = 0.9f;
         targetGroup.Targets.Add(main);
 
         CinemachineTargetGroup.Target sub = new CinemachineTargetGroup.Target();
-        sub.Object = e.cursorpoint;
+        sub.Object = e.cursorFixedPoint;
         sub.Weight = 0.1f;
         targetGroup.Targets.Add(sub);
 

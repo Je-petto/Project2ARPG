@@ -33,11 +33,11 @@ public class Spawner : MonoBehaviour
         character.transform.SetPositionAndRotation(spawnpoint.position, rot);        
         
         CursorControl cursor = Instantiate(e.PlayerCursor);
-        cursor.EyePoint = character.eyepoint;
+        cursor.eyePoint = character.eyepoint;
 
         // 캐릭터 생성 후, After 이벤트 발동
-        eventPlayerSpawnAfter.eyepoint = character.eyepoint;
-        eventPlayerSpawnAfter.cursorpoint = cursor.CursorPoint;
+        eventPlayerSpawnAfter.eyePoint = character.eyepoint;
+        eventPlayerSpawnAfter.cursorFixedPoint = cursor.CursorFixedPoint;
         eventPlayerSpawnAfter?.Raise();
     }
 }

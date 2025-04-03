@@ -47,11 +47,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c552d245795a59a4fb956c6e72ae8abe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsShow: 0
+  IsShowDebugCursor: 0
   eyePoint: {fileID: 0}
-  hitPoint: {fileID: 6914312702888503111}
-  cursorPoint: {fileID: 5303296196057365749}
+  cursorPoint: {fileID: 6914312702888503111}
+  cursorFixedPoint: {fileID: 5303296196057365749}
   line: {fileID: 1384379811676907267}
+  cursorType: 1
+  cursors:
+  - type: 0
+    texture: {fileID: 2800000, guid: 8dbee3ea400761c4aa688775ad9b80b0, type: 3}
+    offset: {x: 64, y: 64}
+  - type: 1
+    texture: {fileID: 2800000, guid: 850b0a2df84a39b42b9e3c5b78fcd25e, type: 3}
+    offset: {x: 0, y: 0}
 --- !u!120 &1384379811676907267
 LineRenderer:
   serializedVersion: 2
@@ -108,7 +116,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.1
+        value: 0.2796875
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -171,7 +179,7 @@ GameObject:
   - component: {fileID: 747233885108422215}
   - component: {fileID: 1557141529235245011}
   m_Layer: 2
-  m_Name: HitPoint
+  m_Name: _CURSORPOINT_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +231,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 918c2dec12a4fdb4585051b70cfed921, type: 2}
+  - {fileID: 2100000, guid: e06accf21330d4b408d80db4241729f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -257,7 +265,7 @@ GameObject:
   - component: {fileID: 7799102058410654667}
   - component: {fileID: 3437335670270903747}
   m_Layer: 2
-  m_Name: CursorPoint
+  m_Name: _CURSORFIXEDPOINT_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -309,7 +317,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5a9603aa200ca0c45bf4ce1b20e1a39a, type: 2}
+  - {fileID: 2100000, guid: 5c08a8c7b89d55d47bac301843bb3672, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
