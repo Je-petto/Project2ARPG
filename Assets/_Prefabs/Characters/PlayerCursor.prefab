@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8198829847440724549}
-  - component: {fileID: 3527178902429313133}
   - component: {fileID: 1384379811676907267}
+  - component: {fileID: 3527178902429313133}
   m_Layer: 0
   m_Name: PlayerCursor
   m_TagString: Untagged
@@ -35,34 +35,6 @@ Transform:
   - {fileID: 5303296196057365749}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3527178902429313133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2792232702559487161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c552d245795a59a4fb956c6e72ae8abe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsShowDebugCursor: 1
-  eyePoint: {fileID: 0}
-  cursorPoint: {fileID: 6914312702888503111}
-  cursorFixedPoint: {fileID: 5303296196057365749}
-  line: {fileID: 1384379811676907267}
-  cursorType: 2
-  cursors:
-  - type: 0
-    texture: {fileID: 2800000, guid: 5d4f781f34b61a34a97a01e1b9443211, type: 3}
-    offset: {x: 12, y: 3}
-  - type: 1
-    texture: {fileID: 2800000, guid: 850b0a2df84a39b42b9e3c5b78fcd25e, type: 3}
-    offset: {x: 0, y: 0}
-  - type: 2
-    texture: {fileID: 2800000, guid: 2e0b6b6132e3c0942b07ab9562988b23, type: 3}
-    offset: {x: 129, y: 133}
 --- !u!120 &1384379811676907267
 LineRenderer:
   serializedVersion: 2
@@ -170,6 +142,37 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &3527178902429313133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2792232702559487161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c552d245795a59a4fb956c6e72ae8abe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsShowDebugCursor: 0
+  eyePoint: {fileID: 0}
+  cursorPoint: {fileID: 6914312702888503111}
+  cursorFixedPoint: {fileID: 5303296196057365749}
+  line: {fileID: 1384379811676907267}
+  cursorType: 0
+  cursors:
+  - cursorType: 0
+    texture: {fileID: 2800000, guid: 5d4f781f34b61a34a97a01e1b9443211, type: 3}
+    offset: {x: 12, y: 3}
+  - cursorType: 2
+    texture: {fileID: 2800000, guid: 850b0a2df84a39b42b9e3c5b78fcd25e, type: 3}
+    offset: {x: 0, y: 0}
+  - cursorType: 1
+    texture: {fileID: 2800000, guid: 3917739d92e9f744eac0661b29908dc9, type: 3}
+    offset: {x: 0, y: 0}
+  - cursorType: 3
+    texture: {fileID: 2800000, guid: 8b9e71cf365b31342ac7d69da7053518, type: 3}
+    offset: {x: 29, y: 30}
 --- !u!1 &3825470455764174227
 GameObject:
   m_ObjectHideFlags: 0

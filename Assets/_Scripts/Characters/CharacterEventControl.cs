@@ -1,8 +1,7 @@
-
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using CustomInspector;
-using System.Collections;
-
 
 public class CharacterEventControl : MonoBehaviour
 {
@@ -64,7 +63,13 @@ public class CharacterEventControl : MonoBehaviour
         if (e.actorProfile.model == null)
             Debug.LogError($"CharacterEventControl ] 모델 없음");
 
-        Instantiate(e.actorProfile.model, cc.model);
+        var clone = Instantiate(e.actorProfile.model, cc.model);
+
+        //Skinned Mesh 만 실루엣 처리
+        clone.GetComponentsInChildren<SkinnedMeshRenderer>().ToList().ForEach( m => 
+        {
+            m.gameObject.layer = LayerMask.NameToLayer("Silhouette");
+        });
 
         
         // 플레이어 애니메이터 아바타 연결

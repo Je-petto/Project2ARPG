@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CustomInspector;
-using DungeonArchitect.Flow.Exec;
 
 
-
-public enum ActorType { NONE = 0, PLAYER, NPC, ENEMY, BOSS, ITEM }
+public enum ActorType { NONE = 0, INTERACT }
 
 
 [CreateAssetMenu(menuName = "Datas/ActorProfile")]

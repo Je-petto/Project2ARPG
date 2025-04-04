@@ -3,14 +3,12 @@ using UnityEngine.InputSystem;
 using CustomInspector;
 using System.Collections.Generic;
 
-
-
-public enum CursorType { MOVE, ATTACK, INTERACT, DIALOG }
+public enum CursorType { MOVE, INTERACT, ATTACK, DIALOGUE}
 
 [System.Serializable]
 public class CursorData
 {
-    public CursorType type;
+    public CursorType cursorType;
     public Texture2D texture;
     public Vector2 offset;
 }
@@ -39,13 +37,12 @@ public class CursorControl : MonoBehaviour
     public CursorType cursorType = CursorType.MOVE;
 
 
-
     // 2D 커서
-
     [SerializeField] List<CursorData> cursors = new List<CursorData>();  
 
 
-
+    private GameObject curHover; // 현재 커서 위치의 오브젝트
+    private GameObject preHover; // 이전 커서 위치의 오브젝트
 
     void Start()
     {
@@ -55,20 +52,36 @@ public class CursorControl : MonoBehaviour
         cursorPoint.GetComponent<MeshRenderer>().enabled = IsShowDebugCursor;
         cursorFixedPoint.GetComponent<MeshRenderer>().enabled = IsShowDebugCursor;  
 
-        SetCursor(cursorType);
+        SetCursor(CursorType.MOVE);
     }
 
     void Update()
     {
         if (cam == null || eyePoint == null) return;
 
+        preHover = curHover;
+
         Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out var hit))
         {
+            //현재 커서 아래의 오브젝트
+            curHover = hit.collider.gameObject;
+
+            //현재 커서와 이전 커서 오브젝트가 다를때만 갱신
+            if (curHover != preHover)
+                OnHoverEnter();
+
+            
             cursorPoint.position = hit.point;
             cursorFixedPoint.position = new Vector3(hit.point.x, eyePoint.position.y, hit.point.z);
 
             DrawLine();
+        }
+        else
+        {
+            OnHoverExit();
+
+            curHover = null;
         }
     }
 
@@ -84,8 +97,40 @@ public class CursorControl : MonoBehaviour
     //커스텀 커서 적용
     public void SetCursor( CursorType type )
     {
-        var cursor = cursors.Find(v => v.type == type);
+        var cursor = cursors.Find(v => v.cursorType == type);
         if (cursor != null)
             Cursor.SetCursor(cursor.texture, cursor.offset, CursorMode.Auto);        
+    }
+
+    // 커서 안에 위치했을 때 이벤트 처리
+    private void OnHoverEnter()
+    {        
+        if (preHover != null)
+        {
+            preHover.layer = LayerMask.NameToLayer("Default");
+            SetCursor(CursorType.MOVE);
+        }
+
+        //Selectable 가능한 오브젝트만 커서 상호작용 한다.
+        var sel = curHover.GetComponentInParent<CursorSelectable>();
+        if(sel == null) return;
+
+        //해당 오브젝트에 맞게 커서 변동          
+        if (curHover != null)
+        {
+            curHover.layer = LayerMask.NameToLayer("Outline");
+            SetCursor(sel.cursorType);
+        }
+
+    }
+
+    // 커서를 벗어났을 때 이벤트 처리
+    private void OnHoverExit()
+    {
+        SetCursor(CursorType.MOVE);
+
+        if (preHover)
+            preHover.layer = LayerMask.NameToLayer("Default");  
+
     }
 }

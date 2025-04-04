@@ -6,9 +6,7 @@ public static class TransfromExtension
 {
     public static Transform FindSlot(this Transform root, string slotname)
     {
-        List<Transform> children = root.GetComponentsInChildren<Transform>().ToList();
-        
-        children.ForEach( c => Debug.Log(c));
+        List<Transform> children = root.GetComponentsInChildren<Transform>().ToList();        
 
         foreach( Transform t in children )
             if(t.name.ToLower().Contains(slotname))
