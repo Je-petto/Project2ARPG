@@ -50,15 +50,15 @@ public class CharacterEventControl : MonoBehaviour
 
     void OneventPlayerSpawnAfter(EventPlayerSpawnAfter e)
     {
-        if ( cc.actorType != e.actorProfile.type )
-            return;
-            
         StartCoroutine(SpawnSequence(e));
     }
 
     IEnumerator SpawnSequence(EventPlayerSpawnAfter e)
     {
         yield return new WaitUntil(()=> e.actorProfile != null && e.actorProfile.model != null);
+
+        // 캐릭터 컨트롤(cc)에 ActorProfile (캐릭터 데이터) 전달한다.
+        cc.profile = e.actorProfile;
 
         // 플레이어 모델 생성한 후 _MODEL_ 슬롯에 붙인다.
         if (e.actorProfile.model == null)

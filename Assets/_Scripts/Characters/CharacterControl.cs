@@ -13,7 +13,7 @@ public class CharacterControl : MonoBehaviour
     [HideInInspector] public AbilityControl ability;
     [HideInInspector] public InputSystem_Actions actionInputs;
 
-    [ReadOnly] public ActorType actorType = ActorType.NONE;
+    [ReadOnly] public ActorProfile profile;
     [ReadOnly] public bool isGrounded;
     [ReadOnly] public bool isArrived = true;
     
@@ -75,15 +75,7 @@ public class CharacterControl : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1.1f);
-        
     }
-
-    void Start()
-    {
-        actorType = ActorType.PLAYER;
-        Visible(false);
-    }
-
 
     public void Visible(bool b)
     {

@@ -28,6 +28,12 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
             Debug.LogWarning("AbilityMoveMouse ] Marker - ParticleSystem 없음");
         
         marker.gameObject.SetActive(false);
+
+        //프로파일 속성 연결
+        if (owner.profile == null) return;
+
+        data.movePerSec = owner.profile.movespeed;
+        data.rotatePerSec = owner.profile.rotatespeed;
     }
 
 

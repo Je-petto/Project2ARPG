@@ -51,10 +51,10 @@ public class Spawner : MonoBehaviour
         _cursor = Instantiate(e.PlayerCursor);
         _cursor.eyePoint = _character.eyepoint;
 
-        StartCoroutine(delayevent());
+        StartCoroutine(SpawnAfter());
     }
 
-    IEnumerator delayevent()
+    IEnumerator SpawnAfter()
     {
         yield return new WaitForEndOfFrame();
 

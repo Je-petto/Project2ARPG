@@ -47,9 +47,6 @@ public class AnimationEventListener : MonoBehaviour
 
     void OneventPlayerSpawnAfter(EventPlayerSpawnAfter e)
     {
-        if ( cc.actorType != e.actorProfile.type )
-            return;
-            
         StartCoroutine(delayfind());
     }
 
