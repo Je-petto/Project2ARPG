@@ -52,14 +52,17 @@ MonoBehaviour:
   cursorPoint: {fileID: 6914312702888503111}
   cursorFixedPoint: {fileID: 5303296196057365749}
   line: {fileID: 1384379811676907267}
-  cursorType: 0
+  cursorType: 2
   cursors:
   - type: 0
-    texture: {fileID: 2800000, guid: 8dbee3ea400761c4aa688775ad9b80b0, type: 3}
-    offset: {x: 64, y: 64}
+    texture: {fileID: 2800000, guid: 5d4f781f34b61a34a97a01e1b9443211, type: 3}
+    offset: {x: 12, y: 3}
   - type: 1
     texture: {fileID: 2800000, guid: 850b0a2df84a39b42b9e3c5b78fcd25e, type: 3}
     offset: {x: 0, y: 0}
+  - type: 2
+    texture: {fileID: 2800000, guid: 2e0b6b6132e3c0942b07ab9562988b23, type: 3}
+    offset: {x: 129, y: 133}
 --- !u!120 &1384379811676907267
 LineRenderer:
   serializedVersion: 2
