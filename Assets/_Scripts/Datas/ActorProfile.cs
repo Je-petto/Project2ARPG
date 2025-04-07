@@ -12,7 +12,6 @@ public class ActorProfile : ScriptableObject
 
     [HorizontalLine("PREFABS"),HideField] public bool _h0;
 
-    public ActorType type;
     public string alias;
     [Preview(Size.medium)] public Sprite portrait;
     [Preview(Size.medium)] public GameObject model;

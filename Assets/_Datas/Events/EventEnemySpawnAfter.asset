@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c4b0a416c5bc5478d9a50db9a0afa4, type: 3}
+  m_Name: EventEnemySpawnAfter
+  m_EditorClassIdentifier: 
+  eyePoint: {fileID: 0}
+  actorProfile: {fileID: 11400000, guid: 917354a91b63d22458f9570c4cba4272, type: 2}
+  particleSpawn: {fileID: 23564290435768151, guid: 9c39fbcfdd2562143b816b99c1ea418b, type: 3}

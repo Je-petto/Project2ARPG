@@ -4,15 +4,19 @@ using UnityEngine;
 
 public static class TransfromExtension
 {
-    public static Transform FindSlot(this Transform root, string slotname)
+    //슬롯을 이름으로 찾는다 (대소문자 상관 없음)
+    public static Transform FindSlot(this Transform root, params string[] slotnames)
     {
         List<Transform> children = root.GetComponentsInChildren<Transform>().ToList();        
 
-        foreach( Transform t in children )
-            if(t.name.ToLower().Contains(slotname))
-                return t;
+        foreach( var slot in slotnames)
+        {
         
-        Debug.Log($"못 찾음 : {slotname}");
+            foreach( Transform t in children )
+                if(t.name.ToLower().Contains(slot.ToLower()))
+                    return t;        
+        }
+        Debug.Log($"못 찾음 : {slotnames.ToList()}");
         return null;
     }
 }
