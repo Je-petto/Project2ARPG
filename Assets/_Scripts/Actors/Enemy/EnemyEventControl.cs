@@ -47,7 +47,7 @@ public class EnemyEventControl : MonoBehaviour
         yield return new WaitUntil(()=> e.actorProfile != null && e.actorProfile.model != null);
 
         // Enemy 컨트롤(ec)에 Actor Profile (Enemy 데이터) 전달한다.
-        ec.profile = e.actorProfile;
+        ec.Profile = e.actorProfile;
 
         // // 플레이어 모델 생성한 후 _MODEL_ 슬롯에 붙인다.
         if (e.actorProfile.model == null)

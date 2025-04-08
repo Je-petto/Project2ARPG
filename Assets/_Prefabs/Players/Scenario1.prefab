@@ -44,4 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6045bbbfc7009649b93d5559f0be0c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _h0: 0
   eventPlayerSpawnBefore: {fileID: 11400000, guid: 4ebd8e8d5faa21845a2a4737a38eb612, type: 2}
+  eventEnemySpawn: {fileID: 11400000, guid: 5c18211d9c2269d4da4a8a9db1259160, type: 2}
+  _h1: 0

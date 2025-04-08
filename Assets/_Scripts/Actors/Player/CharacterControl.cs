@@ -7,13 +7,15 @@ using Project2ARPG;
 // instance , copy
 // 연결(ref), 독립
 // 캐릭터 관리 ( 허브 )
-public class CharacterControl : MonoBehaviour
+public class CharacterControl : MonoBehaviour, IActorControl 
 {
 
+    public ActorProfile Profile{ get => profile; set => profile = value; }    
+    [ReadOnly, SerializeField] private ActorProfile profile;
+    
     [HideInInspector] public AbilityControl ability;
     [HideInInspector] public InputSystem_Actions actionInputs;
 
-    [ReadOnly] public ActorProfile profile;
     [ReadOnly] public bool isGrounded;
     [ReadOnly] public bool isArrived = true;
     
@@ -21,7 +23,6 @@ public class CharacterControl : MonoBehaviour
     [ReadOnly] public Animator animator;
     [ReadOnly] public Transform eyepoint;
     [ReadOnly] public Transform model;
-
 
 
 

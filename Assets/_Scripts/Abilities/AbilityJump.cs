@@ -5,31 +5,36 @@ public class AbilityJump : Ability<AbilityJumpData>
 {
     private bool isjumping = false;
 
-    public AbilityJump(AbilityJumpData data, CharacterControl owner) : base(data,owner)
-    {
-        if (owner.profile == null) return;
+    private CharacterControl ownerCC;
 
-        data.jumpForce = owner.profile.jumpforce;
-        data.jumpDuration = owner.profile.jumpduration;
+    public AbilityJump(AbilityJumpData data, IActorControl owner) : base(data,owner)
+    {
+        if (owner.Profile == null) return;
+
+        //미리 형변환해서 받아 놓는다
+        ownerCC = ((CharacterControl)owner);
+
+        data.jumpForce = owner.Profile.jumpforce;
+        data.jumpDuration = owner.Profile.jumpduration;
     }
 
     public override void Activate()
     {
 
-        owner.actionInputs.Player.Jump.performed += InputJump;
+        ownerCC.actionInputs.Player.Jump.performed += InputJump;
         
     }
     public override void Deactivate()
     {
 
 
-        owner.actionInputs.Player.Jump.performed -= InputJump;
+        ownerCC.actionInputs.Player.Jump.performed -= InputJump;
     }
 
     float elapsed;
     public override void FixedUpdate()
     {
-        if (owner.rb == null || isjumping == false)
+        if (ownerCC.rb == null || isjumping == false)
             return;
  
         elapsed += Time.deltaTime;
@@ -37,12 +42,12 @@ public class AbilityJump : Ability<AbilityJumpData>
         float t = Mathf.Clamp01( elapsed / data.jumpDuration );
 
         //owner.agent.Move(Vector3.up * height * Time.deltaTime);
-        Vector3 velocity = owner.rb.linearVelocity;
+        Vector3 velocity = ((CharacterControl)owner).rb.linearVelocity;
         velocity.y = data.jumpCurve.Evaluate(t) * data.jumpForce;
-        owner.rb.linearVelocity = velocity;
+        ((CharacterControl)owner).rb.linearVelocity = velocity;
 
         // 점프 시간 종료
-        if (t > 0.3f && owner.isGrounded)
+        if (t > 0.3f && ownerCC.isGrounded)
             JumpDown();
             //owner.ability.Deactivate(data.Flag);
 
@@ -50,17 +55,17 @@ public class AbilityJump : Ability<AbilityJumpData>
 
     private void JumpUp()
     {
-        if (owner.rb == null || owner.isGrounded == false)
+        if (ownerCC.rb == null || ownerCC.isGrounded == false)
             return;
 
         isjumping = true;
         elapsed = 0;
-        owner.Animate(owner._JUMPUP, 0.1f);
+        ownerCC.Animate(ownerCC._JUMPUP, 0.1f);
     }
     private void JumpDown()
     {
         isjumping = false;
-        owner.Animate(owner._JUMPDOWN, 0.02f);
+        ownerCC.Animate(ownerCC._JUMPDOWN, 0.02f);
 
     }
 

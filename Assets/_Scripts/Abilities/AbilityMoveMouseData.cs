@@ -6,7 +6,7 @@ using CustomInspector;
 public class AbilityMoveMouseData : AbilityData
 {
     public override AbilityFlag Flag => AbilityFlag.MoveMouse;
-    public override Ability CreateAbility(CharacterControl owner) => new AbilityMoveMouse(this, owner);
+    public override Ability CreateAbility(IActorControl owner) => new AbilityMoveMouse(this, owner);
 
     [ReadOnly] public float movePerSec = 5f;
     [ReadOnly] public float rotatePerSec = 1080f;

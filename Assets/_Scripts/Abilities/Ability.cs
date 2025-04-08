@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 
 // MVC : Model(데이터) , View(UI) , Control(행동)
@@ -17,20 +16,16 @@ using UnityEngine.InputSystem;
 public enum AbilityFlag
 {
     None = 0,
+
+    //플레이어
     MoveKeyboard = 1 << 0,
     MoveMouse = 1 << 1,
-    Jump = 1 << 2,     
-    Dodge = 1 << 3,    
-    Attack = 1 << 4,
+    Jump = 1 << 2,    
+
+    //적 캐릭터
+    Wander = 1 << 3,
 }
 
-// 지속성 여부
-public enum AbilityEffect
-{
-    INSTANT,
-    DURATION,
-    INFINITE
-}
 
 
 // 데이터 담당 : 역할
@@ -40,7 +35,7 @@ public abstract class AbilityData : ScriptableObject
 {
     public abstract AbilityFlag Flag { get; }
     
-    public abstract Ability CreateAbility( CharacterControl owner );
+    public abstract Ability CreateAbility( IActorControl owner );
 }
 
 // 행동 담당
@@ -62,9 +57,9 @@ public abstract class Ability
 public abstract class Ability<D> : Ability where D : AbilityData
 {    
     public D data;
-    protected CharacterControl owner;
+    protected IActorControl owner;
 
-    public Ability(D data, CharacterControl owner)
+    public Ability(D data, IActorControl owner)
     {
         this.data = data;
         this.owner = owner;

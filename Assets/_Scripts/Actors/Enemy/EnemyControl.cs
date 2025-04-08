@@ -2,12 +2,16 @@ using UnityEngine;
 using CustomInspector;
 
 
-public class EnemyControl : MonoBehaviour
+public class EnemyControl : MonoBehaviour, IActorControl
 {
 
-    [HideInInspector] public AbilityControl ability;
 
-    [ReadOnly] public ActorProfile profile;
+    public ActorProfile Profile{ get => profile; set => profile = value; }    
+    [ReadOnly, SerializeField] private ActorProfile profile;
+
+
+    [HideInInspector] public AbilityControl ability;
+    
     [ReadOnly] public bool isArrived = true;
     
     [ReadOnly] public Rigidbody rb;

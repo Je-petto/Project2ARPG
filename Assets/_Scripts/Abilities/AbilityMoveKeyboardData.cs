@@ -5,7 +5,7 @@ using CustomInspector;
 public class AbilityMoveKeyboardData : AbilityData
 {
     public override AbilityFlag Flag => AbilityFlag.MoveKeyboard;
-    public override Ability CreateAbility(CharacterControl owner) => new AbilityMoveKeyboard(this, owner);
+    public override Ability CreateAbility(IActorControl owner) => new AbilityMoveKeyboard(this, owner);
 
     [ReadOnly] public float movePerSec = 5f;
     [ReadOnly] public float rotatePerSec = 720f;
