@@ -24,6 +24,7 @@ public enum AbilityFlag
 
     //적 캐릭터
     Wander = 1 << 3,
+    Trace = 1 << 4
 }
 
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using CustomInspector;
+using TMPro;
 
 
 // instance , copy
@@ -20,6 +21,7 @@ public class CharacterControl : MonoBehaviour
     [ReadOnly] public Animator animator;
     [ReadOnly] public Transform eyepoint;
     [ReadOnly] public Transform model;
+    [ReadOnly] public TextMeshPro uiInfo;
 
 
 
@@ -42,6 +44,8 @@ public class CharacterControl : MonoBehaviour
         model = transform.Find("_MODEL_");
         if (model == null)
             Debug.LogWarning("CharacterControl ] _MODEL_ 없음");
+
+        uiInfo = GetComponentInChildren<TextMeshPro>();
     }
 
 
@@ -58,6 +62,14 @@ public class CharacterControl : MonoBehaviour
     public void Animate(int hash, float duration, int layer = 0)
     {
         animator?.CrossFadeInFixedTime(hash, duration, layer, 0f);
+    }
+
+    public void Display(string info)
+    {
+        if(uiInfo == null) return;
+
+        uiInfo.text = info;
+
     }
 
 

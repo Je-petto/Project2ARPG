@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7207559608954588342}
   - component: {fileID: 8448492756013059103}
   - component: {fileID: 2190434145515341817}
-  - component: {fileID: 8538156213445991282}
   - component: {fileID: 8794265832008657241}
   m_Layer: 0
   m_Name: QuaterviewCamera
@@ -28,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1491119061600017618}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19451058, y: -0.70772743, z: 0.21351027, w: 0.6447487}
-  m_LocalPosition: {x: 15, y: 10, z: 1.4}
+  m_LocalRotation: {x: 0.42470822, y: -0.33985117, z: 0.17591992, w: 0.82047325}
+  m_LocalPosition: {x: 4, y: 8, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -96,36 +95,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: 15, y: 10, z: 1.4}
---- !u!114 &8538156213445991282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1491119061600017618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f38bda98361e1de48a4ca2bd86ea3c17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Composition:
-    ScreenPosition: {x: 0, y: 0}
-    DeadZone:
-      Enabled: 1
-      Size: {x: 0.4, y: 0.4}
-    HardLimits:
-      Enabled: 1
-      Size: {x: 0.8, y: 0.8}
-      Offset: {x: 0, y: 0}
-  CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 1, y: 1}
-  Lookahead:
-    Enabled: 0
-    Time: 0
-    Smoothing: 0
-    IgnoreY: 0
+  FollowOffset: {x: 4, y: 8, z: -4}
 --- !u!114 &8794265832008657241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,8 +145,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3992807169648442459}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19451058, y: -0.7077274, z: 0.21351029, w: 0.64474875}
-  m_LocalPosition: {x: 15, y: 10, z: 1.4}
+  m_LocalRotation: {x: 0.42470822, y: -0.33985117, z: 0.17591992, w: 0.82047325}
+  m_LocalPosition: {x: 4, y: 8, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -415,5 +385,8 @@ MonoBehaviour:
   PositionMode: 0
   RotationMode: 0
   UpdateMethod: 2
-  Targets: []
+  Targets:
+  - Object: {fileID: 776165372009788546}
+    Weight: 0
+    Radius: 0
   m_LegacyTargets: []

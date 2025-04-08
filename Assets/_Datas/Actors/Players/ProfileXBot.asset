@@ -25,5 +25,5 @@ MonoBehaviour:
   jumpduration: 0.8
   _h2: 0
   abilities:
-  - {fileID: 11400000, guid: be60fd9100f48d44cbde8fa3a8860b2c, type: 2}
   - {fileID: 11400000, guid: 5faad428d8fceb046b2ed94621a14c31, type: 2}
+  - {fileID: 11400000, guid: be60fd9100f48d44cbde8fa3a8860b2c, type: 2}

@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,7 +29,6 @@ public class AbilityWander : Ability<AbilityWanderData>
     {
 
         
-        
     }
     public override void Deactivate()
     {
@@ -46,7 +44,10 @@ public class AbilityWander : Ability<AbilityWanderData>
         {
             RandomPosition();
             elapsed = 0f;
+
         }
+        
+        MoveAnimation();
     }
 
     public override void FixedUpdate()
@@ -88,6 +89,7 @@ public class AbilityWander : Ability<AbilityWanderData>
     Quaternion _lookrot;
     private void FollowPath()
     {
+        
         if ( corners == null || corners.Length <= 0 || owner.isArrived == true)
             return;
 
@@ -128,7 +130,7 @@ public class AbilityWander : Ability<AbilityWanderData>
     }
 
     private void MoveAnimation()
-    {
+    {   
         float a = owner.isArrived ? 0f : Mathf.Clamp01(currentVelocity / data.movePerSec);
         float spd = Mathf.Lerp(owner.animator.GetFloat(AnimatorHashes._MOVESPEED), a, Time.deltaTime * 10f);
         owner.animator.SetFloat(AnimatorHashes._MOVESPEED, spd);
