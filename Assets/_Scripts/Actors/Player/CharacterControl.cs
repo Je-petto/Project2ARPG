@@ -26,15 +26,6 @@ public class CharacterControl : MonoBehaviour, IActorControl
 
 
 
-#region Animator HashSet
-    [HideInInspector] public int _MOVESPEED = Animator.StringToHash("MOVESPEED");
-    [HideInInspector] public int _RUNTOSTOP = Animator.StringToHash("RUNTOSTOP");
-    [HideInInspector] public int _JUMPUP = Animator.StringToHash("JUMPUP");
-    [HideInInspector] public int _JUMPDOWN = Animator.StringToHash("JUMPDOWN");
-    [HideInInspector] public int _SPAWN = Animator.StringToHash("SPAWN");
-#endregion
-
-
     void Awake()
     {
         actionInputs = new InputSystem_Actions();

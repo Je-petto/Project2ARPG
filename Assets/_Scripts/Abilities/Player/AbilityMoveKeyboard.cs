@@ -78,7 +78,7 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
     {
         direction = Vector3.zero;
         ownerCC.rb.linearVelocity = Vector3.zero;
-        ownerCC.animator?.SetFloat(ownerCC._MOVESPEED, 0f);
+        ownerCC.animator?.SetFloat(AnimatorHashes._MOVESPEED, 0f);
     }    
 
 
@@ -94,9 +94,9 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
         {
             float v = Vector3.Distance(Vector3.zero,ownerCC.rb.linearVelocity);
             float targetspeed = Mathf.Clamp01(v/data.movePerSec);
-            float movespd = Mathf.Lerp(ownerCC.animator.GetFloat(ownerCC._MOVESPEED), targetspeed, Time.deltaTime * 10f );
+            float movespd = Mathf.Lerp(ownerCC.animator.GetFloat(AnimatorHashes._MOVESPEED), targetspeed, Time.deltaTime * 10f );
 
-            ownerCC.animator?.SetFloat(ownerCC._MOVESPEED, movespd);
+            ownerCC.animator?.SetFloat(AnimatorHashes._MOVESPEED, movespd);
         }
     }
 

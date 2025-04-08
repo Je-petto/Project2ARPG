@@ -60,12 +60,12 @@ public class AbilityJump : Ability<AbilityJumpData>
 
         isjumping = true;
         elapsed = 0;
-        ownerCC.Animate(ownerCC._JUMPUP, 0.1f);
+        ownerCC.Animate(AnimatorHashes._JUMPUP, 0.1f);
     }
     private void JumpDown()
     {
         isjumping = false;
-        ownerCC.Animate(ownerCC._JUMPDOWN, 0.02f);
+        ownerCC.Animate(AnimatorHashes._JUMPDOWN, 0.02f);
 
     }
 

@@ -89,7 +89,7 @@ public class CharacterEventControl : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         
         cc.Visible(true);
-        cc.Animate(cc._SPAWN, 0f);
+        cc.Animate(AnimatorHashes._SPAWN, 0f);
 
 
         // 1초 후 캐릭터 어빌리티 부여

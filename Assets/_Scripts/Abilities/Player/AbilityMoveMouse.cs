@@ -142,7 +142,7 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
         float d = Vector3.Distance(finaltarget, ownerCC.rb.position);
         if (hitDistance > data.runtostopDistance.y && d <= data.runtostopDistance.x)
         {
-            ownerCC.Animate(ownerCC._RUNTOSTOP, 0.1f);
+            ownerCC.Animate(AnimatorHashes._RUNTOSTOP, 0.1f);
         }
         
     }
@@ -150,8 +150,8 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
     private void MoveAnimation()
     {
         float a = ownerCC.isArrived ? 0f : Mathf.Clamp01(currentVelocity / data.movePerSec);
-        float spd = Mathf.Lerp(ownerCC.animator.GetFloat(ownerCC._MOVESPEED), a, Time.deltaTime * 10f);
-        ownerCC.animator.SetFloat(ownerCC._MOVESPEED, spd);
+        float spd = Mathf.Lerp(ownerCC.animator.GetFloat(AnimatorHashes._MOVESPEED), a, Time.deltaTime * 10f);
+        ownerCC.animator.SetFloat(AnimatorHashes._MOVESPEED, spd);
     }
 
 }

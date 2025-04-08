@@ -24,4 +24,5 @@ MonoBehaviour:
   jumpforce: 0
   jumpduration: 0
   _h2: 0
-  abilities: []
+  abilities:
+  - {fileID: 11400000, guid: 42f27fa71d0198c49b9f249dadb7864c, type: 2}

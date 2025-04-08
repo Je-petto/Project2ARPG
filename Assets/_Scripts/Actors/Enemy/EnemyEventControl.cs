@@ -73,14 +73,13 @@ public class EnemyEventControl : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         
         ec.Visible(true);
-        // ec.Animate(ec._SPAWN, 0f);
 
 
         // //1초 후 캐릭터 어빌리티 부여
-        // yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);
 
-        // foreach( var dat in e.actorProfile.abilities )
-        //     ec.ability.Add(dat, true);
+        foreach( var dat in e.actorProfile.abilities )
+            ec.ability.Add(dat, true);
     }
 
 }
