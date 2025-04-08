@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 5944459783495712861}
   - component: {fileID: 2396287047582718204}
   - component: {fileID: 1038036482091280471}
+  - component: {fileID: 3765507620248976469}
   - component: {fileID: 8557026793625717764}
   - component: {fileID: 7568890696256692825}
   - component: {fileID: 4517595978476342986}
@@ -231,6 +232,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3765507620248976469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365852869456442503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b01aef0766cea642bbad5be1aaec89a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8557026793625717764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,19 +272,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f63630da000ec040b56bb44b57884b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ability: {fileID: 0}
   profile: {fileID: 0}
+  ability: {fileID: 0}
   isGrounded: 0
   isArrived: 1
   rb: {fileID: 0}
   animator: {fileID: 0}
   eyepoint: {fileID: 6244858114049361206}
   model: {fileID: 0}
-  _MOVESPEED: 413772982
-  _RUNTOSTOP: 1348743103
-  _JUMPUP: 1184341671
-  _JUMPDOWN: 745124790
-  _SPAWN: 1733954903
 --- !u!114 &4517595978476342986
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,15 +9,13 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
     private Vector3 camForward, camRight;
     private Vector3 direction;
 
-    private CharacterControl ownerCC;
 
-    public AbilityMoveKeyboard(AbilityMoveKeyboardData data, IActorControl owner) : base(data, owner)
+    public AbilityMoveKeyboard(AbilityMoveKeyboardData data, CharacterControl owner) : base(data, owner)
     {        
         cameraTransform = Camera.main.transform;
         
         if (owner.Profile == null) return;
 
-        ownerCC = ((CharacterControl)owner);
 
         data.movePerSec = owner.Profile.movespeed;
         data.rotatePerSec = owner.Profile.rotatespeed;
@@ -25,22 +23,28 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
 
     public override void Activate()
     {
-        // context 가 canceled 는 => 키 를 뗐다는 의미 => 도착했다
-        ownerCC.actionInputs.Player.Move.performed += InputMove;
-        ownerCC.actionInputs.Player.Move.canceled += InputStop;
+        if (owner.TryGetComponent<InputControl>(out var input) == false)
+        {
+            input.actionInputs.Player.Move.performed += InputMove;
+            input.actionInputs.Player.Move.canceled += InputStop;
+        }
+
     }
 
     public override void Deactivate()
     {
-        ownerCC.actionInputs.Player.Move.performed -= InputMove;
-        ownerCC.actionInputs.Player.Move.canceled -= InputStop;
+        if (owner.TryGetComponent<InputControl>(out var input) == false)
+        {
+            input.actionInputs.Player.Move.performed -= InputMove;
+            input.actionInputs.Player.Move.canceled -= InputStop;
+        }
 
         Stop();
     }
 
     private void InputMove(InputAction.CallbackContext ctx)
     {
-        ownerCC.isArrived = !ctx.performed;
+        owner.isArrived = !ctx.performed;
 
         var axis = ctx.ReadValue<Vector2>();
 
@@ -58,7 +62,7 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
 
     private void InputStop(InputAction.CallbackContext ctx)
     {
-        ownerCC.isArrived = ctx.canceled;
+        owner.isArrived = ctx.canceled;
 
         if (ctx.canceled)
             Stop();
@@ -77,8 +81,8 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
     void Stop()
     {
         direction = Vector3.zero;
-        ownerCC.rb.linearVelocity = Vector3.zero;
-        ownerCC.animator?.SetFloat(AnimatorHashes._MOVESPEED, 0f);
+        owner.rb.linearVelocity = Vector3.zero;
+        owner.animator?.SetFloat(AnimatorHashes._MOVESPEED, 0f);
     }    
 
 
@@ -86,17 +90,17 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
     {
         // 50 곱한 이유 : movePerSec 과 linearVelocity 값을 동기화 위한 상수
         Vector3 movement = direction * data.movePerSec * 50f * Time.deltaTime;
-        Vector3 velocity = new Vector3(movement.x, ownerCC.rb.linearVelocity.y, movement.z);
+        Vector3 velocity = new Vector3(movement.x, owner.rb.linearVelocity.y, movement.z);
 
-        ownerCC.rb.linearVelocity = velocity;
+        owner.rb.linearVelocity = velocity;
 
-        if (ownerCC.isGrounded == true)
+        if (owner.isGrounded == true)
         {
-            float v = Vector3.Distance(Vector3.zero,ownerCC.rb.linearVelocity);
+            float v = Vector3.Distance(Vector3.zero,owner.rb.linearVelocity);
             float targetspeed = Mathf.Clamp01(v/data.movePerSec);
-            float movespd = Mathf.Lerp(ownerCC.animator.GetFloat(AnimatorHashes._MOVESPEED), targetspeed, Time.deltaTime * 10f );
+            float movespd = Mathf.Lerp(owner.animator.GetFloat(AnimatorHashes._MOVESPEED), targetspeed, Time.deltaTime * 10f );
 
-            ownerCC.animator?.SetFloat(AnimatorHashes._MOVESPEED, movespd);
+            owner.animator?.SetFloat(AnimatorHashes._MOVESPEED, movespd);
         }
     }
 
@@ -109,7 +113,7 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
         // Atan2 역할 : Vector2(x,z) 가 있을때 해당 각도를 알려준다 (radian)
         // pie(π) (3.14) => 180 degree
         float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-        float smoothangle = Mathf.SmoothDampAngle(ownerCC.transform.eulerAngles.y, angle, ref data.rotatePerSec, 0.1f );
-        ownerCC.transform.rotation = Quaternion.Euler(0f, smoothangle, 0f);
+        float smoothangle = Mathf.SmoothDampAngle(owner.transform.eulerAngles.y, angle, ref data.rotatePerSec, 0.1f );
+        owner.transform.rotation = Quaternion.Euler(0f, smoothangle, 0f);
     }
 }

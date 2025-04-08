@@ -14,14 +14,14 @@ public class EnemyEventControl : MonoBehaviour
     [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
 #endregion
 
-    private EnemyControl ec;
+    private CharacterControl cc;
 
     void Start()
     {      
-        if (TryGetComponent(out ec) == false)
-            Debug.LogWarning("EnemyEventControl ] EnemyControl 없음");
+        if (TryGetComponent(out cc) == false)
+            Debug.LogWarning("EnemyEventControl ] CharactorControl 없음");
 
-        ec.Visible(false);
+        cc.Visible(false);
     }
 
     private void OnEnable()
@@ -46,21 +46,21 @@ public class EnemyEventControl : MonoBehaviour
         
         yield return new WaitUntil(()=> e.actorProfile != null && e.actorProfile.model != null);
 
-        // Enemy 컨트롤(ec)에 Actor Profile (Enemy 데이터) 전달한다.
-        ec.Profile = e.actorProfile;
+        // Enemy 컨트롤(cc)에 Actor Profile (Enemy 데이터) 전달한다.
+        cc.Profile = e.actorProfile;
 
         // // 플레이어 모델 생성한 후 _MODEL_ 슬롯에 붙인다.
         if (e.actorProfile.model == null)
             Debug.LogError($"EnemyEventControl ] 모델 없음");
 
-        var clone = Instantiate(e.actorProfile.model, ec.model);
+        var clone = Instantiate(e.actorProfile.model, cc.model);
 
         
         // 플레이어 애니메이터 아바타 연결
         if (e.actorProfile.avatar == null)
-            Debug.LogError($"CharacterEventControl ] 아바타 없음");
+            Debug.LogError($"EnemyEventControl ] 아바타 없음");
 
-        ec.animator.avatar = e.actorProfile.avatar;
+        cc.animator.avatar = e.actorProfile.avatar;
 
 
         // 1초 후 등장 파티클 발생
@@ -72,14 +72,14 @@ public class EnemyEventControl : MonoBehaviour
         // 캐릭터 등장 연출
         yield return new WaitForSeconds(0.2f);
         
-        ec.Visible(true);
+        cc.Visible(true);
 
 
         // //1초 후 캐릭터 어빌리티 부여
         yield return new WaitForSeconds(1f);
 
         foreach( var dat in e.actorProfile.abilities )
-            ec.ability.Add(dat, true);
+            cc.ability.Add(dat, true);
     }
 
 }

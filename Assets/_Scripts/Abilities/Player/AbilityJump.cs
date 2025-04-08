@@ -5,14 +5,10 @@ public class AbilityJump : Ability<AbilityJumpData>
 {
     private bool isjumping = false;
 
-    private CharacterControl ownerCC;
-
-    public AbilityJump(AbilityJumpData data, IActorControl owner) : base(data,owner)
+    public AbilityJump(AbilityJumpData data, CharacterControl owner) : base(data,owner)
     {
         if (owner.Profile == null) return;
 
-        //미리 형변환해서 받아 놓는다
-        ownerCC = ((CharacterControl)owner);
 
         data.jumpForce = owner.Profile.jumpforce;
         data.jumpDuration = owner.Profile.jumpduration;
@@ -20,21 +16,25 @@ public class AbilityJump : Ability<AbilityJumpData>
 
     public override void Activate()
     {
-
-        ownerCC.actionInputs.Player.Jump.performed += InputJump;
+        if (owner.TryGetComponent<InputControl>(out var input))
+        {
+            input.actionInputs.Player.Jump.performed += InputJump;
+        }
         
     }
     public override void Deactivate()
     {
 
-
-        ownerCC.actionInputs.Player.Jump.performed -= InputJump;
+        if (owner.TryGetComponent<InputControl>(out var input))
+        {
+            input.actionInputs.Player.Jump.performed -= InputJump;
+        }
     }
 
     float elapsed;
     public override void FixedUpdate()
     {
-        if (ownerCC.rb == null || isjumping == false)
+        if (owner.rb == null || isjumping == false)
             return;
  
         elapsed += Time.deltaTime;
@@ -47,7 +47,7 @@ public class AbilityJump : Ability<AbilityJumpData>
         ((CharacterControl)owner).rb.linearVelocity = velocity;
 
         // 점프 시간 종료
-        if (t > 0.3f && ownerCC.isGrounded)
+        if (t > 0.3f && owner.isGrounded)
             JumpDown();
             //owner.ability.Deactivate(data.Flag);
 
@@ -55,17 +55,17 @@ public class AbilityJump : Ability<AbilityJumpData>
 
     private void JumpUp()
     {
-        if (ownerCC.rb == null || ownerCC.isGrounded == false)
+        if (owner.rb == null || owner.isGrounded == false)
             return;
 
         isjumping = true;
         elapsed = 0;
-        ownerCC.Animate(AnimatorHashes._JUMPUP, 0.1f);
+        owner.Animate(AnimatorHashes._JUMPUP, 0.1f);
     }
     private void JumpDown()
     {
         isjumping = false;
-        ownerCC.Animate(AnimatorHashes._JUMPDOWN, 0.02f);
+        owner.Animate(AnimatorHashes._JUMPDOWN, 0.02f);
 
     }
 

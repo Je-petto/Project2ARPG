@@ -15,15 +15,13 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
 
     private ParticleSystem marker; // 마우스로 타겟 위치를 표시 (3D UI)
 
-    private CharacterControl ownerCC;
 
-    public AbilityMoveMouse(AbilityMoveMouseData data, IActorControl owner) : base(data, owner)
+    public AbilityMoveMouse(AbilityMoveMouseData data, CharacterControl owner) : base(data, owner)
     {
-        ownerCC = ((CharacterControl)owner);
-        
+       
         camera = Camera.main; 
         path = new NavMeshPath();
-        ownerCC.isArrived = true;
+        owner.isArrived = true;
 
         marker = GameObject.Instantiate(data.marker);
         if (marker == null)
@@ -33,17 +31,17 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
         marker.gameObject.SetActive(false);
 
         //프로파일 속성 연결
-        if (ownerCC.Profile == null) return;
+        if (owner.Profile == null) return;
 
-        data.movePerSec = ownerCC.Profile.movespeed;
-        data.rotatePerSec = ownerCC.Profile.rotatespeed;
+        data.movePerSec = owner.Profile.movespeed;
+        data.rotatePerSec = owner.Profile.rotatespeed;
     }
 
 
 
     public override void Update()
     {
-        if ( owner == null || ownerCC.rb == null)
+        if ( owner == null || owner.rb == null)
             return;
 
         MoveAnimation();
@@ -51,7 +49,7 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
 
     public override void FixedUpdate()
     {
-        if ( owner == null || ownerCC.rb == null)
+        if ( owner == null || owner.rb == null)
             return;
 
         FollowPath();
@@ -60,12 +58,14 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
 
     public override void Activate()
     {
-        ownerCC.actionInputs.Player.MoveMouse.performed += InputMove;
+        if (owner.TryGetComponent<InputControl>(out var input))
+            input.actionInputs.Player.MoveMouse.performed += InputMove;
     }
 
     public override void Deactivate()
     {
-        ownerCC.actionInputs.Player.MoveMouse.performed -= InputMove;
+        if (owner.TryGetComponent<InputControl>(out var input))
+            input.actionInputs.Player.MoveMouse.performed -= InputMove;
     }
 
 
@@ -79,7 +79,7 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
             marker.transform.position = hit.point + Vector3.up * 0.1f;
             marker.Play();
 
-            hitDistance = Vector3.Distance(hit.point, ownerCC.rb.position);
+            hitDistance = Vector3.Distance(hit.point, owner.rb.position);
             SetDestination(hit.point);
         }
     }
@@ -87,19 +87,19 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
 
     private void SetDestination(Vector3 destination)
     {
-        if (NavMesh.CalculatePath(ownerCC.transform.position, destination, -1, path) == false)
+        if (NavMesh.CalculatePath(owner.transform.position, destination, -1, path) == false)
             return;
 
         corners = path.corners;
         next = 1;
-        ownerCC.isArrived = false;     
+        owner.isArrived = false;     
     }
 
     
     Quaternion _lookrot;
     private void FollowPath()
     {
-        if ( corners == null || corners.Length <= 0 || ownerCC.isArrived == true)
+        if ( corners == null || corners.Length <= 0 || owner.isArrived == true)
             return;
 
         // 다음 위치
@@ -107,7 +107,7 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
         // 최종 위치
         Vector3 finaltarget = corners[corners.Length-1];
         // 다음 위치 방향
-        Vector3 direction = (nexttarget - ownerCC.transform.position).normalized;
+        Vector3 direction = (nexttarget - owner.transform.position).normalized;
         direction.y = 0;
 
 
@@ -115,43 +115,43 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
         if (direction != Vector3.zero)
             _lookrot = Quaternion.LookRotation(direction);
 
-        ownerCC.transform.rotation = Quaternion.RotateTowards(ownerCC.transform.rotation, _lookrot, data.rotatePerSec * Time.deltaTime);
+        owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, _lookrot, data.rotatePerSec * Time.deltaTime);
 
         //이동
         // 50 곱한 이유 : movePerSec 과 linearVelocity 값을 동기화 위한 상수
         Vector3 movement = direction * data.movePerSec * 50f * Time.deltaTime;        
-        ownerCC.rb.linearVelocity = movement;
-        currentVelocity = Vector3.Distance(Vector3.zero, ownerCC.rb.linearVelocity);
+        owner.rb.linearVelocity = movement;
+        currentVelocity = Vector3.Distance(Vector3.zero, owner.rb.linearVelocity);
     
         //도착 확인
-        if (Vector3.Distance(nexttarget, ownerCC.rb.position) <= data.stopDistance)
+        if (Vector3.Distance(nexttarget, owner.rb.position) <= data.stopDistance)
         {
             next++;
 
             // 최종 목적지 도착
             if ( next >= corners.Length )
             {
-                ownerCC.isArrived = true;
-                ownerCC.rb.linearVelocity = Vector3.zero;
+                owner.isArrived = true;
+                owner.rb.linearVelocity = Vector3.zero;
             }
         }
 
 
         // run to stop 바깥 범위에 hit point 를 찍을때만 실행        
         //최종 위치 준비 동작
-        float d = Vector3.Distance(finaltarget, ownerCC.rb.position);
+        float d = Vector3.Distance(finaltarget, owner.rb.position);
         if (hitDistance > data.runtostopDistance.y && d <= data.runtostopDistance.x)
         {
-            ownerCC.Animate(AnimatorHashes._RUNTOSTOP, 0.1f);
+            owner.Animate(AnimatorHashes._RUNTOSTOP, 0.1f);
         }
         
     }
 
     private void MoveAnimation()
     {
-        float a = ownerCC.isArrived ? 0f : Mathf.Clamp01(currentVelocity / data.movePerSec);
-        float spd = Mathf.Lerp(ownerCC.animator.GetFloat(AnimatorHashes._MOVESPEED), a, Time.deltaTime * 10f);
-        ownerCC.animator.SetFloat(AnimatorHashes._MOVESPEED, spd);
+        float a = owner.isArrived ? 0f : Mathf.Clamp01(currentVelocity / data.movePerSec);
+        float spd = Mathf.Lerp(owner.animator.GetFloat(AnimatorHashes._MOVESPEED), a, Time.deltaTime * 10f);
+        owner.animator.SetFloat(AnimatorHashes._MOVESPEED, spd);
     }
 
 }

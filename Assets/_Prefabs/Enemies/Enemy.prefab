@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 8632806264755190806}
   - component: {fileID: 8969761375895944042}
   - component: {fileID: 757347145527025981}
-  - component: {fileID: 8604564387605559444}
+  - component: {fileID: 8868705740675984039}
   - component: {fileID: 2679694546840150252}
   m_Layer: 2
   m_Name: Enemy
@@ -277,7 +277,7 @@ MonoBehaviour:
   _h0: 0
   eventEnemySpawnAfter: {fileID: 11400000, guid: 2a49bded49c65b6489f8da29fb3fe4ce, type: 2}
   _h1: 0
---- !u!114 &8604564387605559444
+--- !u!114 &8868705740675984039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -286,11 +286,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4261972886366983581}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 947f2a212cf8ead4daa56be428e0472f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f63630da000ec040b56bb44b57884b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   profile: {fileID: 0}
   ability: {fileID: 0}
+  isGrounded: 0
   isArrived: 1
   rb: {fileID: 0}
   animator: {fileID: 0}

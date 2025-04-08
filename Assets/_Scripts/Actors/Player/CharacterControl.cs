@@ -1,20 +1,17 @@
-using System.Collections.Generic;
 using UnityEngine;
 using CustomInspector;
-using Project2ARPG;
 
 
 // instance , copy
 // 연결(ref), 독립
 // 캐릭터 관리 ( 허브 )
-public class CharacterControl : MonoBehaviour, IActorControl 
+public class CharacterControl : MonoBehaviour
 {
 
     public ActorProfile Profile{ get => profile; set => profile = value; }    
     [ReadOnly, SerializeField] private ActorProfile profile;
     
     [HideInInspector] public AbilityControl ability;
-    [HideInInspector] public InputSystem_Actions actionInputs;
 
     [ReadOnly] public bool isGrounded;
     [ReadOnly] public bool isArrived = true;
@@ -28,7 +25,6 @@ public class CharacterControl : MonoBehaviour, IActorControl
 
     void Awake()
     {
-        actionInputs = new InputSystem_Actions();
 
         if (TryGetComponent(out ability) == false)
             Debug.LogWarning("CharacterControl ] AbilityControl 없음");
@@ -48,21 +44,6 @@ public class CharacterControl : MonoBehaviour, IActorControl
             Debug.LogWarning("CharacterControl ] _MODEL_ 없음");
     }
 
-
-    void OnDestroy()
-    {
-        actionInputs.Dispose();
-    }
-    
-    void OnEnable()
-    {
-        actionInputs.Enable();
-    }
-    
-    void OnDisable()
-    {
-        actionInputs.Disable();
-    }
 
     void Update()
     {

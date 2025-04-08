@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11df050245c55af4f91fed73db966312, type: 3}
   m_Name: EventEnemySpawnBefore
   m_EditorClassIdentifier: 
-  enemyCharacter: {fileID: 8604564387605559444, guid: ff63e1e607690cb4faa1cffe17537c85, type: 3}
+  enemyCharacter: {fileID: 8868705740675984039, guid: ff63e1e607690cb4faa1cffe17537c85, type: 3}

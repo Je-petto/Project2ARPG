@@ -6,7 +6,7 @@ using CustomInspector;
 public class AbilityWanderData : AbilityData
 {
     public override AbilityFlag Flag => AbilityFlag.Wander;
-    public override Ability CreateAbility(IActorControl owner) =>  new AbilityWander(this, owner);
+    public override Ability CreateAbility(CharacterControl owner) =>  new AbilityWander(this, owner);
 
     [ReadOnly] public float movePerSec = 5f;
     [ReadOnly] public float rotatePerSec = 1080f;

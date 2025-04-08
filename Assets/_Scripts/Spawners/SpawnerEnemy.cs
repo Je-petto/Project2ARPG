@@ -24,12 +24,12 @@ public class SpawnerEnemy : Spawner
     {
         eventEnemySpawnBefore?.Unregister(OneventEnemySpawnBefore);
     }
-    EnemyControl _enemyControl;
+    CharacterControl cc;
     void OneventEnemySpawnBefore(EventEnemySpawnBefore e)
     {
-        _enemyControl = Instantiate(e.enemyCharacter);
+        cc = Instantiate(e.enemyCharacter);
         Quaternion rot = Quaternion.LookRotation(spawnpoint.forward);
-        _enemyControl.transform.SetPositionAndRotation(spawnpoint.position, rot);
+        cc.transform.SetPositionAndRotation(spawnpoint.position, rot);
 
         StartCoroutine(SpawnAfter());
     }
@@ -38,7 +38,7 @@ public class SpawnerEnemy : Spawner
     {
         yield return new WaitForEndOfFrame();
 
-        eventEnemySpawnAfter.eyePoint = _enemyControl.eyepoint;
+        eventEnemySpawnAfter.eyePoint = cc.eyepoint;
         eventEnemySpawnAfter.actorProfile = actorProfile;
         eventEnemySpawnAfter?.Raise();  
     }    

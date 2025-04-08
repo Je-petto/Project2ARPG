@@ -9,22 +9,20 @@ public class AbilityWander : Ability<AbilityWanderData>
     private int next;
     
     private float currentVelocity;
-    public EnemyControl ownerEC;
 
-    public AbilityWander(AbilityWanderData data, IActorControl owner) : base(data,owner)
+    public AbilityWander(AbilityWanderData data, CharacterControl owner) : base(data,owner)
     {
-        ownerEC = ((EnemyControl)owner);
         
-        if (ownerEC.Profile == null) return;
+        if (owner.Profile == null) return;
 
         path = new NavMeshPath();
-        ownerEC.isArrived = true;
+        owner.isArrived = true;
 
         //프로파일 속성 연결
-        if (ownerEC.Profile == null) return;
+        if (owner.Profile == null) return;
 
-        data.movePerSec = ownerEC.Profile.movespeed;
-        data.rotatePerSec = ownerEC.Profile.rotatespeed;
+        data.movePerSec = owner.Profile.movespeed;
+        data.rotatePerSec = owner.Profile.rotatespeed;
 
     }
 
@@ -53,7 +51,7 @@ public class AbilityWander : Ability<AbilityWanderData>
 
     public override void FixedUpdate()
     {
-        if ( owner == null || ownerEC.rb == null)
+        if ( owner == null || owner.rb == null)
             return;
 
         FollowPath();
@@ -64,10 +62,10 @@ public class AbilityWander : Ability<AbilityWanderData>
     {
 
         // isArrived == false : 가는 중이다
-        if (ownerEC.isArrived == false)
+        if (owner.isArrived == false)
             return;
         
-        Vector3 rndpos = ownerEC.transform.position + Random.insideUnitSphere * data.wanderRadius;
+        Vector3 rndpos = owner.transform.position + Random.insideUnitSphere * data.wanderRadius;
         rndpos.y = 1f;
 
         SetDestination(rndpos);
@@ -77,20 +75,20 @@ public class AbilityWander : Ability<AbilityWanderData>
     private void SetDestination(Vector3 destination)
     {
 
-        if (NavMesh.CalculatePath(ownerEC.transform.position, destination, -1, path) == false)
+        if (NavMesh.CalculatePath(owner.transform.position, destination, -1, path) == false)
             return;
 
 
         corners = path.corners;
         next = 1;
-        ownerEC.isArrived = false;     
+        owner.isArrived = false;     
     }
 
     
     Quaternion _lookrot;
     private void FollowPath()
     {
-        if ( corners == null || corners.Length <= 0 || ownerEC.isArrived == true)
+        if ( corners == null || corners.Length <= 0 || owner.isArrived == true)
             return;
 
         // 다음 위치
@@ -98,7 +96,7 @@ public class AbilityWander : Ability<AbilityWanderData>
         // 최종 위치
         Vector3 finaltarget = corners[corners.Length-1];
         // 다음 위치 방향
-        Vector3 direction = (nexttarget - ownerEC.transform.position).normalized;
+        Vector3 direction = (nexttarget - owner.transform.position).normalized;
         direction.y = 0;
 
 
@@ -106,24 +104,24 @@ public class AbilityWander : Ability<AbilityWanderData>
         if (direction != Vector3.zero)
             _lookrot = Quaternion.LookRotation(direction);
 
-        ownerEC.transform.rotation = Quaternion.RotateTowards(ownerEC.transform.rotation, _lookrot, data.rotatePerSec * Time.deltaTime);
+        owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, _lookrot, data.rotatePerSec * Time.deltaTime);
 
         //이동
         // 50 곱한 이유 : movePerSec 과 linearVelocity 값을 동기화 위한 상수
         Vector3 movement = direction * data.movePerSec * 50f * Time.deltaTime;        
-        ownerEC.rb.linearVelocity = movement;
-        currentVelocity = Vector3.Distance(Vector3.zero, ownerEC.rb.linearVelocity);
+        owner.rb.linearVelocity = movement;
+        currentVelocity = Vector3.Distance(Vector3.zero, owner.rb.linearVelocity);
     
         //도착 확인
-        if (Vector3.Distance(nexttarget, ownerEC.rb.position) <= data.stopDistance)
+        if (Vector3.Distance(nexttarget, owner.rb.position) <= data.stopDistance)
         {
             next++;
 
             // 최종 목적지 도착
             if ( next >= corners.Length )
             {
-                ownerEC.isArrived = true;
-                ownerEC.rb.linearVelocity = Vector3.zero;
+                owner.isArrived = true;
+                owner.rb.linearVelocity = Vector3.zero;
             }
         }
         
@@ -131,9 +129,9 @@ public class AbilityWander : Ability<AbilityWanderData>
 
     private void MoveAnimation()
     {
-        float a = ownerEC.isArrived ? 0f : Mathf.Clamp01(currentVelocity / data.movePerSec);
-        float spd = Mathf.Lerp(ownerEC.animator.GetFloat(AnimatorHashes._MOVESPEED), a, Time.deltaTime * 10f);
-        ownerEC.animator.SetFloat(AnimatorHashes._MOVESPEED, spd);
+        float a = owner.isArrived ? 0f : Mathf.Clamp01(currentVelocity / data.movePerSec);
+        float spd = Mathf.Lerp(owner.animator.GetFloat(AnimatorHashes._MOVESPEED), a, Time.deltaTime * 10f);
+        owner.animator.SetFloat(AnimatorHashes._MOVESPEED, spd);
     }
 
 

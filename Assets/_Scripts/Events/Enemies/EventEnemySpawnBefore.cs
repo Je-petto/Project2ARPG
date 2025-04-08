@@ -9,6 +9,6 @@ public class EventEnemySpawnBefore : GameEvent<EventEnemySpawnBefore>
     public override EventEnemySpawnBefore Item => this;
 
     [Space(20)]
-    public EnemyControl enemyCharacter;
+    public CharacterControl enemyCharacter;
 
 }
