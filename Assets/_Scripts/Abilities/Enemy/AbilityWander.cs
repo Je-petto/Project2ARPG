@@ -28,6 +28,7 @@ public class AbilityWander : Ability<AbilityWanderData>
     public override void Activate()
     {
 
+        owner.Display(data.Flag.ToString());
         
     }
     public override void Deactivate()

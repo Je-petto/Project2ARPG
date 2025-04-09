@@ -71,8 +71,12 @@ public class AbilityControl : MonoBehaviour
 
 
     // 잠재 능력 활성화 및 업데이트 추가
-    public void Activate(AbilityFlag flag)
+    // forceDeactivate : True -> 모든 능력 제거 후 flag 해당 능력만 활성화
+    public void Activate(AbilityFlag flag, bool forceDeactivate = false)
     {
+        if(forceDeactivate)
+            DeactivateAll();
+        
         foreach( var d in datas )
         {
             if ((d.Flag & flag) == flag)
@@ -103,4 +107,12 @@ public class AbilityControl : MonoBehaviour
         }
     }
     
+    public void DeactivateAll()
+    {
+        foreach( var a in actives )
+            a.Value.Deactivate();
+
+
+        actives.Clear();
+    }
 }

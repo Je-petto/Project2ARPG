@@ -24,6 +24,7 @@ public class SpawnerEnemy : Spawner
     {
         eventEnemySpawnBefore?.Unregister(OneventEnemySpawnBefore);
     }
+
     CharacterControl cc;
     void OneventEnemySpawnBefore(EventEnemySpawnBefore e)
     {
@@ -38,9 +39,10 @@ public class SpawnerEnemy : Spawner
     {
         yield return new WaitForEndOfFrame();
 
+        eventEnemySpawnAfter.character = cc;
         eventEnemySpawnAfter.eyePoint = cc.eyepoint;
         eventEnemySpawnAfter.actorProfile = actorProfile;
-        eventEnemySpawnAfter?.Raise();  
+        eventEnemySpawnAfter?.Raise();
     }    
 }    
 

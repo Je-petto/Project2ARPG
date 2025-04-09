@@ -8,6 +8,7 @@ public class EventEnemySpawnAfter : GameEvent<EventEnemySpawnAfter>
     //Ctrl + H 누루면 goekd script에서만 이름 바뀜
     public override EventEnemySpawnAfter Item => this;
 
+    [ReadOnly] public CharacterControl character;
     [ReadOnly] public Transform eyePoint;   
     [ReadOnly] public ActorProfile actorProfile;
 

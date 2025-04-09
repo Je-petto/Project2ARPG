@@ -10,34 +10,43 @@ public class EnemyEventControl : MonoBehaviour
     [HorizontalLine("EVENTS"),HideField] public bool _h0;
 
     [SerializeField] EventEnemySpawnAfter eventEnemySpawnAfter;
+    [SerializeField] EventSensorTargetEnter eventSensorTargetEnter;
+    [SerializeField] EventSensorTargetExit eventSensorTargetExit;
     
     [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
 #endregion
 
-    private CharacterControl cc;
+    private CharacterControl owner;
 
     void Start()
     {      
-        if (TryGetComponent(out cc) == false)
+        if (TryGetComponent(out owner) == false)
             Debug.LogWarning("EnemyEventControl ] CharactorControl 없음");
 
-        cc.Visible(false);
+        owner.Visible(false);
     }
 
     private void OnEnable()
     {
         eventEnemySpawnAfter.Register(OneventEnemySpawnAfter);
+        eventSensorTargetEnter.Register(OneventSensorTargetEnter);
+        eventSensorTargetExit.Register(OneventSensorTargetExit);
 
     }
 
     private void OnDisable()
     {
         eventEnemySpawnAfter.Unregister(OneventEnemySpawnAfter);
+        eventSensorTargetEnter.Unregister(OneventSensorTargetEnter);
+        eventSensorTargetExit.Unregister(OneventSensorTargetExit);
     }
 
-
+#region EVENT_SPAWNAFTER
     void OneventEnemySpawnAfter(EventEnemySpawnAfter e)
     {
+        if (owner != e.character !)
+            return;
+        
         StartCoroutine(SpawnSequence(e));
     }
 
@@ -46,21 +55,21 @@ public class EnemyEventControl : MonoBehaviour
         
         yield return new WaitUntil(()=> e.actorProfile != null && e.actorProfile.model != null);
 
-        // Enemy 컨트롤(cc)에 Actor Profile (Enemy 데이터) 전달한다.
-        cc.Profile = e.actorProfile;
+        // Enemy 컨트롤(owner)에 Actor Profile (Enemy 데이터) 전달한다.
+        owner.Profile = e.actorProfile;
 
         // // 플레이어 모델 생성한 후 _MODEL_ 슬롯에 붙인다.
         if (e.actorProfile.model == null)
             Debug.LogError($"EnemyEventControl ] 모델 없음");
 
-        var clone = Instantiate(e.actorProfile.model, cc.model);
+        var clone = Instantiate(e.actorProfile.model, owner.model);
 
         
         // 플레이어 애니메이터 아바타 연결
         if (e.actorProfile.avatar == null)
             Debug.LogError($"EnemyEventControl ] 아바타 없음");
 
-        cc.animator.avatar = e.actorProfile.avatar;
+        owner.animator.avatar = e.actorProfile.avatar;
 
 
         // 1초 후 등장 파티클 발생
@@ -72,19 +81,40 @@ public class EnemyEventControl : MonoBehaviour
         // 캐릭터 등장 연출
         yield return new WaitForSeconds(0.2f);
         
-        cc.Visible(true);
+        owner.Visible(true);
 
 
         // //1초 후 캐릭터 어빌리티 부여
         yield return new WaitForSeconds(1f);
 
         foreach( var dat in e.actorProfile.abilities )
-            cc.ability.Add(dat, true);
+            owner.ability.Add(dat);
 
         yield return new WaitForEndOfFrame();
 
         if (TryGetComponent(out CursorSelectable sel))
             sel.SetupRenderer();
+
+
+//TEMPCODE
+        yield return new WaitForEndOfFrame();
+        owner.ability.Activate(AbilityFlag.Wander);
+//TEMPCODE
+    }
+#endregion
+
+    void OneventSensorTargetEnter(EventSensorTargetEnter e)
+    {
+        if(owner != e.from) return;
+        
+        // 기존꺼 다 날리고 Trace만 켜주기
+        owner.ability.Activate(AbilityFlag.Trace, true);
     }
 
+    void OneventSensorTargetExit(EventSensorTargetExit e)
+    {
+        if(owner != e.from) return;
+
+        owner.ability.Activate(AbilityFlag.Wander, true);
+    }
 }

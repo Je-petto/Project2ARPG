@@ -33,6 +33,8 @@ public class AbilityTrace : Ability<AbilityTraceData>
         if( p != null)
             data.traceTarget = p.transform;
 
+        owner.Display(data.Flag.ToString());
+
 //TEMPCODE      
     }
     public override void Deactivate()
