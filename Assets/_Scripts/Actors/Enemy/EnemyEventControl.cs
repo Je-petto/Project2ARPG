@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using CustomInspector;
+
 
 public class EnemyEventControl : MonoBehaviour
 {
@@ -80,6 +80,11 @@ public class EnemyEventControl : MonoBehaviour
 
         foreach( var dat in e.actorProfile.abilities )
             cc.ability.Add(dat, true);
+
+        yield return new WaitForEndOfFrame();
+
+        if (TryGetComponent(out CursorSelectable sel))
+            sel.SetupRenderer();
     }
 
 }

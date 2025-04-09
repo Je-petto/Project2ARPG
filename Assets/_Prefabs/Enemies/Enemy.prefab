@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2508036700009509026}
   - component: {fileID: 7159879559379634249}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1634024632392159010}
   - component: {fileID: 3633108784817562544}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 6528274596114365061}
   - component: {fileID: 2021551379884185052}
   m_Layer: 0
-  m_Name: _INFO_
+  m_Name: _BILLBOARD_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -309,7 +309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7815263193033109802}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: _EYEPOINT_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +340,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1896590264229318026}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: _MODEL_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,7 +376,8 @@ GameObject:
   - component: {fileID: 757347145527025981}
   - component: {fileID: 8868705740675984039}
   - component: {fileID: 2679694546840150252}
-  m_Layer: 2
+  - component: {fileID: 8892411873056953393}
+  m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -507,3 +508,19 @@ MonoBehaviour:
   _h1: 0
   flags: 0
   datas: []
+--- !u!114 &8892411873056953393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4261972886366983581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28c7295fd9abb142b5e76cedf5e45c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursorType: 2
+  meshrender: {fileID: 0}
+  selectableMaterial: {fileID: 2100000, guid: 84f013ce7829a3a419c44cb3f5a48e74, type: 2}
+  selectableThickness: 0.024
