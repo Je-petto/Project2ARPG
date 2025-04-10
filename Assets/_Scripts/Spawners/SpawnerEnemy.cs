@@ -28,9 +28,10 @@ public class SpawnerEnemy : Spawner
     CharacterControl cc;
     void OneventEnemySpawnBefore(EventEnemySpawnBefore e)
     {
-        cc = Instantiate(e.enemyCharacter);
         Quaternion rot = Quaternion.LookRotation(spawnpoint.forward);
-        cc.transform.SetPositionAndRotation(spawnpoint.position, rot);
+        cc = Instantiate(e.enemyCharacter, spawnpoint.position, rot);
+        // 캐릭터 Clone을 만들고, 해당 Profile을 연결한다
+        cc.Profile = actorProfile;
 
         StartCoroutine(SpawnAfter());
     }
@@ -41,7 +42,6 @@ public class SpawnerEnemy : Spawner
 
         eventEnemySpawnAfter.character = cc;
         eventEnemySpawnAfter.eyePoint = cc.eyepoint;
-        eventEnemySpawnAfter.actorProfile = actorProfile;
         eventEnemySpawnAfter?.Raise();
     }    
 }    

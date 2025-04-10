@@ -30,13 +30,17 @@ public class SpawnerPlayer : Spawner
     CursorControl _cursor;
     void OneventPlayerSpawnBefore(EventPlayerSpawnBefore e)
     {        
-        // 캐릭터 틀 만든다.
-        CameraControl camera = Instantiate(e.PlayerCamera);                
+        // 플레이어용 카메라 만든다
+        CameraControl camera = Instantiate(e.PlayerCamera);
 
-        _character = Instantiate(e.PlayerCharacter);
+        // 플레이어를 만든다
         Quaternion rot = Quaternion.LookRotation(spawnpoint.forward);
-        _character.transform.SetPositionAndRotation(spawnpoint.position, rot);
+        _character = Instantiate(e.PlayerCharacter, spawnpoint.position, rot );
+
+        // 플레이 캐릭터에 프로파일 연결한다        
+        _character.Profile =actorProfile;
         
+        //플레이어용 마우스 커서를 만든다
         _cursor = Instantiate(e.PlayerCursor);
         _cursor.eyePoint = _character.eyepoint;
 
@@ -50,7 +54,6 @@ public class SpawnerPlayer : Spawner
         // 캐릭터 틀 생성 후, After 이벤트 발동 ( 내용을 채운다 )
         eventPlayerspawnAfter.eyePoint = _character.eyepoint;
         eventPlayerspawnAfter.cursorFixedPoint = _cursor.CursorFixedPoint;
-        eventPlayerspawnAfter.actorProfile = actorProfile;
         eventPlayerspawnAfter?.Raise();   
     }
 

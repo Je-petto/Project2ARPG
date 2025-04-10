@@ -33,12 +33,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1370526160864704}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114048670744695864
 MonoBehaviour:
@@ -52,7 +53,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e65b74248fe594982b0d9bfde7d96c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dungeonThemes: []
+  dungeonThemes:
+  - {fileID: 11400000, guid: f5bfe8d3db780aa4c89b9f188e7a688a, type: 2}
   debugDraw: 0
 --- !u!114 &7769902451462461510
 MonoBehaviour:
@@ -104,6 +106,7 @@ MonoBehaviour:
     Links: []
   gridSize: {x: 0, y: 0, z: 0}
   wallsAsEdges: 0
+  query: {fileID: 0}
   lookups:
     serializedNodeCoordLookup: []
 --- !u!114 &114406795247347602

@@ -53,23 +53,23 @@ public class EnemyEventControl : MonoBehaviour
     IEnumerator SpawnSequence(EventEnemySpawnAfter e)
     {
         
-        yield return new WaitUntil(()=> e.actorProfile != null && e.actorProfile.model != null);
+        yield return new WaitUntil(()=> owner.Profile != null);
 
         // Enemy 컨트롤(owner)에 Actor Profile (Enemy 데이터) 전달한다.
-        owner.Profile = e.actorProfile;
+        var model = owner.Profile.models.Random();
 
         // // 플레이어 모델 생성한 후 _MODEL_ 슬롯에 붙인다.
-        if (e.actorProfile.model == null)
+        if (model == null)
             Debug.LogError($"EnemyEventControl ] 모델 없음");
 
-        var clone = Instantiate(e.actorProfile.model, owner.model);
+        var clone = Instantiate(model, owner.model);
 
         
         // 플레이어 애니메이터 아바타 연결
-        if (e.actorProfile.avatar == null)
+        if (owner.Profile.avatar == null)
             Debug.LogError($"EnemyEventControl ] 아바타 없음");
 
-        owner.animator.avatar = e.actorProfile.avatar;
+        owner.animator.avatar = owner.Profile.avatar;
 
 
         // 1초 후 등장 파티클 발생
@@ -87,7 +87,7 @@ public class EnemyEventControl : MonoBehaviour
         // //1초 후 캐릭터 어빌리티 부여
         yield return new WaitForSeconds(1f);
 
-        foreach( var dat in e.actorProfile.abilities )
+        foreach( var dat in owner.Profile.abilities )
             owner.ability.Add(dat);
 
         yield return new WaitForEndOfFrame();

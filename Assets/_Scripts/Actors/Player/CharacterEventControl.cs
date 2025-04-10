@@ -15,14 +15,14 @@ public class CharacterEventControl : MonoBehaviour
     [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
 #endregion
 
-    private CharacterControl cc;
+    private CharacterControl owner;
 
     void Start()
     {      
-        if (TryGetComponent(out cc) == false)
+        if (TryGetComponent(out owner) == false)
             Debug.LogWarning("GameEventControl ] CharacterControl 없음");
 
-        cc.Visible(false);
+        owner.Visible(false);
     }
 
     private void OnEnable()
@@ -41,9 +41,9 @@ public class CharacterEventControl : MonoBehaviour
     void OneventCameraSwitch(EventCameraSwitch e)
     {
         if (e.inout)
-            cc.ability.Deactivate(AbilityFlag.MoveKeyboard);
+            owner.ability.Deactivate(AbilityFlag.MoveKeyboard);
         else
-            cc.ability.Activate(AbilityFlag.MoveKeyboard);
+            owner.ability.Activate(AbilityFlag.MoveKeyboard);
     }
 
 
@@ -54,16 +54,16 @@ public class CharacterEventControl : MonoBehaviour
 
     IEnumerator SpawnSequence(EventPlayerSpawnAfter e)
     {
-        yield return new WaitUntil(()=> e.actorProfile != null && e.actorProfile.model != null);
+        yield return new WaitUntil(()=> owner.Profile != null);
 
-        // 캐릭터 컨트롤(cc)에 ActorProfile (캐릭터 데이터) 전달한다.
-        cc.Profile = e.actorProfile;
+        // 캐릭터 컨트롤에 Actor 프로파일을 전환
+        var model = owner.Profile.models.Random();
 
         // 플레이어 모델 생성한 후 _MODEL_ 슬롯에 붙인다.
-        if (e.actorProfile.model == null)
+        if (model == null)
             Debug.LogError($"CharacterEventControl ] 모델 없음");
 
-        var clone = Instantiate(e.actorProfile.model, cc.model);
+        var clone = Instantiate(model, owner.model);
 
         //Skinned Mesh 만 실루엣 처리
         clone.GetComponentsInChildren<SkinnedMeshRenderer>().ToList().ForEach( m => 
@@ -73,10 +73,10 @@ public class CharacterEventControl : MonoBehaviour
 
         
         // 플레이어 애니메이터 아바타 연결
-        if (e.actorProfile.avatar == null)
+        if (owner.Profile.avatar == null)
             Debug.LogError($"CharacterEventControl ] 아바타 없음");
 
-        cc.animator.avatar = e.actorProfile.avatar;
+        owner.animator.avatar = owner.Profile.avatar;
 
 
         // 1초 후 등장 파티클 발생
@@ -88,15 +88,15 @@ public class CharacterEventControl : MonoBehaviour
         // 캐릭터 등장 연출
         yield return new WaitForSeconds(0.2f);
         
-        cc.Visible(true);
-        cc.Animate(AnimatorHashes._SPAWN, 0f);
+        owner.Visible(true);
+        owner.Animate(AnimatorHashes._SPAWN, 0f);
 
 
         // 1초 후 캐릭터 어빌리티 부여
         yield return new WaitForSeconds(1f);
 
-        foreach( var dat in e.actorProfile.abilities )
-            cc.ability.Add(dat, true);
+        foreach( var dat in owner.Profile.abilities )
+            owner.ability.Add(dat, true);
     }
 
 }

@@ -9,8 +9,7 @@ public class EventEnemySpawnAfter : GameEvent<EventEnemySpawnAfter>
     public override EventEnemySpawnAfter Item => this;
 
     [ReadOnly] public CharacterControl character;
-    [ReadOnly] public Transform eyePoint;   
-    [ReadOnly] public ActorProfile actorProfile;
+    [ReadOnly] public Transform eyePoint;
 
     [Tooltip("플레이어 스폰시 발동 파티클")]
     public PoolableParticle particleSpawn;
