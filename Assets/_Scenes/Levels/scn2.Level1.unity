@@ -1007,7 +1007,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorType: 3
-  meshrender: {fileID: 1532571717}
+  meshrenders: []
   selectableMaterial: {fileID: 0}
   selectableThickness: 0
 --- !u!64 &1532571716
@@ -1978,7 +1978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorType: 3
-  meshrender: {fileID: 2147354694}
+  meshrenders: []
   selectableMaterial: {fileID: 0}
   selectableThickness: 0
 --- !u!64 &2147354693
@@ -2719,7 +2719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorType: 2
-  meshrender: {fileID: 5403687492386293057}
+  meshrenders: []
   selectableMaterial: {fileID: 0}
   selectableThickness: 0
 --- !u!64 &5485123124955770290
@@ -2845,7 +2845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorType: 1
-  meshrender: {fileID: 5525757568236969982}
+  meshrenders: []
   selectableMaterial: {fileID: 0}
   selectableThickness: 0
 --- !u!33 &5915571162053240116

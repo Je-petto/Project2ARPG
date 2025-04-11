@@ -36,10 +36,11 @@ public class SensorControl : MonoBehaviour
         owner = GetComponentInParent<CharacterControl>();
         if(owner == null)
             Debug.LogWarning("SensorControl] CharacterControl 없음");
+
+        InvokeRepeating("CheckOverlap", 0f, 0.5f);
     }
 
-
-    void Update()
+    void CheckOverlap()
     {        
         // 시아거리 안에 들어왔나?
         var cols = Physics.OverlapSphere(owner.eyepoint.position, sightRange, targetLayer);

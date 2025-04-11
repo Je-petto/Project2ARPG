@@ -1,17 +1,19 @@
 using UnityEngine;
-using UnityEngine.AI;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 public class AbilityAttack : Ability<AbilityAttackData>
 {
 
-    private float attackspeed;
+    // 현재 공격 모션 진행 중인가?
+    bool isAttacking = false;
+    private CancellationTokenSource cts;
+
 
     public AbilityAttack(AbilityAttackData data, CharacterControl owner) : base(data,owner)
     {
         
         if (owner.Profile == null) return;
-
-        attackspeed = owner.Profile.attackspeed;
     }
 
     public override void Activate(object obj)
@@ -23,30 +25,42 @@ public class AbilityAttack : Ability<AbilityAttackData>
 
 
         owner.Display(data.Flag.ToString());
-        owner.AnimateOnceAttack(data.target.eyepoint.position);
-        elapsed = 0;
-
     }
     
     public override void Deactivate()
     {
+
     }
 
-    float elapsed;
     public override void Update()
     {
-        if (data.target == null) return;
+        if (isAttacking == true || data.target == null)
+            return;
 
-        elapsed += Time.deltaTime;
-        if ( elapsed >= owner.Profile.attackspeed )
-        {
-            owner.AnimateOnceAttack(data.target.eyepoint.position);
-            elapsed = 0f;
-        }
+        CooltimeAsync().Forget();
 
-        owner.AnimateMoveSpeed(0f);
+        owner.LookatY(data.target.eyepoint.position);
+        AnimationClip clip = owner.Profile.ATTACK.Random();
+        float anispd = owner.Profile.attackspeed;
+        owner.Animate("ATTACK", owner.Profile.animatorOverride, clip, anispd, 0.1f, 0);
+        owner.AnimateMoveSpeed(0f, true);
     }
 
+    
+    async UniTaskVoid CooltimeAsync()
+    {
+        try
+        {
+            isAttacking = true;
+            await UniTask.WaitForSeconds(owner.Profile.attackspeed); 
+            isAttacking = false;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogException(e);
+        }
+
+    }
 
 }
 

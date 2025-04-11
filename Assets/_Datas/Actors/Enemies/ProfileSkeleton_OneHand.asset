@@ -21,13 +21,19 @@ MonoBehaviour:
   - {fileID: 188982, guid: d86c716d338a1a04d89b6ee52d44933c, type: 3}
   avatar: {fileID: 9000000, guid: 20300ac630e0fcd4dbab63a9b39cdafa, type: 3}
   _h1: 0
+  animatorOverride: {fileID: 22100000, guid: fba30c3d59f070740a8c8d6a7026098b, type: 2}
+  ATTACK:
+  - {fileID: 7400000, guid: 5fc58e648726c914f8dee69d8b0cf7ec, type: 3}
+  - {fileID: 7400000, guid: 4d4ad1323cb15f449b3fb62d38f5f5e4, type: 3}
+  - {fileID: 7400000, guid: 209a69b56ebf4474b90999ee91a1062a, type: 3}
+  _h2: 0
   health: 50
   movespeed: 3
   rotatespeed: 540
   jumpforce: 0
   jumpduration: 0
-  attackspeed: 0.8
-  _h2: 0
+  attackspeed: 1
+  _h3: 0
   abilities:
   - {fileID: 11400000, guid: 42f27fa71d0198c49b9f249dadb7864c, type: 2}
   - {fileID: 11400000, guid: 4b303c6be64199640a150c5f468fb335, type: 2}

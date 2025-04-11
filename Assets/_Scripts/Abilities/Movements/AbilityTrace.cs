@@ -116,7 +116,7 @@ public class AbilityTrace : Ability<AbilityTraceData>
     private void MoveAnimation()
     {
         float a = owner.isArrived ? 0f : Mathf.Clamp01(currentVelocity / data.movePerSec);
-        owner.AnimateMoveSpeed(a);
+        owner.AnimateMoveSpeed(a, false);
     }
 
 

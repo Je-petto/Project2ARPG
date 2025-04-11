@@ -3,29 +3,34 @@ using UnityEngine;
 public class CursorSelectable : MonoBehaviour
 {
     public CursorType cursorType;
-    public Renderer meshrender;
+    public Renderer[] meshrenders;
 
     [Tooltip("아웃라인 Material")]
     public Material selectableMaterial;
     [Tooltip("아웃라인 Material 두깨")]
-    public float selectableThickness;
+    public float selectableThickness = 0.05f;
+
 
     public void SetupRenderer()
     {
-        if (meshrender != null) return;
+        if (meshrenders.Length > 0) return;
 
-        meshrender = GetComponentInChildren<SkinnedMeshRenderer>();
+        meshrenders = GetComponentsInChildren<SkinnedMeshRenderer>();
 
-        if(meshrender == null)
-            meshrender = GetComponentInChildren<MeshRenderer>();
+        if(meshrenders.Length <= 0)
+            meshrenders = GetComponentsInChildren<MeshRenderer>();
     }
     
     public void Select(bool on)
     {
-        if (meshrender == null) return;
+        if (meshrenders == null || meshrenders.Length <= 0) return;
         
-        string layername = on ? "Outline" : "Default";
-        meshrender.gameObject.layer = LayerMask.NameToLayer(layername);
+        foreach( var r in meshrenders)
+        {
+            string layername = on ? "Outline" : "Default";
+            r.gameObject.layer = LayerMask.NameToLayer(layername);
+
+        }
 
         if (selectableMaterial != null)
             selectableMaterial?.SetFloat("_Thickness", selectableThickness);

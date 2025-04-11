@@ -76,11 +76,26 @@ public class CharacterControl : MonoBehaviour
         model.gameObject.SetActive(b);
     }
 
+    // 단순한 애니메이터 해시 플레이
     public void Animate(int hash, float duration, int layer = 0)
     {
         animator?.CrossFadeInFixedTime(hash, duration, layer, 0f);
     }
 
+    // 다양한 모션을 가져와서 애니메이터 Name 플레이
+    public void Animate(string name, AnimatorOverrideController aoc, AnimationClip clip, float anispd, float duration, int layer = 0)
+    {
+        if (animator == null) return;
+
+        // 애니메이션 속도와 클립 길이를 반영한 결과를 만든다.
+        float d = 1f / anispd;
+        float s = clip.length / d;
+
+        aoc[name] = clip;
+        animator.runtimeAnimatorController = aoc;
+        animator.CrossFadeInFixedTime(name, duration, layer, 0f);
+    }
+    
     public void Display(string info)
     {
         if(uiInfo == null) return;
@@ -90,13 +105,14 @@ public class CharacterControl : MonoBehaviour
     }
 
 #region ANIMATE   
-    public void AnimateMoveSpeed(float targetspeed)
+    //immediate TRUE : 보간처리 없이 바로 목표 값으로 애니메이션
+    public void AnimateMoveSpeed(float targetspeed,  bool immediate)
     {
         if (animator == null) return;
         
         float cur = animator.GetFloat(AnimatorHashes._MOVESPEED);
         float spd = Mathf.Lerp(cur, targetspeed, Time.deltaTime * 10f);
-        animator.SetFloat(AnimatorHashes._MOVESPEED, spd);
+        animator.SetFloat(AnimatorHashes._MOVESPEED, immediate ? targetspeed : spd);
     }
 
     public void AnimateOnceAttack(Vector3 target)

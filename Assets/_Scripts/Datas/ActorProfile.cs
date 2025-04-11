@@ -15,9 +15,15 @@ public class ActorProfile : ScriptableObject
     public string alias;
     [Preview(Size.medium)] public Sprite portrait;
     [Preview(Size.medium)] public List<GameObject> models;
+
     [Preview(Size.medium)] public Avatar avatar;
 
-    [HorizontalLine("ATTRIBUTES"),HideField] public bool _h1;
+    [HorizontalLine("ANIMATIONS"),HideField] public bool _h1;
+    
+    public AnimatorOverrideController animatorOverride;
+    public List<AnimationClip> ATTACK;
+
+    [HorizontalLine("ATTRIBUTES"),HideField] public bool _h2;
 
     [Tooltip("체력")] public int health;
     [Tooltip("이동 속도(per sec)")] public float movespeed;
@@ -28,7 +34,7 @@ public class ActorProfile : ScriptableObject
 
 
 
-    [HorizontalLine("ABILITIES"),HideField] public bool _h2;
+    [HorizontalLine("ABILITIES"),HideField] public bool _h3;
     public List<AbilityData> abilities;
 
 }
