@@ -54,7 +54,7 @@ public class AbilityControl : MonoBehaviour
         if (immediate)
         {
             actives[d.Flag] = ability;
-            ability.Activate();
+            ability.Activate(null);
         }
     }
 
@@ -72,7 +72,7 @@ public class AbilityControl : MonoBehaviour
 
     // 잠재 능력 활성화 및 업데이트 추가
     // forceDeactivate : True -> 모든 능력 제거 후 flag 해당 능력만 활성화
-    public void Activate(AbilityFlag flag, bool forceDeactivate = false)
+    public void Activate(AbilityFlag flag, bool forceDeactivate, object obj)
     {
         if(forceDeactivate)
             DeactivateAll();
@@ -84,7 +84,7 @@ public class AbilityControl : MonoBehaviour
                 if (actives.ContainsKey(flag) == false)
                     actives[flag] = d.CreateAbility(GetComponent<CharacterControl>());
 
-                actives[flag].Activate();
+                actives[flag].Activate(obj);
             }
         }        
     }

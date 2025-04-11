@@ -9,12 +9,11 @@ public class AbilityJump : Ability<AbilityJumpData>
     {
         if (owner.Profile == null) return;
 
-
         data.jumpForce = owner.Profile.jumpforce;
         data.jumpDuration = owner.Profile.jumpduration;
     }
 
-    public override void Activate()
+    public override void Activate(object obj)
     {
         if (owner.TryGetComponent<InputControl>(out var input))
         {

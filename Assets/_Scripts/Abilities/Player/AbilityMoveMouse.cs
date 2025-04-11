@@ -56,7 +56,7 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
     }
 
 
-    public override void Activate()
+    public override void Activate(object obj)
     {
         if (owner.TryGetComponent<InputControl>(out var input))
             input.actionInputs.Player.MoveMouse.performed += InputMove;

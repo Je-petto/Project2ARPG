@@ -43,7 +43,7 @@ public class CharacterEventControl : MonoBehaviour
         if (e.inout)
             owner.ability.Deactivate(AbilityFlag.MoveKeyboard);
         else
-            owner.ability.Activate(AbilityFlag.MoveKeyboard);
+            owner.ability.Activate(AbilityFlag.MoveKeyboard, false, null);
     }
 
 

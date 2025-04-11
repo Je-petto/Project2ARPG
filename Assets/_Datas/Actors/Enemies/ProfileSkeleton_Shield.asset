@@ -16,7 +16,6 @@ MonoBehaviour:
   alias: Skeleton
   portrait: {fileID: 21300000, guid: e083e4ab0766c9c4ea55069f585133fc, type: 3}
   models:
-  - {fileID: 188982, guid: d86c716d338a1a04d89b6ee52d44933c, type: 3}
   - {fileID: 197444, guid: b2951f8d32af933468dd00c41bb3f7d8, type: 3}
   - {fileID: 123184, guid: e967c42ede832ae4d964d682b25ec538, type: 3}
   - {fileID: 185486, guid: 3a367ca1b4f5a1a47bda6e98e7ba1f43, type: 3}
@@ -27,7 +26,9 @@ MonoBehaviour:
   rotatespeed: 540
   jumpforce: 0
   jumpduration: 0
+  attackspeed: 1.2
   _h2: 0
   abilities:
   - {fileID: 11400000, guid: 42f27fa71d0198c49b9f249dadb7864c, type: 2}
   - {fileID: 11400000, guid: 4b303c6be64199640a150c5f468fb335, type: 2}
+  - {fileID: 11400000, guid: 9cf8027cd69466048ade65cc0b37142c, type: 2}

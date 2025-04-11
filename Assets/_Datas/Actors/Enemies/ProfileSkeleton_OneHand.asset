@@ -26,7 +26,9 @@ MonoBehaviour:
   rotatespeed: 540
   jumpforce: 0
   jumpduration: 0
+  attackspeed: 0.8
   _h2: 0
   abilities:
   - {fileID: 11400000, guid: 42f27fa71d0198c49b9f249dadb7864c, type: 2}
   - {fileID: 11400000, guid: 4b303c6be64199640a150c5f468fb335, type: 2}
+  - {fileID: 11400000, guid: 9cf8027cd69466048ade65cc0b37142c, type: 2}

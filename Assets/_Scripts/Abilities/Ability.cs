@@ -22,9 +22,13 @@ public enum AbilityFlag
     MoveMouse = 1 << 1,
     Jump = 1 << 2,    
 
-    //적 캐릭터
+    //움직임
     Wander = 1 << 3,
-    Trace = 1 << 4
+    Trace = 1 << 4,
+
+    //공격
+    Attack = 1 << 11,
+
 }
 
 
@@ -46,7 +50,7 @@ public abstract class AbilityData : ScriptableObject
 public abstract class Ability 
 {
     // 어빌리티 활성
-    public virtual void Activate() {}    
+    public virtual void Activate(object obj = null) {}    
     // 어빌리티 비활성
     public virtual void Deactivate() {}
     // 어빌리티 계속 Update

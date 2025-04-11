@@ -3,6 +3,7 @@ using CustomInspector;
 using TMPro;
 
 
+
 // instance , copy
 // 연결(ref), 독립
 // 캐릭터 관리 ( 허브 )
@@ -54,6 +55,22 @@ public class CharacterControl : MonoBehaviour
         isGrounded = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1.1f);
     }
 
+    // 타겟을 바라본다 (Y 축만 회전)
+    public void LookatY(Vector3 target)
+    {
+        target.y = 0;
+        
+        Vector3 direction = target - new Vector3(eyepoint.position.x, 0f, eyepoint.position.z);
+        Vector3 eular = Quaternion.LookRotation(direction.normalized).eulerAngles;
+        transform.rotation = Quaternion.Euler(eular);        
+    }
+
+    public void Stop()
+    {
+        isArrived = true;
+        rb.linearVelocity = Vector3.zero;
+    }
+
     public void Visible(bool b)
     {
         model.gameObject.SetActive(b);
@@ -72,5 +89,20 @@ public class CharacterControl : MonoBehaviour
 
     }
 
+#region ANIMATE   
+    public void AnimateMoveSpeed(float targetspeed)
+    {
+        if (animator == null) return;
+        
+        float cur = animator.GetFloat(AnimatorHashes._MOVESPEED);
+        float spd = Mathf.Lerp(cur, targetspeed, Time.deltaTime * 10f);
+        animator.SetFloat(AnimatorHashes._MOVESPEED, spd);
+    }
 
+    public void AnimateOnceAttack(Vector3 target)
+    {
+        LookatY(target);
+        Animate(AnimatorHashes._ATTACK, 0.1f);        
+    }
+#endregion
 }

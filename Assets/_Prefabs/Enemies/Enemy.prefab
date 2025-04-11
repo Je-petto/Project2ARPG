@@ -285,7 +285,7 @@ MonoBehaviour:
   _SortingLayerID: 0
   _SortingOrder: 0
   m_hasFontAssetChanged: 0
-  m_renderer: {fileID: 0}
+  m_renderer: {fileID: 1227049078460735033}
   m_maskType: 0
 --- !u!1 &2578866377080948311
 GameObject:
@@ -482,7 +482,7 @@ Animator:
   m_GameObject: {fileID: 4261972886366983581}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 56a7a1286160895499ea2bc03b82e013, type: 2}
+  m_Controller: {fileID: 22100000, guid: fba30c3d59f070740a8c8d6a7026098b, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -508,8 +508,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _h0: 0
   eventEnemySpawnAfter: {fileID: 11400000, guid: 2a49bded49c65b6489f8da29fb3fe4ce, type: 2}
-  eventSensorTargetEnter: {fileID: 11400000, guid: 013eb0419161a9347a85345e1a7c8c95, type: 2}
-  eventSensorTargetExit: {fileID: 11400000, guid: 47f09e40a86c97e4c90bc5b065f46ba5, type: 2}
+  eventSensorSightEnter: {fileID: 11400000, guid: 013eb0419161a9347a85345e1a7c8c95, type: 2}
+  eventSensorSightExit: {fileID: 11400000, guid: 47f09e40a86c97e4c90bc5b065f46ba5, type: 2}
+  eventSensorAttackEnter: {fileID: 11400000, guid: 7c3f2670a1c73f344ba650372ee742f6, type: 2}
+  eventSensorAttackExit: {fileID: 11400000, guid: 60c3d11ad8a10184d907f0c2430fffdb, type: 2}
   _h1: 0
 --- !u!114 &931083918660662246
 MonoBehaviour:
@@ -524,10 +526,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _h0: 0
-  eventSensorTargetEnter: {fileID: 11400000, guid: 013eb0419161a9347a85345e1a7c8c95, type: 2}
-  eventSensorTargetExit: {fileID: 11400000, guid: 47f09e40a86c97e4c90bc5b065f46ba5, type: 2}
+  eventSensorSightEnter: {fileID: 11400000, guid: 013eb0419161a9347a85345e1a7c8c95, type: 2}
+  eventSensorSightExit: {fileID: 11400000, guid: 47f09e40a86c97e4c90bc5b065f46ba5, type: 2}
+  eventSensorAttackEnter: {fileID: 11400000, guid: 7c3f2670a1c73f344ba650372ee742f6, type: 2}
+  eventSensorAttackExit: {fileID: 11400000, guid: 60c3d11ad8a10184d907f0c2430fffdb, type: 2}
   _h1: 0
   sightRange: 5
+  attacRange: 1
   targetLayer:
     serializedVersion: 2
     m_Bits: 4

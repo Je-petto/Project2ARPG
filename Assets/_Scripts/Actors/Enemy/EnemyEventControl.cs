@@ -10,8 +10,11 @@ public class EnemyEventControl : MonoBehaviour
     [HorizontalLine("EVENTS"),HideField] public bool _h0;
 
     [SerializeField] EventEnemySpawnAfter eventEnemySpawnAfter;
-    [SerializeField] EventSensorTargetEnter eventSensorTargetEnter;
-    [SerializeField] EventSensorTargetExit eventSensorTargetExit;
+    [SerializeField] EventSensorSightEnter eventSensorSightEnter;
+    [SerializeField] EventSensorSightExit eventSensorSightExit;
+
+    [SerializeField] EventSensorAttackEnter eventSensorAttackEnter;
+    [SerializeField] EventSensorAttackExit eventSensorAttackExit;
     
     [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
 #endregion
@@ -29,16 +32,21 @@ public class EnemyEventControl : MonoBehaviour
     private void OnEnable()
     {
         eventEnemySpawnAfter.Register(OneventEnemySpawnAfter);
-        eventSensorTargetEnter.Register(OneventSensorTargetEnter);
-        eventSensorTargetExit.Register(OneventSensorTargetExit);
+        eventSensorSightEnter.Register(OneventSensorSightEnter);
+        eventSensorSightExit.Register(OneventSensorSightExit);
+        eventSensorAttackEnter.Register(OneventSensorAttackEnter);
+        eventSensorAttackExit.Register(OneventSensorAttackExit);
 
     }
 
     private void OnDisable()
     {
         eventEnemySpawnAfter.Unregister(OneventEnemySpawnAfter);
-        eventSensorTargetEnter.Unregister(OneventSensorTargetEnter);
-        eventSensorTargetExit.Unregister(OneventSensorTargetExit);
+        eventSensorSightEnter.Unregister(OneventSensorSightEnter);
+        eventSensorSightExit.Unregister(OneventSensorSightExit);
+        eventSensorAttackEnter.Unregister(OneventSensorAttackEnter);
+        eventSensorAttackExit.Unregister(OneventSensorAttackExit);
+
     }
 
 #region EVENT_SPAWNAFTER
@@ -98,23 +106,38 @@ public class EnemyEventControl : MonoBehaviour
 
 //TEMPCODE
         yield return new WaitForEndOfFrame();
-        owner.ability.Activate(AbilityFlag.Wander);
+        owner.ability.Activate(AbilityFlag.Wander, true, null);
 //TEMPCODE
     }
 #endregion
 
-    void OneventSensorTargetEnter(EventSensorTargetEnter e)
+    void OneventSensorSightEnter(EventSensorSightEnter e)
     {
         if(owner != e.from) return;
         
         // 기존꺼 다 날리고 Trace만 켜주기
-        owner.ability.Activate(AbilityFlag.Trace, true);
+        owner.ability.Activate(AbilityFlag.Trace, true, e.to);
     }
 
-    void OneventSensorTargetExit(EventSensorTargetExit e)
+    void OneventSensorSightExit(EventSensorSightExit e)
     {
         if(owner != e.from) return;
 
-        owner.ability.Activate(AbilityFlag.Wander, true);
+        owner.ability.Activate(AbilityFlag.Wander, true, null);
     }
+
+    void OneventSensorAttackEnter(EventSensorAttackEnter e)
+    {
+        if(owner != e.from) return;
+
+        owner.ability.Activate(AbilityFlag.Attack, true, e.to);
+    }
+
+    void OneventSensorAttackExit(EventSensorAttackExit e)
+    {
+        if(owner != e.from) return;
+
+        owner.ability.Activate(AbilityFlag.Trace, true, e.to);        
+    }    
+
 }
