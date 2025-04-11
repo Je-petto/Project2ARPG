@@ -15,4 +15,4 @@ MonoBehaviour:
   movePerSec: 3
   rotatePerSec: 540
   stopDistance: 0.5
-  traceTarget: {fileID: 0}
+  target: {fileID: 0}

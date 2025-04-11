@@ -414,6 +414,7 @@ GameObject:
   - component: {fileID: 8868705740675984039}
   - component: {fileID: 2679694546840150252}
   - component: {fileID: 8892411873056953393}
+  - component: {fileID: -3992358251924265949}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -532,8 +533,8 @@ MonoBehaviour:
   eventSensorAttackExit: {fileID: 11400000, guid: 60c3d11ad8a10184d907f0c2430fffdb, type: 2}
   _h1: 0
   sightRange: 5
-  attacRange: 1
-  targetLayer:
+  attackRange: 2
+  targetlayer:
     serializedVersion: 2
     m_Bits: 4
   targetTag: Player
@@ -587,6 +588,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorType: 2
-  meshrender: {fileID: 0}
+  meshrenders: []
   selectableMaterial: {fileID: 2100000, guid: 84f013ce7829a3a419c44cb3f5a48e74, type: 2}
   selectableThickness: 0.024
+--- !u!114 &-3992358251924265949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4261972886366983581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fccfb7ff877afc468ede2b90628493e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _h0: 0
+  eventPlayerSpawnAfter: {fileID: 11400000, guid: 2eae19cd0908b9244aaa138822c18fff, type: 2}
+  eventEnemySpawnAfter: {fileID: 11400000, guid: 2a49bded49c65b6489f8da29fb3fe4ce, type: 2}
+  _h1: 0
+  smoke1: {fileID: 0}
+  smoke2: {fileID: 0}
+  swing1: {fileID: 9004040142215552570, guid: 7d0bd841ab256d842af6a99febbba20f, type: 3}
+  footLeft: {fileID: 0}
+  footRight: {fileID: 0}
+  handLeft: {fileID: 0}
+  handRight: {fileID: 0}

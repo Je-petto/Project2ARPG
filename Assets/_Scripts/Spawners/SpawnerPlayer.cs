@@ -52,6 +52,7 @@ public class SpawnerPlayer : Spawner
         yield return new WaitForEndOfFrame();
 
         // 캐릭터 틀 생성 후, After 이벤트 발동 ( 내용을 채운다 )
+        eventPlayerspawnAfter.character = _character;
         eventPlayerspawnAfter.eyePoint = _character.eyepoint;
         eventPlayerspawnAfter.cursorFixedPoint = _cursor.CursorFixedPoint;
         eventPlayerspawnAfter?.Raise();   

@@ -280,6 +280,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   eyepoint: {fileID: 6244858114049361206}
   model: {fileID: 0}
+  uiInfo: {fileID: 0}
 --- !u!114 &4517595978476342986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,11 +310,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _h0: 0
   eventPlayerSpawnAfter: {fileID: 11400000, guid: 2eae19cd0908b9244aaa138822c18fff, type: 2}
+  eventEnemySpawnAfter: {fileID: 11400000, guid: 2a49bded49c65b6489f8da29fb3fe4ce, type: 2}
   _h1: 0
   smoke1: {fileID: 2566886472975382880, guid: 0d879c6f654b17e4e8b87b32da426228, type: 3}
   smoke2: {fileID: 23564290435768151, guid: 9c39fbcfdd2562143b816b99c1ea418b, type: 3}
   footLeft: {fileID: 0}
   footRight: {fileID: 0}
+  handLeft: {fileID: 0}
+  handRight: {fileID: 0}
 --- !u!1 &1763961240379952856
 GameObject:
   m_ObjectHideFlags: 0
