@@ -34,7 +34,8 @@ public class ActorProfile : ScriptableObject
     [Tooltip("초당 회전 속도")]public float rotatespeed;
     [Tooltip("점프 파워")]public float jumpforce;
     [Tooltip("점프 체공 시간")]public float jumpduration;
-    [Tooltip("초당 공격 속도(/sec)")]public float attackspeed;    
+    [Tooltip("초당 공격 속도(/sec)")]public float attackspeed;
+    [Tooltip("공격 범위(/m)")]public float attackrange;       
 
 
 

@@ -53,6 +53,7 @@ public class CharacterControl : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1.1f);
+    
     }
 
     // 타겟을 바라본다 (Y 축만 회전)

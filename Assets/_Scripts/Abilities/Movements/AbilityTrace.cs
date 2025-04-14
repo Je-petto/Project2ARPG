@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -101,6 +102,8 @@ public class AbilityTrace : Ability<AbilityTraceData>
         owner.rb.linearVelocity = movement;
         currentVelocity = Vector3.Distance(Vector3.zero, owner.rb.linearVelocity);
     
+        if(Vector3.Distance(owner.eyepoint.position, data.target.eyepoint.position) <= owner.Profile.attackrange)
+
         //도착 확인
         if (Vector3.Distance(nexttarget, owner.rb.position) <= data.stopDistance)
         {
