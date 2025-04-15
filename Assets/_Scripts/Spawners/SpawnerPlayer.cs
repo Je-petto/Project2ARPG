@@ -39,6 +39,8 @@ public class SpawnerPlayer : Spawner
 
         // 플레이 캐릭터에 프로파일 연결한다        
         _character.Profile =actorProfile;
+        // 플레이어의 상태를 프로파일과 동기화 한다
+        _character.State.Set(actorProfile);
         
         //플레이어용 마우스 커서를 만든다
         _cursor = Instantiate(e.PlayerCursor);

@@ -1,8 +1,19 @@
 using UnityEngine;
 using CustomInspector;
-using TMPro;
 
 
+//TEMPCODE
+public struct CharactertState
+{
+    // 현재 체력()
+    public int healthCurrent;
+
+    public void Set(ActorProfile profile)
+    {
+        healthCurrent =profile.health;
+    }
+}
+//TEMPCODE
 
 // instance , copy
 // 연결(ref), 독립
@@ -12,6 +23,7 @@ public class CharacterControl : MonoBehaviour
 
     public ActorProfile Profile{ get => profile; set => profile = value; }    
     [ReadOnly, SerializeField] private ActorProfile profile;
+    public CharactertState State;
     
     [HideInInspector] public AbilityControl ability;
     [ReadOnly] public UIControl ui;

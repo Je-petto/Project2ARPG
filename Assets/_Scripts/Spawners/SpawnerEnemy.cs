@@ -32,6 +32,8 @@ public class SpawnerEnemy : Spawner
         cc = Instantiate(e.enemyCharacter, spawnpoint.position, rot);
         // 캐릭터 Clone을 만들고, 해당 Profile을 연결한다
         cc.Profile = actorProfile;
+        // 플레이어의 상태를 프로파일과 동기화 한다
+        cc.State.Set(actorProfile);
 
         StartCoroutine(SpawnAfter());
     }

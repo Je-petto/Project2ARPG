@@ -51,6 +51,7 @@ public class CharacterEventControl : MonoBehaviour
     }
 
 
+#region SPAWNS
     void OneventPlayerSpawnAfter(EventPlayerSpawnAfter e)
     {
         StartCoroutine(SpawnSequence(e));
@@ -105,7 +106,13 @@ public class CharacterEventControl : MonoBehaviour
         //ui 출현
         yield return new WaitForEndOfFrame();
         owner.ui.Show(true);
+
+        //Health
+        owner.ui.SetHealth(owner.Profile.health, owner.Profile.health);
     }
+#endregion
+
+#region DAMAGES
 
     void OneventAttackAfter(EventAttackAfter e)
     {
@@ -122,6 +129,12 @@ public class CharacterEventControl : MonoBehaviour
         rndsphere.y =0f;
         Vector3 rndpos = rndsphere * 0.5f + owner.eyepoint.position;
         PoolManager.I.Spawn(e.feedbackFloatingText, rndpos, Quaternion.identity, null);
+
+        //데미지 SliderUI 연출
+        owner.State.healthCurrent -= e.damage;
+        owner.ui.SetHealth(owner.State.healthCurrent, owner.Profile.health);
+
     }
+#endregion
 
 }
