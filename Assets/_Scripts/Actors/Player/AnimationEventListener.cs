@@ -12,6 +12,9 @@ public class AnimationEventListener : MonoBehaviour
     [SerializeField] EventPlayerSpawnAfter eventPlayerSpawnAfter;
     //Enemy
     [SerializeField] EventEnemySpawnAfter eventEnemySpawnAfter;
+
+    // 공격
+    [SerializeField] EventAttackBefore eventAttackBefore;
     
     [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
 #endregion
@@ -78,7 +81,6 @@ public class AnimationEventListener : MonoBehaviour
         handRight = modelRoot.FindSlot("R Hand", "RightHand", "r hand");
     }
 
-    
 
     public void Footstep(string s)
     {        
@@ -102,6 +104,14 @@ public class AnimationEventListener : MonoBehaviour
 
     public void Attack(string s)
     {
+        //해당 프레임에서 공격 이벤트 발생 : 가해자 = owner
+        eventAttackBefore.from = owner;
+        eventAttackBefore.Raise();
+        
+        //확률 30~50%
+        int rnd = Random.Range(0, 3);
+        if (rnd < 1) return;
+        
         var rot = Quaternion.LookRotation(owner.transform.forward, Vector3.up);
         rot.eulerAngles = new Vector3(-90f, rot.eulerAngles.y, 0f);
         PoolManager.I.Spawn(swing1, s == "L" ? handLeft.position : handRight.position, rot, null);        

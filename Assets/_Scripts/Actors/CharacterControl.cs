@@ -14,6 +14,7 @@ public class CharacterControl : MonoBehaviour
     [ReadOnly, SerializeField] private ActorProfile profile;
     
     [HideInInspector] public AbilityControl ability;
+    [ReadOnly] public UIControl ui;
 
     [ReadOnly] public bool isGrounded;
     [ReadOnly] public bool isArrived = true;
@@ -22,7 +23,7 @@ public class CharacterControl : MonoBehaviour
     [ReadOnly] public Animator animator;
     [ReadOnly] public Transform eyepoint;
     [ReadOnly] public Transform model;
-    [ReadOnly] public TextMeshPro uiInfo;
+
 
 
 
@@ -38,6 +39,9 @@ public class CharacterControl : MonoBehaviour
         if (TryGetComponent(out animator) == false)
             Debug.LogWarning("CharacterControl ] Animator 없음");
 
+        if (TryGetComponent(out ui) == false)
+            Debug.LogWarning("CharactorControl ] UIControl 없음");
+
         eyepoint = transform.Find("_EYEPOINT_");
         if (eyepoint == null)
             Debug.LogWarning("CharacterControl ] _EYEPOINT_ 없음");
@@ -45,8 +49,6 @@ public class CharacterControl : MonoBehaviour
         model = transform.Find("_MODEL_");
         if (model == null)
             Debug.LogWarning("CharacterControl ] _MODEL_ 없음");
-
-        uiInfo = GetComponentInChildren<TextMeshPro>();
     }
 
 
@@ -97,13 +99,6 @@ public class CharacterControl : MonoBehaviour
         animator.CrossFadeInFixedTime(name, duration, layer, 0f);
     }
     
-    public void Display(string info)
-    {
-        if(uiInfo == null) return;
-
-        uiInfo.text = info;
-
-    }
 
 #region ANIMATE   
     //immediate TRUE : 보간처리 없이 바로 목표 값으로 애니메이션

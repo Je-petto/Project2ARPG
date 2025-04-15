@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5769d8756f318d4b9ba64061ad38f5b, type: 3}
+  m_Name: EventAttackAfter
+  m_EditorClassIdentifier: 
+  from: {fileID: 0}
+  to: {fileID: 0}
+  damage: 5
+  particleHit: {fileID: -6973664763144213041, guid: a18415f5ce86992488957689bbd8a29d, type: 3}
+  feedbackFloatingText: {fileID: 3398200623031791857, guid: b0690ef25f95f5e4f9eade648f49b201, type: 3}

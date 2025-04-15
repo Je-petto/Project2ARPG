@@ -33,8 +33,10 @@ MonoBehaviour:
   rotatespeed: 540
   jumpforce: 0
   jumpduration: 0
+  sightrange: 5
   attackspeed: 1
   attackrange: 2
+  attackdamage: 3
   _h3: 0
   abilities:
   - {fileID: 11400000, guid: 42f27fa71d0198c49b9f249dadb7864c, type: 2}

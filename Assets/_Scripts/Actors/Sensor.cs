@@ -15,8 +15,11 @@ public class Sensor : MonoBehaviour
 #region EVENTS
     [HorizontalLine("EVENTS"),HideField] public bool _h0;
 
+    [SerializeField] EventEnemySpawnAfter eventEnemySpawnAfter;
+
     [SerializeField] EventSensorSightEnter eventSensorSightEnter;
     [SerializeField] EventSensorSightExit eventSensorSightExit;
+
     [SerializeField] EventSensorAttackEnter eventSensorAttackEnter;
     [SerializeField] EventSensorAttackExit eventSensorAttackExit;
     
@@ -39,6 +42,23 @@ public class Sensor : MonoBehaviour
     private Dictionary<CharacterControl, TargetState> visibilityStates = new Dictionary<CharacterControl, TargetState>();
 
     private CharacterControl owner, target;
+
+    void OnEnable()
+    {
+        eventEnemySpawnAfter.Register(OneventEnemySpawnAfter);
+    }
+    void OnDisable()
+    {
+        eventEnemySpawnAfter.Unregister(OneventEnemySpawnAfter);    
+    }
+    
+    void OneventEnemySpawnAfter(EventEnemySpawnAfter e)
+    {
+        if (owner != e.character) return;
+
+        detectionRadius  = owner.Profile.sightrange;
+        arrivedRadius = owner.Profile.attackrange;
+    }
 
     void Start()
     {

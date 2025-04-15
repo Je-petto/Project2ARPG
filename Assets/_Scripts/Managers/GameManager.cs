@@ -38,6 +38,10 @@ public class GameManager : BehaviourSingleton<GameManager>
 
             oncomplete?.Invoke();
         }
+        catch (OperationCanceledException)
+        {
+            
+        }
         catch (Exception e)
         {
             Debug.LogException(e);

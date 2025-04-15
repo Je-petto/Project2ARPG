@@ -11,6 +11,8 @@ public class CharacterEventControl : MonoBehaviour
 
     [SerializeField] EventCameraSwitch eventCameraswitch;
     [SerializeField] EventPlayerSpawnAfter eventPlayerSpawnAfter;
+
+    [SerializeField] EventAttackAfter eventAttackAfter;
     
     [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
 #endregion
@@ -29,12 +31,14 @@ public class CharacterEventControl : MonoBehaviour
     {
         eventPlayerSpawnAfter.Register(OneventPlayerSpawnAfter);
         eventCameraswitch.Register(OneventCameraSwitch);
+        eventAttackAfter.Register(OneventAttackAfter);
     }
 
     private void OnDisable()
     {
         eventPlayerSpawnAfter.Unregister(OneventPlayerSpawnAfter);
         eventCameraswitch.Unregister(OneventCameraSwitch);
+        eventAttackAfter.Unregister(OneventAttackAfter);
     }
 
 
@@ -97,6 +101,27 @@ public class CharacterEventControl : MonoBehaviour
 
         foreach( var dat in owner.Profile.abilities )
             owner.ability.Add(dat, true);
+
+        //ui 출현
+        yield return new WaitForEndOfFrame();
+        owner.ui.Show(true);
+    }
+
+    void OneventAttackAfter(EventAttackAfter e)
+    {
+        if (owner != e.to)
+            return;
+        
+        // 타격 이펙트 
+        PoolManager.I.Spawn(e.particleHit, owner.eyepoint.position, Quaternion.identity, null);
+
+ Debug.Log($"플레이어 피해 : {e.damage}");        
+        // 타격 데미지 수치 이펙트
+        e.feedbackFloatingText.SetText(e.damage.ToString());
+        Vector3 rndsphere = Random.insideUnitSphere;
+        rndsphere.y =0f;
+        Vector3 rndpos = rndsphere * 0.5f + owner.eyepoint.position;
+        PoolManager.I.Spawn(e.feedbackFloatingText, rndpos, Quaternion.identity, null);
     }
 
 }

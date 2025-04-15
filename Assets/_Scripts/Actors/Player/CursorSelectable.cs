@@ -1,9 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CursorSelectable : MonoBehaviour
 {
     public CursorType cursorType;
-    public Renderer[] meshrenders;
+    public List<Renderer> meshrenders = new List<Renderer>();
 
     [Tooltip("아웃라인 Material")]
     public Material selectableMaterial;
@@ -13,17 +16,18 @@ public class CursorSelectable : MonoBehaviour
 
     public void SetupRenderer()
     {
-        if (meshrenders.Length > 0) return;
+        meshrenders.Clear();
 
-        meshrenders = GetComponentsInChildren<SkinnedMeshRenderer>();
+        var skinnedmeshes = GetComponentsInChildren<SkinnedMeshRenderer>().ToList();
+        var meshes = GetComponentsInChildren<MeshRenderer>().ToList();
 
-        if(meshrenders.Length <= 0)
-            meshrenders = GetComponentsInChildren<MeshRenderer>();
+        meshrenders.AddRange(skinnedmeshes);
+        meshrenders.AddRange(meshes);
     }
     
     public void Select(bool on)
     {
-        if (meshrenders == null || meshrenders.Length <= 0) return;
+        if (meshrenders == null || meshrenders.Count <= 0) return;
         
         foreach( var r in meshrenders)
         {

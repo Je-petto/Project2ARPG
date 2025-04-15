@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86b133eae371b949bd483fcbb48cd08, type: 3}
   m_Name: AbilityAttack
   m_EditorClassIdentifier: 
-  traceTarget: {fileID: 0}
+  _h0: 0
+  eventAttackBefore: {fileID: 11400000, guid: 969632e23bb32dd4b9d0d9071902d828, type: 2}
+  eventAttackAfter: {fileID: 11400000, guid: f382ceec8f87d004abf69023c62d57b3, type: 2}
+  _h1: 0
+  target: {fileID: 0}
