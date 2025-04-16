@@ -103,6 +103,9 @@ public class EnemyEventControl : MonoBehaviour
         if (TryGetComponent(out CursorSelectable sel))
             sel.SetupRenderer();
 
+        //ui 출현
+        yield return new WaitForEndOfFrame();
+        owner.ui.Show(true);
 
 //TEMPCODE
         yield return new WaitForEndOfFrame();

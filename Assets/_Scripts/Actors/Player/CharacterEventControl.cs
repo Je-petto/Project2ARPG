@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using CustomInspector;
+using NUnit.Framework.Constraints;
 
 public class CharacterEventControl : MonoBehaviour
 {
@@ -116,23 +117,25 @@ public class CharacterEventControl : MonoBehaviour
 
     void OneventAttackAfter(EventAttackAfter e)
     {
+        // 플레이어가 맞는지 체크
         if (owner != e.to)
             return;
         
         // 타격 이펙트 
         PoolManager.I.Spawn(e.particleHit, owner.eyepoint.position, Quaternion.identity, null);
-
- Debug.Log($"플레이어 피해 : {e.damage}");        
+      
         // 타격 데미지 수치 이펙트
-        e.feedbackFloatingText.SetText(e.damage.ToString());
         Vector3 rndsphere = Random.insideUnitSphere;
         rndsphere.y =0f;
         Vector3 rndpos = rndsphere * 0.5f + owner.eyepoint.position;
-        PoolManager.I.Spawn(e.feedbackFloatingText, rndpos, Quaternion.identity, null);
+        var floating = PoolManager.I.Spawn(e.feedbackFloatingText, rndpos, Quaternion.identity, null) as PoolableFeedback;
+        if(floating != null)
+            floating.SetText($"{e.damage}");
+        
 
         //데미지 SliderUI 연출
-        owner.State.healthCurrent -= e.damage;
-        owner.ui.SetHealth(owner.State.healthCurrent, owner.Profile.health);
+        owner.State.health -= e.damage;
+        owner.ui.SetHealth(owner.State.health, owner.Profile.health);
 
     }
 #endregion

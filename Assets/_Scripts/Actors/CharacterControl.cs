@@ -6,11 +6,17 @@ using CustomInspector;
 public struct CharactertState
 {
     // 현재 체력()
-    public int healthCurrent;
+    public int health;
+
+    // 현재 공격력
+    public int damage;
+
+
 
     public void Set(ActorProfile profile)
     {
-        healthCurrent =profile.health;
+        health = profile.health;
+        damage = profile.attackdamage;
     }
 }
 //TEMPCODE
@@ -22,7 +28,10 @@ public class CharacterControl : MonoBehaviour
 {
 
     public ActorProfile Profile{ get => profile; set => profile = value; }    
+    
+    // 원본 데이터
     [ReadOnly, SerializeField] private ActorProfile profile;
+    // 인스턴스화 한 데이터
     public CharactertState State;
     
     [HideInInspector] public AbilityControl ability;

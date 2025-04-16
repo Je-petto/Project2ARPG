@@ -48,7 +48,7 @@ public class AbilityAttack : Ability<AbilityAttackData>
         // 가해자, 피해자 정보를 담아서 Event를 쏜다
         data.eventAttackAfter.from = owner;
         data.eventAttackAfter.to = data.target;
-        data.eventAttackAfter.damage = owner.Profile.attackdamage;
+        data.eventAttackAfter.damage = owner.State.damage;
         data.eventAttackAfter.Raise();
     }
     public override void Update()
