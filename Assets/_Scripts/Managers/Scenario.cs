@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using CustomInspector;
+using System.Xml.Serialization;
 
 public class Scenario : MonoBehaviour
 {
@@ -11,8 +12,20 @@ public class Scenario : MonoBehaviour
     public EventPlayerSpawnBefore eventPlayerSpawnBefore;
     public EventEnemySpawnBefore eventEnemySpawn;
 
+    public EventDeath eventDeath;
+
     [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
-#endregion
+    #endregion
+
+    void OnEnable()
+    {
+        eventDeath.Register(OneventDeath);
+    }
+
+    void OnDisable()
+    {
+        eventDeath.Unregister(OneventDeath);        
+    }
 
 
     IEnumerator Start()
@@ -28,8 +41,21 @@ public class Scenario : MonoBehaviour
 
 
         // 아이템 스폰
+
+        //UI 애니메이션 연출
+        yield return new WaitForSeconds(1f);
+        GameManager.I.ShowInfo("KILL ALL ENEMIES", 5f);  
         
     }
+
+    void OneventDeath(EventDeath e)
+    {
+        if (e.target.Profile.actorType == ActorType.PLAYER)
+            GameManager.I.ShowInfo("YOU DIED", 10f);  
+
+    }
+
+    
     
 }
 

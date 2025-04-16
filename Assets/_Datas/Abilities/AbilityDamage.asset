@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: AbilityDamage
   m_EditorClassIdentifier: 
   _h0: 0
-  eventAttackBefore: {fileID: 0}
-  eventAttackAfter: {fileID: 0}
+  eventDeath: {fileID: 11400000, guid: c835de0cae047e9429b2d98467b8e6e9, type: 2}
   _h1: 0
   target: {fileID: 0}

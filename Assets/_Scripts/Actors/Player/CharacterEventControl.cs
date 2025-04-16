@@ -2,7 +2,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using CustomInspector;
-using NUnit.Framework.Constraints;
+
 
 public class CharacterEventControl : MonoBehaviour
 {
@@ -12,7 +12,7 @@ public class CharacterEventControl : MonoBehaviour
 
     [SerializeField] EventCameraSwitch eventCameraswitch;
     [SerializeField] EventPlayerSpawnAfter eventPlayerSpawnAfter;
-
+    [SerializeField] EventDeath eventDeath;
     [SerializeField] EventAttackAfter eventAttackAfter;
     
     [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
@@ -31,6 +31,7 @@ public class CharacterEventControl : MonoBehaviour
     private void OnEnable()
     {
         eventPlayerSpawnAfter.Register(OneventPlayerSpawnAfter);
+        eventDeath.Register(OneventDeath);
         eventCameraswitch.Register(OneventCameraSwitch);
         eventAttackAfter.Register(OneventAttackAfter);
     }
@@ -38,6 +39,7 @@ public class CharacterEventControl : MonoBehaviour
     private void OnDisable()
     {
         eventPlayerSpawnAfter.Unregister(OneventPlayerSpawnAfter);
+        eventDeath.Unregister(OneventDeath);
         eventCameraswitch.Unregister(OneventCameraSwitch);
         eventAttackAfter.Unregister(OneventAttackAfter);
     }
@@ -109,6 +111,16 @@ public class CharacterEventControl : MonoBehaviour
 
         foreach( var dat in owner.Profile.abilities )
             owner.ability.Add(dat, true);
+    }
+
+    void OneventDeath(EventDeath e)
+    {
+        //죽은 캐릭터가 본인이 아니면 패스
+        if (owner != e.target)
+            return;
+
+        owner.Animate(AnimatorHashes._DEATH, 0.2f);
+        owner.ability.RemoveAll();      
     }
 #endregion
 

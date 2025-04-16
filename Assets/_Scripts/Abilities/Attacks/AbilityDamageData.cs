@@ -8,10 +8,7 @@ public class AbilityDamageData : AbilityData
     #region EVENTS
     [HorizontalLine("EVENTS"),HideField] public bool _h0;
 
-    //이벤트 받는 용도
-    public EventAttackBefore eventAttackBefore;
-    //이벤트 보내는 용도
-    public EventAttackAfter eventAttackAfter;
+    public EventDeath eventDeath;    
     
     [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
 #endregion

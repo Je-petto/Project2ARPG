@@ -50,8 +50,9 @@ public class AbilityDamage : Ability<AbilityDamageData>
         // 사망 시 연출
         if (owner.State.health <= 0f)
         {
-            owner.Animate(AnimatorHashes._DEATH, 0.2f);
-            owner.ability.RemoveAll();
+            // 죽으면 본인 정보를 이벤트로 전달
+            data.eventDeath.target = owner;
+            data.eventDeath.Raise();
         }
 
 
