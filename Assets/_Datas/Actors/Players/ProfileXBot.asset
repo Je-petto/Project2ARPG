@@ -17,7 +17,7 @@ MonoBehaviour:
   alias: XBot
   portrait: {fileID: 21300000, guid: 6c3bbe72eb860e846a56d8c10fb57eec, type: 3}
   models:
-  - {fileID: 919132149155446097, guid: 3a23c4d693f0a9548a8509867a6d5bb7, type: 3}
+  - {fileID: 337374552111532046, guid: 03cdb7a9349a7cc45a1f745c935d1790, type: 3}
   avatar: {fileID: 9000000, guid: 3a23c4d693f0a9548a8509867a6d5bb7, type: 3}
   _h1: 0
   animatorOverride: {fileID: 0}
@@ -36,3 +36,4 @@ MonoBehaviour:
   abilities:
   - {fileID: 11400000, guid: 5faad428d8fceb046b2ed94621a14c31, type: 2}
   - {fileID: 11400000, guid: be60fd9100f48d44cbde8fa3a8860b2c, type: 2}
+  - {fileID: 11400000, guid: 5417d24aae0c65649856b31c16dac64c, type: 2}

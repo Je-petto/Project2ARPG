@@ -9,5 +9,6 @@ public static class AnimatorHashes
     public static int _JUMPDOWN = Animator.StringToHash("JUMPDOWN");
     public static int _SPAWN = Animator.StringToHash("SPAWN");
     public static int _ATTACK = Animator.StringToHash("ATTACK");
+    public static int _DEATH = Animator.StringToHash("DEATH");
 }
 

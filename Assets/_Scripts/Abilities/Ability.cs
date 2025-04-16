@@ -28,6 +28,7 @@ public enum AbilityFlag
 
     //공격
     Attack = 1 << 11,
+    Damage = 1 << 12,    
 
 }
 

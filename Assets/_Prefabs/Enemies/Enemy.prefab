@@ -361,7 +361,7 @@ Transform:
   m_GameObject: {fileID: 3094352730871743241}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.46, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -386,7 +386,7 @@ MonoBehaviour:
   eventSensorAttackEnter: {fileID: 11400000, guid: 7c3f2670a1c73f344ba650372ee742f6, type: 2}
   eventSensorAttackExit: {fileID: 11400000, guid: 60c3d11ad8a10184d907f0c2430fffdb, type: 2}
   _h1: 0
-  interval: 0.5
+  interval: 0.25
   detectionRadius: 5
   arrivedRadius: 2
   fieldOfViewAngle: 360

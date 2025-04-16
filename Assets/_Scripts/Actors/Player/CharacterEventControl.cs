@@ -71,6 +71,12 @@ public class CharacterEventControl : MonoBehaviour
 
         var clone = Instantiate(model, owner.model);
 
+        //생성한 모델(Wrapper) 의 Feedback 연결
+        
+        var feedback = clone.GetComponentInChildren<FeedbackControl>();
+        if(feedback != null)
+            owner.feedback = feedback;
+
         //Skinned Mesh 만 실루엣 처리
         clone.GetComponentsInChildren<SkinnedMeshRenderer>().ToList().ForEach( m => 
         {
@@ -103,13 +109,6 @@ public class CharacterEventControl : MonoBehaviour
 
         foreach( var dat in owner.Profile.abilities )
             owner.ability.Add(dat, true);
-
-        //ui 출현
-        yield return new WaitForEndOfFrame();
-        owner.ui.Show(true);
-
-        //Health
-        owner.ui.SetHealth(owner.Profile.health, owner.Profile.health);
     }
 #endregion
 
@@ -120,22 +119,11 @@ public class CharacterEventControl : MonoBehaviour
         // 플레이어가 맞는지 체크
         if (owner != e.to)
             return;
-        
-        // 타격 이펙트 
-        PoolManager.I.Spawn(e.particleHit, owner.eyepoint.position, Quaternion.identity, null);
-      
-        // 타격 데미지 수치 이펙트
-        Vector3 rndsphere = Random.insideUnitSphere;
-        rndsphere.y =0f;
-        Vector3 rndpos = rndsphere * 0.5f + owner.eyepoint.position;
-        var floating = PoolManager.I.Spawn(e.feedbackFloatingText, rndpos, Quaternion.identity, null) as PoolableFeedback;
-        if(floating != null)
-            floating.SetText($"{e.damage}");
-        
 
-        //데미지 SliderUI 연출
-        owner.State.health -= e.damage;
-        owner.ui.SetHealth(owner.State.health, owner.Profile.health);
+        // 플레이어의 Damage Ability 발동 -> Damage값만 전달
+        // object : EventAttackAfter
+        owner.ability.Activate(AbilityFlag.Damage, false, e);
+
 
     }
 #endregion

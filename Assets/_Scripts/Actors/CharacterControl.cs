@@ -35,9 +35,14 @@ public class CharacterControl : MonoBehaviour
     public CharactertState State;
     
     [HideInInspector] public AbilityControl ability;
-    [ReadOnly] public UIControl ui;
+    [HideInInspector] public UIControl ui;
+    [HideInInspector] public FeedbackControl feedback;
 
+    // 땅에 붙어 있냐 ? TRUE : 땅에 붙어있다
     [ReadOnly] public bool isGrounded;
+    // 데미지를 받을 수 있는 상태인가? TRUE : 데미지 가능
+    [ReadOnly] public bool isDamagable = false;
+    // 목적지 도착했나? TRUE : 도착했다
     [ReadOnly] public bool isArrived = true;
     
     [ReadOnly] public Rigidbody rb;
@@ -100,6 +105,7 @@ public class CharacterControl : MonoBehaviour
         model.gameObject.SetActive(b);
     }
 
+#region ANIMATE   
     // 단순한 애니메이터 해시 플레이
     public void Animate(int hash, float duration, int layer = 0)
     {
@@ -121,7 +127,7 @@ public class CharacterControl : MonoBehaviour
     }
     
 
-#region ANIMATE   
+
     //immediate TRUE : 보간처리 없이 바로 목표 값으로 애니메이션
     public void AnimateMoveSpeed(float targetspeed,  bool immediate)
     {

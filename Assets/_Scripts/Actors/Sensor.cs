@@ -83,6 +83,10 @@ public class Sensor : MonoBehaviour
             if (target == null)
                 Debug.LogWarning("Sensor ] target - CharacterControl 없음");
 
+            // 데미지 받을 수 없는 상태
+            if (target.isDamagable == false)
+                continue;
+
             Vector3 direction = (target.eyepoint.position - transform.position).normalized;
 
             float angle = Vector3.Angle(transform.forward, direction);
