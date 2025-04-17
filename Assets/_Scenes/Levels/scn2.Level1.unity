@@ -3334,6 +3334,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 8426381793352650412, guid: e7f08204b9009dd4d9af37f481e764c1, type: 3}
+      propertyPath: actorProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: f017578444c32594b9d72c67046f3835, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -75,10 +75,10 @@ public class AnimationEventListener : MonoBehaviour
     {   
         yield return new WaitForEndOfFrame();
 
-        footLeft = modelRoot.FindSlot("leftfoot", "l foot", "Lfoot");
-        footRight = modelRoot.FindSlot("rightfoot", "r foot", "Rfoot");
-        handLeft = modelRoot.FindSlot("L Hand", "LeftHand", "l hand");
-        handRight = modelRoot.FindSlot("R Hand", "RightHand", "r hand");
+        footLeft = modelRoot.FindSlot("leftfoot", "Ball_L", "l foot", "Lfoot");
+        footRight = modelRoot.FindSlot("rightfoot", "Ball_R", "r foot", "Rfoot");
+        handLeft = modelRoot.FindSlot("L Hand", "Hand_L", "LeftHand", "l hand");
+        handRight = modelRoot.FindSlot("R Hand", "Hand_R", "RightHand", "r hand");
     }
 
 

@@ -41,15 +41,16 @@ public class Sensor : MonoBehaviour
     
     private Dictionary<CharacterControl, TargetState> visibilityStates = new Dictionary<CharacterControl, TargetState>();
 
-    private CharacterControl owner, target;
+    [HorizontalLine("DEBUG"),HideField] public bool _h2;
+    [ReadOnly, SerializeField] private CharacterControl owner, target;
 
     void OnEnable()
     {
-        eventEnemySpawnAfter.Register(OneventEnemySpawnAfter);
+        eventEnemySpawnAfter?.Register(OneventEnemySpawnAfter);
     }
     void OnDisable()
     {
-        eventEnemySpawnAfter.Unregister(OneventEnemySpawnAfter);    
+        eventEnemySpawnAfter?.Unregister(OneventEnemySpawnAfter);    
     }
     
     void OneventEnemySpawnAfter(EventEnemySpawnAfter e)
@@ -168,15 +169,19 @@ public class Sensor : MonoBehaviour
         //owner.Display("BLOCKED");
         eventSensorSightExit.from = owner;
         eventSensorSightExit.to = target;
+        target = null;
         eventSensorSightExit.Raise();
     }
 
     void OnLost()
     {        
         //owner.Display("LOST");
-        eventSensorSightExit.from = owner;
+       
+       eventSensorSightExit.from = owner;
         eventSensorSightExit.to = target;
         eventSensorSightExit.Raise();
+
+        target = null;
     }
 
     void OnArrived()

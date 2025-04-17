@@ -31,7 +31,10 @@ public class CursorControl : MonoBehaviour
     [SerializeField] Transform cursorFixedPoint;
     public Transform CursorFixedPoint => cursorFixedPoint;
     [SerializeField] LineRenderer line;
-    
+
+    //충돌할 레이어
+    [SerializeField] LayerMask targetLayer;
+
     private Camera cam;
 
     public CursorType cursorType = CursorType.MOVE;
@@ -62,7 +65,7 @@ public class CursorControl : MonoBehaviour
         preHover = curHover;
 
         Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
-        if (Physics.Raycast(ray, out var hit))
+        if (Physics.Raycast(ray, out var hit, 100f, targetLayer))
         {
             //현재 커서 아래의 오브젝트
             curHover = hit.collider.GetComponentInParent<CursorSelectable>();

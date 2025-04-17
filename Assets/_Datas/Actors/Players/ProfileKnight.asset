@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d979e3f21fb1f45a13f61535b1efda, type: 3}
+  m_Name: ProfileKnight
+  m_EditorClassIdentifier: 
+  _h0: 0
+  actorType: 1
+  alias: XBot
+  portrait: {fileID: 21300000, guid: 6c3bbe72eb860e846a56d8c10fb57eec, type: 3}
+  models:
+  - {fileID: 707174289538129255, guid: 026640e3873f5704189d6ea920d4aec8, type: 3}
+  avatar: {fileID: 9000000, guid: 32562d1256a1b3b4ca9be3d6ce7adf64, type: 3}
+  _h1: 0
+  animatorOverride: {fileID: 22100000, guid: c66b46405d6d85e479e0d1566a7d747f, type: 2}
+  ATTACK:
+  - {fileID: 7400000, guid: 6a50ec1c5967ae740bf2f54e26c359f0, type: 2}
+  - {fileID: 7400000, guid: 27170cb39952f1f48b646885adacbe48, type: 2}
+  - {fileID: 7400000, guid: d14d5b65dfe255d409fcc3ba8d803399, type: 2}
+  _h2: 0
+  health: 100
+  movespeed: 5
+  rotatespeed: 720
+  jumpforce: 10
+  jumpduration: 0.8
+  sightrange: 1
+  attackspeed: 1.5
+  attackrange: 2
+  attackdamage: 10
+  _h3: 0
+  abilities:
+  - {fileID: 11400000, guid: 5faad428d8fceb046b2ed94621a14c31, type: 2}
+  - {fileID: 11400000, guid: be60fd9100f48d44cbde8fa3a8860b2c, type: 2}
+  - {fileID: 11400000, guid: 5417d24aae0c65649856b31c16dac64c, type: 2}
+  - {fileID: 11400000, guid: 2de33191e5bee5f4baf7d152e741c674, type: 2}

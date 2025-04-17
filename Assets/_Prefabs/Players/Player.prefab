@@ -157,7 +157,8 @@ GameObject:
   - component: {fileID: 4517595978476342986}
   - component: {fileID: 2204030611194256509}
   - component: {fileID: 6209618592649883331}
-  m_Layer: 2
+  - component: {fileID: 1636968697604755940}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -286,6 +287,7 @@ MonoBehaviour:
   isArrived: 1
   rb: {fileID: 0}
   animator: {fileID: 0}
+  ik: {fileID: 0}
   eyepoint: {fileID: 6244858114049361206}
   model: {fileID: 0}
 --- !u!114 &4517595978476342986
@@ -343,6 +345,25 @@ MonoBehaviour:
   footRight: {fileID: 0}
   handLeft: {fileID: 0}
   handRight: {fileID: 0}
+--- !u!114 &1636968697604755940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365852869456442503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a231f28975cc3c4da0a98ad0587a4c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _h0: 0
+  isTarget: 0
+  target: {fileID: 0}
+  _h1: 0
+  overallWeight: 1
+  bodyWeight: 1
+  headWeight: 1
 --- !u!1 &1698176609459416707
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,7 +861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7873465916208997769}
   - component: {fileID: 8699219944588440948}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Collision
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1791,6 +1812,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6244858114049361206}
+  - component: {fileID: 640892623690391066}
   m_Layer: 2
   m_Name: _EYEPOINT_
   m_TagString: Untagged
@@ -1813,6 +1835,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5944459783495712861}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &640892623690391066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128816165353334288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 994a9f8943f48ee48bf0b8d0f4375142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _h0: 0
+  eventEnemySpawnAfter: {fileID: 11400000, guid: 2a49bded49c65b6489f8da29fb3fe4ce, type: 2}
+  eventSensorSightEnter: {fileID: 11400000, guid: 013eb0419161a9347a85345e1a7c8c95, type: 2}
+  eventSensorSightExit: {fileID: 11400000, guid: 47f09e40a86c97e4c90bc5b065f46ba5, type: 2}
+  eventSensorAttackEnter: {fileID: 11400000, guid: 7c3f2670a1c73f344ba650372ee742f6, type: 2}
+  eventSensorAttackExit: {fileID: 11400000, guid: 60c3d11ad8a10184d907f0c2430fffdb, type: 2}
+  _h1: 0
+  interval: 0.5
+  detectionRadius: 8
+  arrivedRadius: 3
+  fieldOfViewAngle: 360
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  blockLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  targetTag: Enemy
+  showGizmos: 1
+  _h2: 0
+  owner: {fileID: 0}
+  target: {fileID: 0}
 --- !u!1 &8877766330161134330
 GameObject:
   m_ObjectHideFlags: 0

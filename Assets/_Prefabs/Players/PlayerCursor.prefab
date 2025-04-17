@@ -159,6 +159,9 @@ MonoBehaviour:
   cursorPoint: {fileID: 6914312702888503111}
   cursorFixedPoint: {fileID: 5303296196057365749}
   line: {fileID: 1384379811676907267}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
   cursorType: 0
   cursors:
   - cursorType: 0

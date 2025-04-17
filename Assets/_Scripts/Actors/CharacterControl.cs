@@ -1,5 +1,7 @@
 using UnityEngine;
 using CustomInspector;
+using UnityEngine.UIElements;
+using UnityEditor.Timeline.Actions;
 
 
 //TEMPCODE
@@ -34,9 +36,9 @@ public class CharacterControl : MonoBehaviour
     // 인스턴스화 한 데이터
     public CharactertState State;
     
-    [HideInInspector] public AbilityControl ability;
-    [HideInInspector] public UIControl ui;
-    [HideInInspector] public FeedbackControl feedback;
+    [ReadOnly] public AbilityControl ability;
+    [ReadOnly] public UIControl ui;
+    [ReadOnly] public FeedbackControl feedback;
 
     // 땅에 붙어 있냐 ? TRUE : 땅에 붙어있다
     [ReadOnly] public bool isGrounded;
@@ -47,6 +49,7 @@ public class CharacterControl : MonoBehaviour
     
     [ReadOnly] public Rigidbody rb;
     [ReadOnly] public Animator animator;
+    [ReadOnly] public AnimationIKControl ik;
     [ReadOnly] public Transform eyepoint;
     [ReadOnly] public Transform model;
 
@@ -75,6 +78,9 @@ public class CharacterControl : MonoBehaviour
         model = transform.Find("_MODEL_");
         if (model == null)
             Debug.LogWarning("CharacterControl ] _MODEL_ 없음");
+
+        // 옵션 : 있으면 쓰고 없으면 안 쓴다
+        ik = GetComponent<AnimationIKControl>();
     }
 
 
@@ -117,13 +123,21 @@ public class CharacterControl : MonoBehaviour
     {
         if (animator == null) return;
 
-        // 애니메이션 속도와 클립 길이를 반영한 결과를 만든다.
-        float d = 1f / anispd;
-        float s = clip.length / d;
-
         aoc[name] = clip;
         animator.runtimeAnimatorController = aoc;
         animator.CrossFadeInFixedTime(name, duration, layer, 0f);
+    }
+
+
+
+    // Trigger는 1회성 호출
+    public void AnimateTrigger(int hash, AnimatorOverrideController aoc, AnimationClip clip)
+    {
+        if (animator == null) return;
+
+        aoc[name] = clip;
+        animator.runtimeAnimatorController = aoc;
+        animator.SetTrigger(hash);
     }
     
 

@@ -33,7 +33,8 @@ public class AbilityPlayerAttack : Ability<AbilityPlayerAttackData>
         if (ctx.performed == false) return;
 
         AnimationClip aniclip = owner.Profile.ATTACK.Random();
-        owner.Animate("ATTACK", owner.Profile.animatorOverride, aniclip, 0.1f, 0);
+        owner.AnimateTrigger(AnimatorHashes._ATTACK, owner.Profile.animatorOverride, aniclip);
+        //owner.Animate("ATTACK", owner.Profile.animatorOverride, aniclip, 0.1f, 0);
     }
 
 

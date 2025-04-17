@@ -14,6 +14,9 @@ public class CharacterEventControl : MonoBehaviour
     [SerializeField] EventPlayerSpawnAfter eventPlayerSpawnAfter;
     [SerializeField] EventDeath eventDeath;
     [SerializeField] EventAttackAfter eventAttackAfter;
+
+    [SerializeField] EventSensorSightEnter eventSensorSightEnter;
+    [SerializeField] EventSensorSightExit eventSensorSightExit;
     
     [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
 #endregion
@@ -34,6 +37,9 @@ public class CharacterEventControl : MonoBehaviour
         eventDeath.Register(OneventDeath);
         eventCameraswitch.Register(OneventCameraSwitch);
         eventAttackAfter.Register(OneventAttackAfter);
+
+        eventSensorSightEnter.Register(OneventSightEnter);
+        eventSensorSightExit.Register(OneventSightExit);
     }
 
     private void OnDisable()
@@ -42,6 +48,9 @@ public class CharacterEventControl : MonoBehaviour
         eventDeath.Unregister(OneventDeath);
         eventCameraswitch.Unregister(OneventCameraSwitch);
         eventAttackAfter.Unregister(OneventAttackAfter);
+
+        eventSensorSightEnter.Unregister(OneventSightEnter);
+        eventSensorSightExit.Unregister(OneventSightExit);
     }
 
 
@@ -92,6 +101,10 @@ public class CharacterEventControl : MonoBehaviour
 
         owner.animator.avatar = owner.Profile.avatar;
 
+        //플레이어 애니메이터 IK 연결 - 마우스 커서를 타겟으로 연결한다.
+        if ( owner.ik != null)
+            owner.ik.target = e.cursorFixedPoint;
+
 
         // 1초 후 등장 파티클 발생
         yield return new WaitForSeconds(1f);
@@ -119,12 +132,30 @@ public class CharacterEventControl : MonoBehaviour
         if (owner != e.target)
             return;
 
+        owner.ik.isTarget = false;
+
         owner.Animate(AnimatorHashes._DEATH, 0.2f);
         owner.ability.RemoveAll();      
     }
 #endregion
 
 #region DAMAGES
+
+    void OneventSightEnter(EventSensorSightEnter e)
+    {
+        if(owner != e.from) return;
+
+        owner.ik.isTarget = true;
+        owner.ik.target = e.to.eyepoint;
+    }
+
+    void OneventSightExit(EventSensorSightExit e)
+    {
+        if(owner != e.from) return;
+
+        owner.ik.target = null;
+        owner.ik.isTarget = false;
+    }
 
     void OneventAttackAfter(EventAttackAfter e)
     {
@@ -137,6 +168,8 @@ public class CharacterEventControl : MonoBehaviour
         owner.ability.Activate(AbilityFlag.Damage, false, e);
 
     }
+
+
 #endregion
 
 }
