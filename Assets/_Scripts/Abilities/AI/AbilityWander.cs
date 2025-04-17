@@ -1,5 +1,8 @@
+
+
 using UnityEngine;
 using UnityEngine.AI;
+
 
 public class AbilityWander : Ability<AbilityWanderData>
 {
@@ -9,43 +12,39 @@ public class AbilityWander : Ability<AbilityWanderData>
     
     private float currentVelocity;
 
+
+
     public AbilityWander(AbilityWanderData data, CharacterControl owner) : base(data,owner)
-    {
-        
+    {        
         if (owner.Profile == null) return;
 
         path = new NavMeshPath();
         owner.isArrived = true;
-
+        
         data.movePerSec = owner.Profile.movespeed;
-        data.rotatePerSec = owner.Profile.rotatespeed;
-
+        data.rotatePerSec = owner.Profile.rotatespeed;        
     }
 
     public override void Activate(object obj)
     {
-
-        owner.ui.Display(data.Flag.ToString());
-        
+        owner.ui.Display(data.Flag.ToString());                        
     }
+
     public override void Deactivate()
     {
         owner.Stop();
-        MoveAnimation();
-
     }
 
     float elapsed;
     public override void Update()
     {
         elapsed += Time.deltaTime;
-        if (elapsed > data.wanderStay)
+        if ( elapsed > data.wanderStay )
         {
             RandomPosition();
             elapsed = 0f;
-
         }
-        
+
         MoveAnimation();
     }
 
@@ -57,27 +56,25 @@ public class AbilityWander : Ability<AbilityWanderData>
         FollowPath();
     }
     
+
     // 이동할 랜덤 위치를 정한다.
     void RandomPosition()
-    {
-
-        // isArrived == false : 가는 중이다
+    {        
+        //false : 가는중이다
         if (owner.isArrived == false)
-            return;
-        
+            return;            
+
         Vector3 rndpos = owner.transform.position + Random.insideUnitSphere * data.wanderRadius;
         rndpos.y = 1f;
 
         SetDestination(rndpos);
-
     }
+
 
     private void SetDestination(Vector3 destination)
     {
-
         if (NavMesh.CalculatePath(owner.transform.position, destination, -1, path) == false)
             return;
-
 
         corners = path.corners;
         next = 1;
@@ -88,7 +85,7 @@ public class AbilityWander : Ability<AbilityWanderData>
     Quaternion _lookrot;
     private void FollowPath()
     {
-        
+
         if ( corners == null || corners.Length <= 0 || owner.isArrived == true)
             return;
 
@@ -112,6 +109,7 @@ public class AbilityWander : Ability<AbilityWanderData>
         Vector3 movement = direction * data.movePerSec * 50f * Time.deltaTime;        
         owner.rb.linearVelocity = movement;
         currentVelocity = Vector3.Distance(Vector3.zero, owner.rb.linearVelocity);
+
     
         //도착 확인
         if (Vector3.Distance(nexttarget, owner.rb.position) <= data.stopDistance)
@@ -121,16 +119,14 @@ public class AbilityWander : Ability<AbilityWanderData>
             // 최종 목적지 도착
             if ( next >= corners.Length )
                 owner.Stop();
-        }
-        
+        }        
     }
 
     private void MoveAnimation()
-    {   
+    {
         float a = owner.isArrived ? 0f : Mathf.Clamp01(currentVelocity / data.movePerSec);
-        float spd = Mathf.Lerp(owner.animator.GetFloat(AnimatorHashes._MOVESPEED), a, Time.deltaTime * 10f);
-        owner.animator.SetFloat(AnimatorHashes._MOVESPEED, spd);
+        float spd = Mathf.Lerp(owner.animator.GetFloat("MOVESPEED"), a, Time.deltaTime * 10f);
+        owner.animator.SetFloat("MOVESPEED", spd);
     }
-
-
+    
 }

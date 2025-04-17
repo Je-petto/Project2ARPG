@@ -1,7 +1,10 @@
+
 using System.Collections;
 using System.Linq;
 using UnityEngine;
 using CustomInspector;
+using Unity.VisualScripting;
+
 
 
 public class CharacterEventControl : MonoBehaviour
@@ -17,6 +20,8 @@ public class CharacterEventControl : MonoBehaviour
 
     [SerializeField] EventSensorSightEnter eventSensorSightEnter;
     [SerializeField] EventSensorSightExit eventSensorSightExit;
+
+    [SerializeField] EventCursorHover eventCursorHover;
     
     [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h1;
 #endregion
@@ -38,8 +43,10 @@ public class CharacterEventControl : MonoBehaviour
         eventCameraswitch.Register(OneventCameraSwitch);
         eventAttackAfter.Register(OneventAttackAfter);
 
-        eventSensorSightEnter.Register(OneventSightEnter);
-        eventSensorSightExit.Register(OneventSightExit);
+        eventSensorSightEnter.Register(OneventSensorSightEnter);
+        eventSensorSightExit.Register(OneventSensorSightExit);
+
+        eventCursorHover.Register(OneventCursorHover);
     }
 
     private void OnDisable()
@@ -49,8 +56,10 @@ public class CharacterEventControl : MonoBehaviour
         eventCameraswitch.Unregister(OneventCameraSwitch);
         eventAttackAfter.Unregister(OneventAttackAfter);
 
-        eventSensorSightEnter.Unregister(OneventSightEnter);
-        eventSensorSightExit.Unregister(OneventSightExit);
+        eventSensorSightEnter.Unregister(OneventSensorSightEnter);
+        eventSensorSightExit.Unregister(OneventSensorSightExit);
+
+        eventCursorHover.Unregister(OneventCursorHover);
     }
 
 
@@ -64,6 +73,7 @@ public class CharacterEventControl : MonoBehaviour
 
 
 #region SPAWNS
+
     void OneventPlayerSpawnAfter(EventPlayerSpawnAfter e)
     {
         StartCoroutine(SpawnSequence(e));
@@ -73,7 +83,7 @@ public class CharacterEventControl : MonoBehaviour
     {
         yield return new WaitUntil(()=> owner.Profile != null);
 
-        // 캐릭터 컨트롤에 Actor 프로파일을 전환
+        // 캐릭터 컨트롤(CC)에 Actor Profile (캐릭터 데이터) 전달한다.
         var model = owner.Profile.models.Random();
 
         // 플레이어 모델 생성한 후 _MODEL_ 슬롯에 붙인다.
@@ -82,13 +92,14 @@ public class CharacterEventControl : MonoBehaviour
 
         var clone = Instantiate(model, owner.model);
 
-        //생성한 모델(Wrapper) 의 Feedback 연결
-        
+
+        // 생성한 모델 ( Wrapper ) 의 Feedback 연결
         var feedback = clone.GetComponentInChildren<FeedbackControl>();
-        if(feedback != null)
+        if (feedback != null)
             owner.feedback = feedback;
 
-        //Skinned Mesh 만 실루엣 처리
+
+        // Skinned 메시만 실루엣 처리 한다.
         clone.GetComponentsInChildren<SkinnedMeshRenderer>().ToList().ForEach( m => 
         {
             m.gameObject.layer = LayerMask.NameToLayer("Silhouette");
@@ -101,9 +112,6 @@ public class CharacterEventControl : MonoBehaviour
 
         owner.animator.avatar = owner.Profile.avatar;
 
-        //플레이어 애니메이터 IK 연결 - 마우스 커서를 타겟으로 연결한다.
-        if ( owner.ik != null)
-            owner.ik.target = e.cursorFixedPoint;
 
 
         // 1초 후 등장 파티클 발생
@@ -116,42 +124,44 @@ public class CharacterEventControl : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         
         owner.Visible(true);
-        owner.Animate(AnimatorHashes._SPAWN, 0f);
+        owner.Animate("SPAWN", 0f);
 
 
         // 1초 후 캐릭터 어빌리티 부여
         yield return new WaitForSeconds(1f);
 
         foreach( var dat in owner.Profile.abilities )
-            owner.ability.Add(dat, true);
+            owner.ability.Add(dat, true);        
     }
 
     void OneventDeath(EventDeath e)
     {
-        //죽은 캐릭터가 본인이 아니면 패스
+        // 죽은 캐릭터가 본인이 아니면 패스
         if (owner != e.target)
             return;
-
+        
         owner.ik.isTarget = false;
 
-        owner.Animate(AnimatorHashes._DEATH, 0.2f);
-        owner.ability.RemoveAll();      
+        owner.Animate("DEATH", 0.2f);
+        owner.ability.RemoveAll();
     }
+
 #endregion
+
 
 #region DAMAGES
 
-    void OneventSightEnter(EventSensorSightEnter e)
-    {
-        if(owner != e.from) return;
 
-        owner.ik.isTarget = true;
-        owner.ik.target = e.to.eyepoint;
+    void OneventSensorSightEnter(EventSensorSightEnter e)
+    {
+        if (owner != e.from) return;
+        
     }
 
-    void OneventSightExit(EventSensorSightExit e)
+    void OneventSensorSightExit(EventSensorSightExit e)
     {
-        if(owner != e.from) return;
+        // 바라보는 자신과 from 이 다르거나 , 바라볼 타겟과 to 가 다르면 , RETURN
+        if (owner != e.from) return;
 
         owner.ik.target = null;
         owner.ik.isTarget = false;
@@ -163,10 +173,19 @@ public class CharacterEventControl : MonoBehaviour
         if (owner != e.to)
             return;
 
-        // 플레이어의 Damage Ability 발동 -> Damage값만 전달
-        // object : EventAttackAfter
+        // 플레이어 의 Damage Ability 발동
+        // object : EventAttackAfter 
         owner.ability.Activate(AbilityFlag.Damage, false, e);
+    }
 
+
+    // 플레이어가 커서 타겟된 위치를 바라본다
+    void OneventCursorHover(EventCursorHover e)
+    {
+        owner.ik.isTarget = true;
+        owner.ik.target = e.target.eyepoint;
+
+        owner.LookatY(e.target.eyepoint.position);
     }
 
 

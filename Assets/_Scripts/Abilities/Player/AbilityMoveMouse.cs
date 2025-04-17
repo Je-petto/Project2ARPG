@@ -18,7 +18,6 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
 
     public AbilityMoveMouse(AbilityMoveMouseData data, CharacterControl owner) : base(data, owner)
     {
-       
         camera = Camera.main; 
         path = new NavMeshPath();
         owner.isArrived = true;
@@ -26,13 +25,13 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
         marker = GameObject.Instantiate(data.marker);
         if (marker == null)
             Debug.LogWarning("AbilityMoveMouse ] Marker - ParticleSystem 없음");
-
         
         marker.gameObject.SetActive(false);
 
-        //프로파일 속성 연결
-        if (owner.Profile == null) return;
 
+        // 프로파일 속성 연결
+        if (owner.Profile == null) return;
+        
         data.movePerSec = owner.Profile.movespeed;
         data.rotatePerSec = owner.Profile.rotatespeed;
     }
@@ -60,7 +59,7 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
     {
         if (owner.TryGetComponent<InputControl>(out var input))
         {
-            input.actionInputs.Player.MoveMouse.performed += InputMove;
+            input.actionInput.Player.MoveMouse.performed += InputMove;            
         }
     }
 
@@ -68,11 +67,12 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
     {
         if (owner.TryGetComponent<InputControl>(out var input))
         {
-            input.actionInputs.Player.MoveMouse.performed -= InputMove;
+            input.actionInput.Player.MoveMouse.performed -= InputMove;
         }
     }
 
-    
+
+
     private void InputMove(InputAction.CallbackContext ctx)
     {
         // 마우스움직임(2D좌표) -> 카메라 Ray -> hit.point(3D좌표)
@@ -146,7 +146,7 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
         float d = Vector3.Distance(finaltarget, owner.rb.position);
         if (hitDistance > data.runtostopDistance.y && d <= data.runtostopDistance.x)
         {
-            owner.Animate(AnimatorHashes._RUNTOSTOP, 0.1f);
+            owner.Animate("RUNTOSTOP", 0.1f);
         }
         
     }
@@ -154,8 +154,8 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
     private void MoveAnimation()
     {
         float a = owner.isArrived ? 0f : Mathf.Clamp01(currentVelocity / data.movePerSec);
-        float spd = Mathf.Lerp(owner.animator.GetFloat(AnimatorHashes._MOVESPEED), a, Time.deltaTime * 10f);
-        owner.animator.SetFloat(AnimatorHashes._MOVESPEED, spd);
+        float spd = Mathf.Lerp(owner.animator.GetFloat("MOVESPEED"), a, Time.deltaTime * 10f);
+        owner.animator.SetFloat("MOVESPEED", spd);
     }
 
 }

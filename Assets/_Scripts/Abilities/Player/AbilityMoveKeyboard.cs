@@ -8,38 +8,38 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
     private Transform cameraTransform;
     private Vector3 camForward, camRight;
     private Vector3 direction;
+    
 
 
     public AbilityMoveKeyboard(AbilityMoveKeyboardData data, CharacterControl owner) : base(data, owner)
-    {        
+    {
         cameraTransform = Camera.main.transform;
-        
+
         if (owner.Profile == null) return;
 
-
         data.movePerSec = owner.Profile.movespeed;
-        data.rotatePerSec = owner.Profile.rotatespeed;
+        data.rotatePerSec = owner.Profile.rotatespeed;        
     }
 
     public override void Activate(object obj)
     {
-        if (owner.TryGetComponent<InputControl>(out var input) == false)
+        if (owner.TryGetComponent<InputControl>(out var input))
         {
-            input.actionInputs.Player.Move.performed += InputMove;
-            input.actionInputs.Player.Move.canceled += InputStop;
+            // context 가 canceled 는 => 키 를 뗐다는 의미 => 도착했다
+            input.actionInput.Player.Move.performed += InputMove;
+            input.actionInput.Player.Move.canceled += InputStop;
         }
-
     }
 
     public override void Deactivate()
     {
-        if (owner.TryGetComponent<InputControl>(out var input) == false)
-        {
-            input.actionInputs.Player.Move.performed -= InputMove;
-            input.actionInputs.Player.Move.canceled -= InputStop;
-        }
-
         Stop();
+
+        if (owner.TryGetComponent<InputControl>(out var input))
+        {
+            input.actionInput.Player.Move.performed -= InputMove;
+            input.actionInput.Player.Move.canceled -= InputStop;
+        }
     }
 
     private void InputMove(InputAction.CallbackContext ctx)
@@ -82,7 +82,7 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
     {
         direction = Vector3.zero;
         owner.rb.linearVelocity = Vector3.zero;
-        owner.animator?.SetFloat(AnimatorHashes._MOVESPEED, 0f);
+        owner.animator?.SetFloat("MOVESPEED", 0f);
     }    
 
 
@@ -98,13 +98,14 @@ public class AbilityMoveKeyboard : Ability<AbilityMoveKeyboardData>
         {
             float v = Vector3.Distance(Vector3.zero,owner.rb.linearVelocity);
             float targetspeed = Mathf.Clamp01(v/data.movePerSec);
-            float movespd = Mathf.Lerp(owner.animator.GetFloat(AnimatorHashes._MOVESPEED), targetspeed, Time.deltaTime * 10f );
+            float movespd = Mathf.Lerp(owner.animator.GetFloat("MOVESPEED"), targetspeed, Time.deltaTime * 10f );
 
-            owner.animator?.SetFloat(AnimatorHashes._MOVESPEED, movespd);
+            owner.animator?.SetFloat("MOVESPEED", movespd);
         }
     }
 
 
+       
     void Rotate()
     {
         if (direction == Vector3.zero)

@@ -1,32 +1,35 @@
+using Project2ARPG;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class AbilityPlayerJump : Ability<AbilityPlayerJumpData>
 {
+
     private bool isjumping = false;
+
+    
 
     public AbilityPlayerJump(AbilityPlayerJumpData data, CharacterControl owner) : base(data,owner)
     {
         if (owner.Profile == null) return;
-
+        
         data.jumpForce = owner.Profile.jumpforce;
         data.jumpDuration = owner.Profile.jumpduration;
     }
 
     public override void Activate(object obj)
-    {
+    { 
         if (owner.TryGetComponent<InputControl>(out var input))
         {
-            input.actionInputs.Player.Jump.performed += InputJump;
+            input.actionInput.Player.Jump.performed += InputJump;
         }
-        
     }
+
     public override void Deactivate()
     {
-
         if (owner.TryGetComponent<InputControl>(out var input))
         {
-            input.actionInputs.Player.Jump.performed -= InputJump;
+            input.actionInput.Player.Jump.performed -= InputJump;
         }
     }
 
@@ -35,21 +38,17 @@ public class AbilityPlayerJump : Ability<AbilityPlayerJumpData>
     {
         if (owner.rb == null || isjumping == false)
             return;
- 
+
         elapsed += Time.deltaTime;
 
-        float t = Mathf.Clamp01( elapsed / data.jumpDuration );
-
-        //owner.agent.Move(Vector3.up * height * Time.deltaTime);
-        Vector3 velocity = ((CharacterControl)owner).rb.linearVelocity;
+        float t = Mathf.Clamp01(elapsed / data.jumpDuration);
+        
+        Vector3 velocity = owner.rb.linearVelocity;
         velocity.y = data.jumpCurve.Evaluate(t) * data.jumpForce;
-        ((CharacterControl)owner).rb.linearVelocity = velocity;
+        owner.rb.linearVelocity = velocity;
 
-        // 점프 시간 종료
         if (t > 0.3f && owner.isGrounded)
             JumpDown();
-            //owner.ability.Deactivate(data.Flag);
-
     }
 
     private void JumpUp()
@@ -59,13 +58,14 @@ public class AbilityPlayerJump : Ability<AbilityPlayerJumpData>
 
         isjumping = true;
         elapsed = 0;
-        owner.Animate(AnimatorHashes._JUMPUP, 0.1f);
+        
+        owner.Animate("JUMPUP", 0.1f);
     }
+
     private void JumpDown()
     {
         isjumping = false;
-        owner.Animate(AnimatorHashes._JUMPDOWN, 0.02f);
-
+        owner.Animate("JUMPDOWN", 0.02f);     
     }
 
     private void InputJump(InputAction.CallbackContext ctx)
@@ -73,6 +73,4 @@ public class AbilityPlayerJump : Ability<AbilityPlayerJumpData>
         if (ctx.performed)
             JumpUp();
     }
-
-
 }

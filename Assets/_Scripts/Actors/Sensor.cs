@@ -85,7 +85,7 @@ public class Sensor : MonoBehaviour
                 Debug.LogWarning("Sensor ] target - CharacterControl 없음");
 
             // 데미지 받을 수 없는 상태
-            if (target.isDamagable == false)
+            if (target.isDamageable == false)
                 continue;
 
             Vector3 direction = (target.eyepoint.position - transform.position).normalized;

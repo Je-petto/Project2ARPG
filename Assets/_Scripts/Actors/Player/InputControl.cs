@@ -3,26 +3,26 @@ using Project2ARPG;
 
 public class InputControl : MonoBehaviour
 {
-    [HideInInspector] public InputSystem_Actions actionInputs;
+    [HideInInspector] public InputSystem_Actions  actionInput;
 
     void Awake()
     {
-        actionInputs = new InputSystem_Actions();
+        actionInput = new InputSystem_Actions();
     }
     
     void OnDestroy()
     {
-        actionInputs.Dispose();
+        actionInput.Dispose();
     }
     
     void OnEnable()
     {
-        actionInputs.Enable();
+        actionInput.Enable();
     }
     
     void OnDisable()
     {
-        actionInputs.Disable();
+        actionInput.Disable();
     }
 
 }

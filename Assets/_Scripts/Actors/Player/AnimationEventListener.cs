@@ -1,6 +1,7 @@
 using UnityEngine;
 using CustomInspector;
 using System.Collections;
+using UnityEngine.VFX;
 
 public class AnimationEventListener : MonoBehaviour
 {
@@ -20,8 +21,11 @@ public class AnimationEventListener : MonoBehaviour
 #endregion
 
 
-    public PoolableParticle smoke1, smoke2, swing1;  
+    [HorizontalLine("EFFECTS"),HideField] public bool _h2;
+    public PoolableParticle smoke1, smoke2, swing1;
+    public VisualEffect vfxSwing;  
 
+    [Space(10), HorizontalLine(color:FixedColor.Cyan),HideField] public bool _h3;
     [ReadOnly] public Transform footLeft;
     [ReadOnly] public Transform footRight;
     [ReadOnly] public Transform handLeft;
@@ -53,7 +57,6 @@ public class AnimationEventListener : MonoBehaviour
         eventPlayerSpawnAfter.Unregister(OneventPlayerSpawnAfter);       
         eventEnemySpawnAfter.Unregister(OneventEnemySpawnAfter); 
     }
-
 
     void OneventPlayerSpawnAfter(EventPlayerSpawnAfter e)
     {
@@ -102,6 +105,7 @@ public class AnimationEventListener : MonoBehaviour
         PoolManager.I.Spawn(smoke2, owner.model.position + offset, Quaternion.identity, null);
     }
 
+    //Swing L : left, R : right
     public void Attack(string s)
     {
         //해당 프레임에서 공격 이벤트 발생 : 가해자 = owner
@@ -115,5 +119,13 @@ public class AnimationEventListener : MonoBehaviour
         var rot = Quaternion.LookRotation(owner.transform.forward, Vector3.up);
         rot.eulerAngles = new Vector3(-90f, rot.eulerAngles.y, 0f);
         PoolManager.I.Spawn(swing1, s == "L" ? handLeft.position : handRight.position, rot, null);        
+    }
+
+    // string : on : 이펙트 시작/ off: 이펙트 오프
+    // Visual Effect 사용
+    public void Swing(string on)
+    {
+        owner.feedback.PlayerSwingTrail(on.ToLower() == "on");
+
     }
 }

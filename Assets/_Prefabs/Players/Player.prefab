@@ -265,6 +265,9 @@ MonoBehaviour:
   eventPlayerSpawnAfter: {fileID: 11400000, guid: 2eae19cd0908b9244aaa138822c18fff, type: 2}
   eventDeath: {fileID: 11400000, guid: c835de0cae047e9429b2d98467b8e6e9, type: 2}
   eventAttackAfter: {fileID: 11400000, guid: f382ceec8f87d004abf69023c62d57b3, type: 2}
+  eventSensorSightEnter: {fileID: 0}
+  eventSensorSightExit: {fileID: 0}
+  eventCursorHover: {fileID: 0}
   _h1: 0
 --- !u!114 &7568890696256692825
 MonoBehaviour:
@@ -283,7 +286,7 @@ MonoBehaviour:
   ui: {fileID: 0}
   feedback: {fileID: 0}
   isGrounded: 0
-  isDamagable: 0
+  isDamageable: 0
   isArrived: 1
   rb: {fileID: 0}
   animator: {fileID: 0}
@@ -338,9 +341,12 @@ MonoBehaviour:
   eventEnemySpawnAfter: {fileID: 11400000, guid: 2a49bded49c65b6489f8da29fb3fe4ce, type: 2}
   eventAttackBefore: {fileID: 11400000, guid: 969632e23bb32dd4b9d0d9071902d828, type: 2}
   _h1: 0
+  _h2: 0
   smoke1: {fileID: 2566886472975382880, guid: 0d879c6f654b17e4e8b87b32da426228, type: 3}
   smoke2: {fileID: 23564290435768151, guid: 9c39fbcfdd2562143b816b99c1ea418b, type: 3}
   swing1: {fileID: 0}
+  vfxSwing: {fileID: 1550146890861012557, guid: a0de8f72f0d461f44988531ca4debd9a, type: 3}
+  _h3: 0
   footLeft: {fileID: 0}
   footRight: {fileID: 0}
   handLeft: {fileID: 0}
@@ -362,8 +368,8 @@ MonoBehaviour:
   target: {fileID: 0}
   _h1: 0
   overallWeight: 1
-  bodyWeight: 1
-  headWeight: 1
+  bodyWeight: 0.5
+  headWeight: 0.8
 --- !u!1 &1698176609459416707
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 // MVC : Model(데이터) , View(UI) , Control(행동)
@@ -17,19 +18,19 @@ public enum AbilityFlag
 {
     None = 0,
 
-    //플레이어
+    // 플레이어
     MoveKeyboard = 1 << 0,
     MoveMouse = 1 << 1,
-    Jump = 1 << 2,    
+    Jump = 1 << 2, 
 
-    //움직임
+    // 움직임
     Wander = 1 << 3,
     Trace = 1 << 4,
 
-    //공격
+    // 공격
     Attack = 1 << 11,
-    Damage = 1 << 12,    
-
+    // 
+    Damage = 1 << 15
 }
 
 
@@ -51,7 +52,7 @@ public abstract class AbilityData : ScriptableObject
 public abstract class Ability 
 {
     // 어빌리티 활성
-    public virtual void Activate(object obj = null) {}    
+    public virtual void Activate(object obj = null) {}
     // 어빌리티 비활성
     public virtual void Deactivate() {}
     // 어빌리티 계속 Update

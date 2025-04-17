@@ -1,6 +1,6 @@
-using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 using UnityEngine.AI;
+
 
 public class AbilityTrace : Ability<AbilityTraceData>
 {
@@ -10,36 +10,36 @@ public class AbilityTrace : Ability<AbilityTraceData>
     
     private float currentVelocity;
 
+
+
     public AbilityTrace(AbilityTraceData data, CharacterControl owner) : base(data,owner)
-    {
-        
+    {        
         if (owner.Profile == null) return;
 
         path = new NavMeshPath();
         owner.isArrived = true;
-
+        
         data.movePerSec = owner.Profile.movespeed;
-        data.rotatePerSec = owner.Profile.rotatespeed;
-
+        data.rotatePerSec = owner.Profile.rotatespeed;        
     }
 
     public override void Activate(object obj)
     {
-        //obj는 공격 대상 (Target)
+        //obj 는 추격 대상 (Target)
         data.target = obj as CharacterControl;
         if (data.target == null)
             return;
 
-        owner.ui.Display(data.Flag.ToString());  
+        owner.ui.Display(data.Flag.ToString());
     }
 
     public override void Deactivate()
-    {
-        owner.Stop();
+    {        
+        owner.Stop();   
     }
 
     public override void Update()
-    {        
+    {
         TargetPosition();
         MoveAnimation();
     }
@@ -52,21 +52,21 @@ public class AbilityTrace : Ability<AbilityTraceData>
         FollowPath();
     }
     
-    // 이동할 랜덤 위치를 정한다.
+
+    // 추격 대상을 정한다.
     void TargetPosition()
-    {
+    {        
         if (data.target == null || owner.isArrived == false)
-            return;
+            return;            
 
         SetDestination(data.target.transform.position);
     }
 
+
     private void SetDestination(Vector3 destination)
     {
-
         if (NavMesh.CalculatePath(owner.transform.position, destination, -1, path) == false)
             return;
-
 
         corners = path.corners;
         next = 1;
@@ -77,14 +77,14 @@ public class AbilityTrace : Ability<AbilityTraceData>
     Quaternion _lookrot;
     private void FollowPath()
     {
-        
+
         if ( corners == null || corners.Length <= 0 || owner.isArrived == true)
             return;
 
         // 다음 위치
         Vector3 nexttarget = corners[next];
         // 최종 위치
-        Vector3 finaltarget = corners[corners.Length-1];
+        //Vector3 finaltarget = corners[corners.Length-1];
         // 다음 위치 방향
         Vector3 direction = (nexttarget - owner.transform.position).normalized;
         direction.y = 0;
@@ -101,9 +101,8 @@ public class AbilityTrace : Ability<AbilityTraceData>
         Vector3 movement = direction * data.movePerSec * 50f * Time.deltaTime;        
         owner.rb.linearVelocity = movement;
         currentVelocity = Vector3.Distance(Vector3.zero, owner.rb.linearVelocity);
-    
-        if(Vector3.Distance(owner.eyepoint.position, data.target.eyepoint.position) <= owner.Profile.attackrange)
 
+    
         //도착 확인
         if (Vector3.Distance(nexttarget, owner.rb.position) <= data.stopDistance)
         {
@@ -112,15 +111,15 @@ public class AbilityTrace : Ability<AbilityTraceData>
             // 최종 목적지 도착
             if ( next >= corners.Length )
                 owner.Stop();
-
         }        
     }
 
     private void MoveAnimation()
     {
         float a = owner.isArrived ? 0f : Mathf.Clamp01(currentVelocity / data.movePerSec);
-        owner.AnimateMoveSpeed(a, false);
+        owner.AnimateMovespeed(a, false);
     }
 
 
+    
 }

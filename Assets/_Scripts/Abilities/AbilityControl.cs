@@ -1,8 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using CustomInspector;
-using System.Linq;
-
 
 
 // abilityDatas : 외부에서 능력 부여/회수 인터페이스
@@ -75,7 +74,7 @@ public class AbilityControl : MonoBehaviour
     public void RemoveAll()
     {
         DeactivateAll();
-        
+
         flags = AbilityFlag.None;
         actives.Clear();
         datas.Clear();
@@ -83,16 +82,16 @@ public class AbilityControl : MonoBehaviour
 
 
     // 잠재 능력 활성화 및 업데이트 추가
-    // forceDeactivate : True -> 모든 능력 제거 후 flag 해당 능력만 활성화
+    // forceDeactivate : TRUE -> 모든 능력 제거 후 flag 해당 능력만 활성화
     public void Activate(AbilityFlag flag, bool forceDeactivate, object obj)
     {
-        if(forceDeactivate)
+        if (forceDeactivate)
             DeactivateAll();
 
-        //실시간 삭제된 데이터를 반영하기 위해 임시변수로 바꾼다
+        // 실시간 삭제된 데이터를 반영하기위해 , 임시변수에 담아놓는다.
         List<AbilityData> temp = new List<AbilityData>();
-        temp.AddRange(datas.GetRange(0, datas.Count));
-        
+        temp.AddRange(datas.GetRange(0,datas.Count));
+
         foreach( var d in temp )
         {
             if ((d.Flag & flag) == flag)
@@ -105,7 +104,7 @@ public class AbilityControl : MonoBehaviour
         }        
     }
 
-    // 활성 능력 비활성화 및 업데이트 제거
+    // 능력 비활성화
     public void Deactivate(AbilityFlag flag)
     {        
         foreach( var d in datas )
@@ -122,13 +121,14 @@ public class AbilityControl : MonoBehaviour
             }
         }
     }
-    
+
+    // 모든 능력 비활성화
     public void DeactivateAll()
     {
         foreach( var a in actives )
             a.Value.Deactivate();
 
-
         actives.Clear();
     }
+    
 }
