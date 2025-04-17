@@ -47,4 +47,5 @@ MonoBehaviour:
   _h0: 0
   eventPlayerSpawnBefore: {fileID: 11400000, guid: 4ebd8e8d5faa21845a2a4737a38eb612, type: 2}
   eventEnemySpawn: {fileID: 11400000, guid: 5c18211d9c2269d4da4a8a9db1259160, type: 2}
+  eventDeath: {fileID: 11400000, guid: c835de0cae047e9429b2d98467b8e6e9, type: 2}
   _h1: 0

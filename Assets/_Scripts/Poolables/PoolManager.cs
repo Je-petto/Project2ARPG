@@ -68,8 +68,8 @@ public class PoolManager : BehaviourSingleton<PoolManager>
         var clone = pool.Get();
         clone.transform.rotation = rot;
         clone.transform.position = pos;
-        clone.transform.SetParent(parent ?? transform, true);
-
+        //clone.transform.SetParent(parent ?? transform, true);
+Debug.Log($"{clone.name}, {clone.transform.position}");
         instances[clone] = pool;
 
         return clone;

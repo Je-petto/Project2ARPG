@@ -59,16 +59,20 @@ public class AbilityMoveMouse : Ability<AbilityMoveMouseData>
     public override void Activate(object obj)
     {
         if (owner.TryGetComponent<InputControl>(out var input))
+        {
             input.actionInputs.Player.MoveMouse.performed += InputMove;
+        }
     }
 
     public override void Deactivate()
     {
         if (owner.TryGetComponent<InputControl>(out var input))
+        {
             input.actionInputs.Player.MoveMouse.performed -= InputMove;
+        }
     }
 
-
+    
     private void InputMove(InputAction.CallbackContext ctx)
     {
         // 마우스움직임(2D좌표) -> 카메라 Ray -> hit.point(3D좌표)

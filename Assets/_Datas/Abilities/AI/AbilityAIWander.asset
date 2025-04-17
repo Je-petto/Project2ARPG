@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40736cf54ed1a9f47b3412a252c31845, type: 3}
-  m_Name: AbilityTrace
+  m_Script: {fileID: 11500000, guid: 872df7b7b1b00c44eb05b425432791e0, type: 3}
+  m_Name: AbilityAIWander
   m_EditorClassIdentifier: 
-  movePerSec: 3
-  rotatePerSec: 540
-  stopDistance: 0.5
-  target: {fileID: 0}

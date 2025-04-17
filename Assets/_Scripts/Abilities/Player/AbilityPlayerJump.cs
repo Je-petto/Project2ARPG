@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class AbilityJump : Ability<AbilityJumpData>
+public class AbilityPlayerJump : Ability<AbilityPlayerJumpData>
 {
     private bool isjumping = false;
 
-    public AbilityJump(AbilityJumpData data, CharacterControl owner) : base(data,owner)
+    public AbilityPlayerJump(AbilityPlayerJumpData data, CharacterControl owner) : base(data,owner)
     {
         if (owner.Profile == null) return;
 

@@ -136,7 +136,6 @@ public class CharacterEventControl : MonoBehaviour
         // object : EventAttackAfter
         owner.ability.Activate(AbilityFlag.Damage, false, e);
 
-
     }
 #endregion
 
